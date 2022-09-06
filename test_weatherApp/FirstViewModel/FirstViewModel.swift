@@ -7,13 +7,33 @@
 
 import Foundation
 
-struct FirstViewModel: Decodable {
+//TODO: Fix decoding error
+struct FirstViewModel: Codable {
     var coor: Coordination
     var weather: [Weather]
-    var cityName: String
+    var cityName: String //도시이름
+    var main: Main
+    
+    enum CodingKeys: String, CodingKey {
+        case coor = "coord"
+        case weather = "weather"
+        case cityName = "name"
+        case main = "main"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        coor = try container.decode(Coordination.self, forKey: .coor)
+        weather = try container.decode([Weather].self, forKey: .weather)
+        cityName = try container.decode(String.self, forKey: .cityName)
+        main = try container.decode(Main.self, forKey: .main)
+    }
 }
 
-struct Coordination: Decodable {
+
+
+struct Coordination: Codable {
     
     enum CodingKeys: String, CodingKey {
         case lan = "lan"
@@ -26,16 +46,16 @@ struct Coordination: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        lan = (try? container.decode(Double.self, forKey: .lan)) ?? 0.1111111
+        lan = try container.decode(Double.self, forKey: .lan)
         lon = try container.decode(Double.self, forKey: .lon)
     }
 }
 
-struct Weather: Decodable {
+struct Weather: Codable {
     var id: Double
     var main: String
     var description: String
-    var icon: String
+    var icon: String //날씨아이콘
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -53,5 +73,22 @@ struct Weather: Decodable {
         
         //TODO: http://openweathermap.org/img/w/10d.png
         icon = try container.decode(String.self, forKey: .icon)
+    }
+}
+
+struct Main: Codable {
+    var temp: Double //현재기온
+    var humidity: Double //현재습도
+    
+    enum CodingKeys: String, CodingKey {
+        case temp = "temp"
+        case humidity = "humidity"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        temp = try container.decode(Double.self, forKey: .temp)
+        humidity = try container.decode(Double.self, forKey: .humidity)
     }
 }
