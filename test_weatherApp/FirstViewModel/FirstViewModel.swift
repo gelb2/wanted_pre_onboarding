@@ -36,11 +36,11 @@ struct FirstViewModel: Codable {
 struct Coordination: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case lan = "lan"
+        case lan = "lat"
         case lon = "lon"
     }
     
-    var lan: Double?
+    var lan: Double
     var lon: Double
     
     init(from decoder: Decoder) throws {
