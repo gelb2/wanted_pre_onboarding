@@ -35,7 +35,20 @@ class FirstViewController: UIViewController {
                 print(value)
             }
         } catch {
-            print("❌ Error: \(error)")
+            //TODO: 뷰모델이 에러 핸들링 하게 하기
+            let error = error as? HTTPError
+            switch error {
+            case .invalidURL:
+                print("❌ Error: \(error)")
+            case .errorDecodingData:
+                print("❌ Error: \(error)")
+            case .badResponse:
+                print("❌ Error: \(error)")
+            case .badURL:
+                print("❌ Error: \(error)")
+            case .none:
+                print("noError")
+            }
         }
     }
 
