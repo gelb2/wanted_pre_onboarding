@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7028C77C1D00D07443 /* BasicModel.swift */; };
+		36B1CB7328C77C4600D07443 /* BasicCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7228C77C4600D07443 /* BasicCollectionViewModel.swift */; };
+		36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* FirstViewController.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36B1CB7028C77C1D00D07443 /* BasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicModel.swift; sourceTree = "<group>"; };
+		36B1CB7228C77C4600D07443 /* BasicCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionViewModel.swift; sourceTree = "<group>"; };
+		36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSearchViewModel.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36B1CB6F28C77BFA00D07443 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		4CCDE7F328C7211500F05AFF = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +123,7 @@
 				4CCDE80128C7211500F05AFF /* SceneDelegate.swift */,
 				4CCDE80328C7211500F05AFF /* FirstViewController.swift */,
 				4CCDE82F28C729F100F05AFF /* SecondViewController.swift */,
+				36B1CB6F28C77BFA00D07443 /* Entity */,
 				4CCDE83B28C74ADC00F05AFF /* Model */,
 				4CCDE83E28C75EDC00F05AFF /* ViewModels */,
 				4CCDE83128C72AC600F05AFF /* Utilities */,
@@ -148,7 +163,9 @@
 		4CCDE83B28C74ADC00F05AFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */,
+				36B1CB7028C77C1D00D07443 /* BasicModel.swift */,
+				36B1CB7228C77C4600D07443 /* BasicCollectionViewModel.swift */,
+				36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -290,12 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36B1CB7328C77C4600D07443 /* BasicCollectionViewModel.swift in Sources */,
 				4CCDE83028C729F100F05AFF /* SecondViewController.swift in Sources */,
 				4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */,
+				36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */,
 				4CCDE80428C7211500F05AFF /* FirstViewController.swift in Sources */,
 				4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */,
 				4CCDE83D28C74AF200F05AFF /* BasicWeatherEntity.swift in Sources */,
 				4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */,
+				36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */,
 				4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

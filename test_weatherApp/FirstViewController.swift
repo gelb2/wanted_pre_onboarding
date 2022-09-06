@@ -9,52 +9,27 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
+    //TODO: 뷰컨 init때 뷰모델 주입 받도록 하기
+    var viewModel: BasicModel
+    
+    init(viewModel: BasicModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = UIView()
+        self.viewModel = BasicModel(repository: Repository(httpClient: HTTPClient()))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
-        
-        
-        Task {
-            await test()
-        }
         // Do any additional setup after loading the view.
     }
-    
-    func test() async {
-        
-        //TODO: url 영문 아닌 한글도 되도록 allowQuery옵션 추가
-        
-        guard let testURL = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=7f1a9a7368d6f22c077f8bef8d7a5200") else { return }
-        
-        do {
-            let httpClient = HTTPClient()
-            let value: BasicWeatherEntity = try await httpClient.fetch(url: testURL)
-            
-            DispatchQueue.main.async {
-                print(value)
-            }
-        } catch {
-            //TODO: 뷰모델이 에러 핸들링 하게 하기
-            let error = error as? HTTPError
-            switch error {
-            case .invalidURL:
-                print("❌ Error: \(error)")
-            case .errorDecodingData:
-                print("❌ Error: \(error)")
-            case .badResponse:
-                print("❌ Error: \(error)")
-            case .badURL:
-                print("❌ Error: \(error)")
-            case .none:
-                print("noError")
-            }
-        }
-    }
-
-
 }
 

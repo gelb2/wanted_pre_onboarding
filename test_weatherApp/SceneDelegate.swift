@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //세그, 뷰컨에서 present 하는 방식 아닌 다른 방식으로 프리젠테이션 처리
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
-        window?.rootViewController = FirstViewController()
+        window?.rootViewController = FirstViewController(viewModel: BasicModel(repository: Repository(httpClient: HTTPClient())))
         window?.makeKeyAndVisible()
     }
 
