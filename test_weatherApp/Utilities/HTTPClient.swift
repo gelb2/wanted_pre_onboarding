@@ -28,6 +28,9 @@ protocol HTTPClientProtocol {
     func fetch<T: Codable>(url: URL) async throws -> T
 }
 
+//TODO: 클래스 전면 리팩토링
+//http메소드 주입처리
+//repository 클래스와의 연관성 처리
 class HTTPClient: HTTPClientProtocol {
     
     func fetch<T: Codable>(url: URL) async throws -> T {

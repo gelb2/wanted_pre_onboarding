@@ -17,6 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         //TODO: 뷰컨트롤러 프리젠테이션 관련 로직 추가 및 보강
+        //뷰모덜 -> 뷰컨트롤러 주입
+        //세그, 뷰컨에서 present 하는 방식 아닌 다른 방식으로 프리젠테이션 처리
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         window?.rootViewController = FirstViewController()

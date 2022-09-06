@@ -18,7 +18,7 @@
 		4CCDE83028C729F100F05AFF /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE82F28C729F100F05AFF /* SecondViewController.swift */; };
 		4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83228C72ADC00F05AFF /* HTTPClient.swift */; };
 		4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83428C7356C00F05AFF /* Repository.swift */; };
-		4CCDE83D28C74AF200F05AFF /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83C28C74AF200F05AFF /* FirstViewModel.swift */; };
+		4CCDE83D28C74AF200F05AFF /* BasicWeatherEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		4CCDE82F28C729F100F05AFF /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		4CCDE83228C72ADC00F05AFF /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4CCDE83428C7356C00F05AFF /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		4CCDE83C28C74AF200F05AFF /* FirstViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewModel.swift; sourceTree = "<group>"; };
+		4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWeatherEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +108,9 @@
 				4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */,
 				4CCDE80128C7211500F05AFF /* SceneDelegate.swift */,
 				4CCDE80328C7211500F05AFF /* FirstViewController.swift */,
-				4CCDE83B28C74ADC00F05AFF /* FirstViewModel */,
 				4CCDE82F28C729F100F05AFF /* SecondViewController.swift */,
+				4CCDE83B28C74ADC00F05AFF /* Model */,
+				4CCDE83E28C75EDC00F05AFF /* ViewModels */,
 				4CCDE83128C72AC600F05AFF /* Utilities */,
 				4CCDE80828C7211500F05AFF /* Assets.xcassets */,
 				4CCDE80A28C7211500F05AFF /* LaunchScreen.storyboard */,
@@ -144,12 +145,19 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		4CCDE83B28C74ADC00F05AFF /* FirstViewModel */ = {
+		4CCDE83B28C74ADC00F05AFF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4CCDE83C28C74AF200F05AFF /* FirstViewModel.swift */,
+				4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */,
 			);
-			path = FirstViewModel;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4CCDE83E28C75EDC00F05AFF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +294,7 @@
 				4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */,
 				4CCDE80428C7211500F05AFF /* FirstViewController.swift in Sources */,
 				4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */,
-				4CCDE83D28C74AF200F05AFF /* FirstViewModel.swift in Sources */,
+				4CCDE83D28C74AF200F05AFF /* BasicWeatherEntity.swift in Sources */,
 				4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */,
 				4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */,
 			);
