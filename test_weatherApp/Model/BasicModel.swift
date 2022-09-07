@@ -12,6 +12,14 @@ class BasicModel {
     
     var repository: RepositoryProtocol
     
+    //TODO: MVVM적으로, 이 모델이 컬렉션뷰를 컨트롤 하도록...
+    var collectionViewModel: [BasicCollectionViewModel] = []
+    
+    //input
+    var callBack = { }
+    
+    //output
+    
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
@@ -19,21 +27,28 @@ class BasicModel {
     
     func populateData() {
         Task {
-            await populateData()
+            await requestAPI()
+            dataIsReadyToPresent()
         }
     }
     
-    private func populateData() async {
+    //TODO: model이 uikit에 대해 알고 있는건 좋지 못한듯 하다. DispatchQueue를 다른데로 빼야 한다
+    private func dataIsReadyToPresent() {
+        print("dataIsReady")
+        
+        callBack()
+        
+        
+    }
+    
+    private func requestAPI() async {
 
         do {
             
-            //TODO: http://openweathermap.org/img/w/10d.png
-            //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
+            let timer = ParkBenchTimer()
             
-            var testArray: [BasicWeatherEntity] = []
             //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
-            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함
-            let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seoul")))
+            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...
                         
             async let gongju: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gongju.rawValue)))
             async let gwangu: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gwangju.rawValue)))
@@ -55,16 +70,25 @@ class BasicModel {
             async let cheonan: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.cheonan.rawValue)))
             async let cheongju: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.cheongju.rawValue)))
             async let chuncheon: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.chuncheon.rawValue)))
-            
+
             let result = try await [gongju,gwangu,gumi,gunsan,daegu,daejeon,mokpo,busan,seosan,seoul,sokcho,suwon,suncheon,ulsan,iksan,jeonju,jeju,cheonan,cheongju,chuncheon]
+
+            //TODO: http://openweathermap.org/img/w/10d.png
+            //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
             
-            print("result count check : \(result.count)")
-            
-            DispatchQueue.main.async {
-                print("viewModelData begin")
-                print(value)
-                print("viewModelData end")
+            collectionViewModel = result.map { entity -> BasicCollectionViewModel in
+                let weather = BasicCollectionViewModel()
+                weather.cityName = entity.cityName
+                weather.humid = entity.main.humidity
+                weather.temp = entity.main.temp
+                weather.icon = "http://openweathermap.org/img/w/10d.png"
+                return weather
             }
+            
+            print("elapsed Time is \(timer.stop())")
+            
+            //TODO: 엔티티 --> 모델링 --> 콜렉션뷰 모델링 --> 뷰컨트롤러로 넘겨줌 --> 메인스레드에서 ui고칠 수 있도록 dispatchQueue.main을 하던 아니면 새로 나온 방법으로 하던...
+            
         } catch {
             //TODO: 뷰모델이 에러 핸들링 하게 하기
             let error = error as? HTTPError

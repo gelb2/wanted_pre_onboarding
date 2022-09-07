@@ -71,23 +71,48 @@ extension BasicViewController: Presentable {
     }
     
     func bind() {
-//        collectionView.dataSource = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(BasicCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        viewModel.populateData()
+        
+        viewModel.callBack = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        
+        Task {
+            viewModel.populateData()
+            print("vc print")
+        }
     }
 }
 
-//extension BasicViewController: UICollectionViewDataSource {
-//    
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        
-//    }
-//}
-//
-//extension BasicViewController: UICollectionViewDelegate {
-//    
-//}
+//TODO: collectionViewModel과의 연관 로직 개선
+extension BasicViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.collectionViewModel.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? BasicCell else {
+            fatalError()
+        }
+        
+        cell.cellView.cityNameLabel.text = viewModel.collectionViewModel[indexPath.item].cityName
+        cell.cellView.humidityLabel.text = String(viewModel.collectionViewModel[indexPath.item].humid)
+        cell.cellView.temperatureLabel.text = String(viewModel.collectionViewModel[indexPath.item].temp)
+        
+        //TODO: 제대로 이미지 넣기
+        //http://openweathermap.org/img/w/10d.png
+        cell.cellView.iconImageView.image = UIImage(named: "10d")
+        return cell
+    }
+}
+
+extension BasicViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+}
