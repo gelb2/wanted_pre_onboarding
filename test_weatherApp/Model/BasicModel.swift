@@ -29,7 +29,26 @@ class BasicModel {
             
             //TODO: http://openweathermap.org/img/w/10d.png
             //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
+            
+            var testArray: [BasicWeatherEntity] = []
+            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선
             let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seoul")))
+            let value2: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "busan")))
+            let value3: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "daegu")))
+            let value4: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seosan")))
+            let value5: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "sokcho")))
+            let value6: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "suwon")))
+            testArray.append(value)
+            testArray.append(value2)
+            testArray.append(value3)
+            testArray.append(value4)
+            testArray.append(value5)
+            testArray.append(value6)
+            
+            print("testARray check")
+            print(testArray.count)
+            print("testARray check end")
+            
             DispatchQueue.main.async {
                 print("viewModelData begin")
                 print(value)
