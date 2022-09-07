@@ -33,10 +33,14 @@ class Repository: RepositoryProtocol {
     func testHandleAPI(api: API) -> URL? {
         //TODO: url 영문 아닌 한글도 되도록 allowQuery옵션 추가
         var url: URL?
-        
+
         switch api {
         case .weatherData(.cityName(let name)):
-            url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(name)&appid=7f1a9a7368d6f22c077f8bef8d7a5200")
+            let baseURLString = APIURLAddressSet.baseURL.urlString
+            let cityNameString = APIURLAddressSet.cityName(name: name).urlString
+            let appIDString = APIURLAddressSet.appID.urlString
+            
+            url = URL(string: baseURLString + cityNameString + appIDString)
         case .weatherData(.cityCoordination(lat: let lat, lon: let lon)):
             break
         }
