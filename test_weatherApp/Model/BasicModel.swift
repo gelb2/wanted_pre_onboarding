@@ -31,23 +31,16 @@ class BasicModel {
             //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
             
             var testArray: [BasicWeatherEntity] = []
-            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선
+            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
+            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함
             let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seoul")))
-            let value2: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "busan")))
-            let value3: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "daegu")))
-            let value4: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seosan")))
-            let value5: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "sokcho")))
-            let value6: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "suwon")))
-            testArray.append(value)
-            testArray.append(value2)
-            testArray.append(value3)
-            testArray.append(value4)
-            testArray.append(value5)
-            testArray.append(value6)
             
-            print("testARray check")
-            print(testArray.count)
-            print("testARray check end")
+            for city in CityNames.allCases {
+                print("city name : \(city)")
+                let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: city.rawValue)))
+                testArray.append(value)
+                print("city name appended: \(city)")
+            }
             
             DispatchQueue.main.async {
                 print("viewModelData begin")

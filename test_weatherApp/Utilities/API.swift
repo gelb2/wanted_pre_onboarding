@@ -28,6 +28,10 @@ enum API {
         return URLQueryItem(name: "lang", value: "kr")
     }
     
+    var unitSet: URLQueryItem {
+        return URLQueryItem(name: "units", value: "metric")
+    }
+    
     //TODO: 쿼리아이템 리턴 더 괜찮은 방법으로 리팩토링
     var querySet: URLQueryItem {
         switch self {

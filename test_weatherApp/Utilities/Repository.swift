@@ -10,6 +10,7 @@ import Foundation
 protocol RepositoryProtocol {
     var httpClient: HTTPClientProtocol { get set }
     func fetch<T: Codable>(api: API) async throws -> T
+    func test<T: Codable>(api: API, completion: @escaping (T) -> ()) throws
 }
 
 //네트워크 콜 관련, 캐쉬 관련 클래스들을 담고 있게끔
@@ -26,5 +27,12 @@ class Repository: RepositoryProtocol {
     func fetch<T: Codable>(api: API) async throws -> T {
         let result: T = try await httpClient.fetch(api: api)
         return result
+    }
+    
+    func test<T: Codable>(api: API, completion: @escaping (T) -> ()) throws {
+        Task {
+            let result: T = try await httpClient.fetch(api: api)
+            completion(result)
+        }
     }
 }
