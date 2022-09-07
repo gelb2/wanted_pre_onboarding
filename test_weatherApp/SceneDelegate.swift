@@ -7,9 +7,10 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, SceneDelegateRoutable {
 
     var window: UIWindow?
+    var windowScene: UIWindowScene?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,10 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //TODO: 뷰컨트롤러 프리젠테이션 관련 로직 추가 및 보강
         //뷰모덜 -> 뷰컨트롤러 주입
         //세그, 뷰컨에서 present 하는 방식 아닌 다른 방식으로 프리젠테이션 처리
-        guard let scene = (scene as? UIWindowScene) else { return }
-        self.window = UIWindow(windowScene: scene)
-        window?.rootViewController = FirstViewController(viewModel: BasicModel(repository: Repository(httpClient: HTTPClient())))
-        window?.makeKeyAndVisible()
+
+        self.windowScene = (scene as? UIWindowScene)
+        let sceneContext = SceneContext(dependency: BasicModel(repository: Repository(httpClient: HTTPClient())))
+        route(to: .main(.firstViewController(sceneContext)))
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
