@@ -36,8 +36,8 @@ class HTTPClient: HTTPClientProtocol {
     func fetch<T: Codable>(api: API) async throws -> T {
         
         guard let url = api.url else { throw HTTPError.iosDevloperIsStupid }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
+        let request = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw HTTPError.badResponse
@@ -48,5 +48,7 @@ class HTTPClient: HTTPClientProtocol {
         }
         return object
     }
-    
 }
+
+//func data(from url: URL, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse)
+
