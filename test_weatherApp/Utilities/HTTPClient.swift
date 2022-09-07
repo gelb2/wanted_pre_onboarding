@@ -39,7 +39,8 @@ class HTTPClient: HTTPClientProtocol {
         var baseComponent = api.baseURLSet
         let cityName = api.querySet
         let appID = api.appIDSet
-        baseComponent?.queryItems = [cityName, appID]
+        let langQuery = api.langSet
+        baseComponent?.queryItems = [cityName, appID, langQuery]
         
         guard let url = baseComponent?.url else { throw HTTPError.badURL }
         var request = URLRequest(url: url)

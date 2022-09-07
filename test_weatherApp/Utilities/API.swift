@@ -24,11 +24,16 @@ enum API {
         return URLQueryItem(name: "appid", value: "7f1a9a7368d6f22c077f8bef8d7a5200")
     }
     
+    var langSet: URLQueryItem {
+        return URLQueryItem(name: "lang", value: "kr")
+    }
+    
     //TODO: 쿼리아이템 리턴 더 괜찮은 방법으로 리팩토링
     var querySet: URLQueryItem {
         switch self {
         case .weatherData(.cityName(let name)):
-            return URLQueryItem(name: "q", value: name)
+            let encodedName = String(name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            return URLQueryItem(name: "q", value: encodedName)
         case .weatherData(.cityCoordination(lat: let lat, lon: let lon)):
             return URLQueryItem(name: "q", value: String(lat))
         }
