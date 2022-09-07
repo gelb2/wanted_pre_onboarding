@@ -25,7 +25,7 @@ enum HTTPError: Error {
 
 //https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=7f1a9a7368d6f22c077f8bef8d7a5200
 protocol HTTPClientProtocol {
-    func fetch<T: Codable>(url: URL) async throws -> T
+    func fetch<T: Codable>(api: API) async throws -> T
 }
 
 //TODO: 클래스 전면 리팩토링
@@ -33,7 +33,10 @@ protocol HTTPClientProtocol {
 //repository 클래스와의 연관성 처리
 class HTTPClient: HTTPClientProtocol {
     
-    func fetch<T: Codable>(url: URL) async throws -> T {
+    func fetch<T: Codable>(api: API) async throws -> T {
+        
+        guard let url = api.url else { throw HTTPError.iosDevloperIsStupid }
+        
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
