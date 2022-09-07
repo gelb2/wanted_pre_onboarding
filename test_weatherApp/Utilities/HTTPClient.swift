@@ -20,7 +20,7 @@ enum HTTPHeaders: String {
 }
 
 enum HTTPError: Error {
-    case badURL, badResponse, errorDecodingData, invalidURL
+    case badURL, badResponse, errorDecodingData, invalidURL, iosDevloperIsStupid
 }
 
 //https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=7f1a9a7368d6f22c077f8bef8d7a5200

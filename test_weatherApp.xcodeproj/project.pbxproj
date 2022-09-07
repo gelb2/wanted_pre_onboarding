@@ -14,6 +14,7 @@
 		36B1CB7A28C786DE00D07443 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7928C786DE00D07443 /* Routable.swift */; };
 		36B1CB7C28C7870D00D07443 /* SceneCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7B28C7870D00D07443 /* SceneCategory.swift */; };
 		36B1CB8028C78CBF00D07443 /* SceneDelegateRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7F28C78CBF00D07443 /* SceneDelegateRoutable.swift */; };
+		36B1CB8228C8290C00D07443 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB8128C8290C00D07443 /* API.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* FirstViewController.swift */; };
@@ -53,6 +54,7 @@
 		36B1CB7928C786DE00D07443 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
 		36B1CB7B28C7870D00D07443 /* SceneCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCategory.swift; sourceTree = "<group>"; };
 		36B1CB7F28C78CBF00D07443 /* SceneDelegateRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateRoutable.swift; sourceTree = "<group>"; };
+		36B1CB8128C8290C00D07443 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				4CCDE83228C72ADC00F05AFF /* HTTPClient.swift */,
 				4CCDE83428C7356C00F05AFF /* Repository.swift */,
 				36B1CB7628C785EF00D07443 /* SceneContext.swift */,
+				36B1CB8128C8290C00D07443 /* API.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				36B1CB7C28C7870D00D07443 /* SceneCategory.swift in Sources */,
 				4CCDE83028C729F100F05AFF /* SecondViewController.swift in Sources */,
 				4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */,
+				36B1CB8228C8290C00D07443 /* API.swift in Sources */,
 				36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */,
 				36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */,
 				4CCDE80428C7211500F05AFF /* FirstViewController.swift in Sources */,

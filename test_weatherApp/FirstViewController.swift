@@ -23,12 +23,12 @@ class FirstViewController: UIViewController {
     
     override func loadView() {
         self.view = UIView()
-        self.viewModel = BasicModel(repository: Repository(httpClient: HTTPClient()))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
+        viewModel.populateData()
         // Do any additional setup after loading the view.
     }
 }
