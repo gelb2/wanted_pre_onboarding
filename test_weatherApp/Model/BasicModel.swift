@@ -28,7 +28,9 @@ class BasicModel {
         do {
             let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seoul")))
             DispatchQueue.main.async {
+                print("viewModelData begin")
                 print(value)
+                print("viewModelData end")
             }
         } catch {
             //TODO: 뷰모델이 에러 핸들링 하게 하기
