@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class DetailViewController: UIViewController {
 
     override func loadView() {
         self.view = UIView()

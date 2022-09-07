@@ -26,6 +26,9 @@ class BasicModel {
     private func populateData() async {
 
         do {
+            
+            //TODO: http://openweathermap.org/img/w/10d.png
+            //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
             let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: "seoul")))
             DispatchQueue.main.async {
                 print("viewModelData begin")

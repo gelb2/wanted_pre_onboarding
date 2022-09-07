@@ -70,8 +70,6 @@ struct Weather: Codable {
         main = try container.decode(String.self, forKey: .main)
         description = try container.decode(String.self, forKey: .description)
         
-        //TODO: http://openweathermap.org/img/w/10d.png
-        //png 파일명 가지고 이미지URLString 만들기
         icon = try container.decode(String.self, forKey: .icon)
     }
 }
