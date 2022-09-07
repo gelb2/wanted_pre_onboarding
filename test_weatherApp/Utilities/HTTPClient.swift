@@ -26,7 +26,6 @@ enum HTTPError: Error {
 //https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=7f1a9a7368d6f22c077f8bef8d7a5200
 protocol HTTPClientProtocol {
     func fetch<T: Codable>(api: API) async throws -> T
-    func testFetch<T: Codable>(api: API) async throws -> T
 }
 
 //TODO: 클래스 전면 리팩토링
@@ -35,43 +34,16 @@ protocol HTTPClientProtocol {
 class HTTPClient: HTTPClientProtocol {
     
     func fetch<T: Codable>(api: API) async throws -> T {
-        
-        guard let url = api.url else { throw HTTPError.badURL }
-        let request = URLRequest(url: url)
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-            throw HTTPError.badResponse
-        }
-        
-        guard let object = try? JSONDecoder().decode(T.self, from: data) else {
-            throw HTTPError.errorDecodingData
-        }
-        return object
-    }
-    
-    //query추가 위한 테스트
-    func testFetch<T: Codable>(api: API) async throws -> T {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=7f1a9a7368d6f22c077f8bef8d7a5200"
-        
-        let components = URLComponents(string: urlString)
-        let items = components?.queryItems ?? []
-        for item in items {
-            print("-----")
-            print("name : \(item.name)")
-            print("value : \(item.value)")
-            print("-----")
-        }
-        
-        var baseComponent = (URLComponents(string: "https://api.openweathermap.org/data/2.5/weather"))
-        let cityName = URLQueryItem(name: "q", value: "seoul")
-        let appID = URLQueryItem(name: "appid", value: "7f1a9a7368d6f22c077f8bef8d7a5200")
+        //TODO: 쿼리 넣는 방법 개선
+        //TODO: get인지, post인지, patch인지 등 암튼 쿼리로 넣어야 할 지 파라미터로 넣어야 할 지에 대한 분기 및 로직 개선
+        var baseComponent = api.baseURLSet
+        let cityName = api.querySet
+        let appID = api.appIDSet
         baseComponent?.queryItems = [cityName, appID]
         
         guard let url = baseComponent?.url else { throw HTTPError.badURL }
         var request = URLRequest(url: url)
         request.httpMethod = api.httpMethod.rawValue
-        
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
