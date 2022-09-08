@@ -26,6 +26,8 @@
 		36B1CB9828C9A0F600D07443 /* BasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9728C9A0F600D07443 /* BasicContentView.swift */; };
 		36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */; };
 		36B1CB9D28C9E2BD00D07443 /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */; };
+		36B1CB9F28C9ED3600D07443 /* BasicViewControllerRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9E28C9ED3600D07443 /* BasicViewControllerRoutable.swift */; };
+		36B1CBA128C9EEF200D07443 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBA028C9EEF200D07443 /* DetailModel.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* BasicViewController.swift */; };
@@ -77,6 +79,8 @@
 		36B1CB9728C9A0F600D07443 /* BasicContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicContentView.swift; sourceTree = "<group>"; };
 		36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCache+Extension.swift"; sourceTree = "<group>"; };
 		36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageView.swift; sourceTree = "<group>"; };
+		36B1CB9E28C9ED3600D07443 /* BasicViewControllerRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewControllerRoutable.swift; sourceTree = "<group>"; };
+		36B1CBA028C9EEF200D07443 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				36B1CB7928C786DE00D07443 /* Routable.swift */,
 				36B1CB7B28C7870D00D07443 /* SceneCategory.swift */,
 				36B1CB7F28C78CBF00D07443 /* SceneDelegateRoutable.swift */,
+				36B1CB9E28C9ED3600D07443 /* BasicViewControllerRoutable.swift */,
 			);
 			path = ViewPresentation;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				36B1CB9528C99EC500D07443 /* BasicCollectionViewModel.swift */,
 				36B1CB7228C77C4600D07443 /* BasicCellViewModel.swift */,
 				36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */,
+				36B1CBA028C9EEF200D07443 /* DetailModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -398,10 +404,12 @@
 				36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */,
 				36B1CB8C28C8B20000D07443 /* BasicCellView.swift in Sources */,
 				36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */,
+				36B1CB9F28C9ED3600D07443 /* BasicViewControllerRoutable.swift in Sources */,
 				36B1CB9D28C9E2BD00D07443 /* CacheImageView.swift in Sources */,
 				36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */,
 				36B1CB9028C8B35600D07443 /* DetailCellView.swift in Sources */,
 				4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */,
+				36B1CBA128C9EEF200D07443 /* DetailModel.swift in Sources */,
 				4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */,
 				36B1CB9628C99EC500D07443 /* BasicCollectionViewModel.swift in Sources */,
 				36B1CB7A28C786DE00D07443 /* Routable.swift in Sources */,

@@ -17,6 +17,6 @@ enum SceneCategory {
     }
     
     enum detailScene {
-        case detailViewController
+        case detailViewController(SceneContext<DetailModel>)
     }
 }

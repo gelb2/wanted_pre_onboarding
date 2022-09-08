@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BasicViewController: UIViewController {
+class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
     var contentView: BasicContentView = BasicContentView()
     
@@ -66,8 +66,9 @@ extension BasicViewController: Presentable {
         }
         
         //TODO: 다른 뷰 푸시 혹은 프리젠테이션 관련 처리 추가
-        viewModel.routeSubject = {
-            
+        viewModel.routeSubject = { [weak self] in
+            let context = SceneContext(dependency: DetailModel())
+            self?.route(to: .detail(.detailViewController(context)))
         }
     }
 }
