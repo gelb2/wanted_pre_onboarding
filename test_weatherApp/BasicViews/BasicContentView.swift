@@ -108,6 +108,6 @@ extension BasicContentView: UICollectionViewDataSource {
 
 extension BasicContentView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didSelectItemCallBack(indexPath)
+        viewModel.didSelectItemInCollectionView(indexPath)
     }
 }

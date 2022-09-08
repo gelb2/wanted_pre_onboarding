@@ -14,7 +14,7 @@ class BasicModel {
     
     //output
     var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var outputCallBack: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
+    var routeSubject = { }
     
     //properties
     private var basicViewModel: BasicCollectionViewModel
@@ -24,6 +24,14 @@ class BasicModel {
     init(repository: RepositoryProtocol) {
         self.repository = repository
         self.basicViewModel = BasicCollectionViewModel()
+        self.bind()
+    }
+    
+    func bind() {
+        basicViewModel.propergateDidSelectItem = { [weak self] indexPathRow in
+            print("basicViewModel Propergated indexPathRow \(indexPathRow)")
+            self?.routeSubject()
+        }
     }
 
     func populateData() {

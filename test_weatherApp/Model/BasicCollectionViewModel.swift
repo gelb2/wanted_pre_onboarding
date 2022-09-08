@@ -10,12 +10,11 @@ import Foundation
 class BasicCollectionViewModel {
     
     //input
-    var didSelectItemCallBack:(_ indexPath: IndexPath) -> () = { (IndexPath) in }
+    var didSelectItemInCollectionView:(_ indexPath: IndexPath) -> () = { (IndexPath) in }
     var didReceivedDataSource: (_: [BasicCellViewModel]) -> () = { model in }
     
     //output
-    var didDataSourceReceived: (_: [BasicCellViewModel]) -> () = { model in }
-    var outputCallBack: (_: [BasicCellViewModel]) -> () = { model in }
+    var propergateDidSelectItem: (_ indexPathRow: Int) -> () = { (Int) in }
     var dataSource: [BasicCellViewModel] { return privateDataSource }
     
     //properties
@@ -31,8 +30,9 @@ class BasicCollectionViewModel {
             self?.privateDataSource = model
         }
         
-        didSelectItemCallBack = { indexPath in
+        didSelectItemInCollectionView = { [weak self] indexPath in
             print("BasicContentView item didSelected indexPath : \(indexPath.item)")
+            self?.propergateDidSelectItem(indexPath.item)
         }
     }
 }
