@@ -9,18 +9,14 @@ import UIKit
 
 class BasicViewController: UIViewController {
 
+    var contentView: BasicContentView
+    
     //TODO: 뷰컨 init때 뷰모델 주입 받도록 하기
     var viewModel: BasicModel
     
-    //TODO: 컬렉션뷰만 들고 있을 UIView 추가 후 거기에서 추가작업 진행. 지금은 일단 임의로 vc에 붙임
-    private let layout = UICollectionViewFlowLayout()
-    lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    private let reuseIdentifier = "BasicCell"
-    private let cellSpacing: CGFloat = 1
-    private let columns: CGFloat = 3
-    
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
+        self.contentView = BasicContentView(viewModel: viewModel.basicViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,76 +39,29 @@ class BasicViewController: UIViewController {
 extension BasicViewController: Presentable {
     func initViewHierachy() {
         self.view = UIView()
-        view.addSubview(collectionView)
+        view.addSubview(contentView)
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         
         var constraints: [NSLayoutConstraint] = []
         defer { NSLayoutConstraint.activate(constraints) }
         
         constraints += [
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            contentView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
     }
     
     func configureView() {
         self.view.backgroundColor = .white
-        collectionView.backgroundColor = .white
-        
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = cellSpacing
-        layout.minimumInteritemSpacing = cellSpacing
-        let width = (UIScreen.main.bounds.width - cellSpacing * 2) / columns
-        layout.itemSize = CGSize(width: width , height: width)
     }
     
     func bind() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(BasicCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        viewModel.callBack = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
-        
         Task {
             viewModel.populateData()
             print("vc print")
         }
-    }
-}
-
-//TODO: collectionViewModel과의 연관 로직 개선
-extension BasicViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.collectionViewModel.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? BasicCell else {
-            fatalError()
-        }
-        
-        cell.cellView.cityNameLabel.text = viewModel.collectionViewModel[indexPath.item].cityName
-        cell.cellView.humidityLabel.text = String(viewModel.collectionViewModel[indexPath.item].humid)
-        cell.cellView.temperatureLabel.text = String(viewModel.collectionViewModel[indexPath.item].temp)
-        
-        //TODO: 제대로 이미지 넣기
-        //http://openweathermap.org/img/w/10d.png
-        cell.cellView.iconImageView.image = UIImage(named: "10d")
-        return cell
-    }
-}
-
-extension BasicViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
     }
 }

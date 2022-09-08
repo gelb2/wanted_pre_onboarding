@@ -13,32 +13,31 @@ class BasicModel {
     var repository: RepositoryProtocol
     
     //TODO: MVVM적으로, 이 모델이 컬렉션뷰를 컨트롤 하도록...
-    var collectionViewModel: [BasicCollectionViewModel] = []
+    var basicViewModel: BasicCollectionViewModel
     
     //input
     var callBack = { }
     
     //output
+    var outputCallBack = { }
     
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
+        self.basicViewModel = BasicCollectionViewModel(dataSource: [])
     }
     
     func populateData() {
+        print("basicViewModel populatedata")
         Task {
             await requestAPI()
             dataIsReadyToPresent()
         }
     }
     
-    //TODO: model이 uikit에 대해 알고 있는건 좋지 못한듯 하다. DispatchQueue를 다른데로 빼야 한다
     private func dataIsReadyToPresent() {
-        print("dataIsReady")
-        
-        callBack()
-        
-        
+        print("basicViewModel dataIsReady")
+        basicViewModel.inputCallBack()
     }
     
     private func requestAPI() async {
@@ -76,19 +75,17 @@ class BasicModel {
             //TODO: http://openweathermap.org/img/w/10d.png
             //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
             
-            collectionViewModel = result.map { entity -> BasicCollectionViewModel in
-                let weather = BasicCollectionViewModel()
+            let dataSource = result.map { entity -> BasicCellViewModel in
+                let weather = BasicCellViewModel()
                 weather.cityName = entity.cityName
                 weather.humid = entity.main.humidity
                 weather.temp = entity.main.temp
                 weather.icon = "http://openweathermap.org/img/w/10d.png"
                 return weather
             }
+            basicViewModel.dataSource = dataSource
             
             print("elapsed Time is \(timer.stop())")
-            
-            //TODO: 엔티티 --> 모델링 --> 콜렉션뷰 모델링 --> 뷰컨트롤러로 넘겨줌 --> 메인스레드에서 ui고칠 수 있도록 dispatchQueue.main을 하던 아니면 새로 나온 방법으로 하던...
-            
         } catch {
             //TODO: 뷰모델이 에러 핸들링 하게 하기
             let error = error as? HTTPError
