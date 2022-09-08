@@ -71,15 +71,14 @@ class BasicModel {
 
             let result = try await [gongju,gwangu,gumi,gunsan,daegu,daejeon,mokpo,busan,seosan,seoul,sokcho,suwon,suncheon,ulsan,iksan,jeonju,jeju,cheonan,cheongju,chuncheon]
 
-            //TODO: http://openweathermap.org/img/w/10d.png
-            //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
-            
             dataSource = result.map { entity -> BasicCellViewModel in
                 let weather = BasicCellViewModel()
                 weather.cityName = entity.cityName
                 weather.humid = entity.main.humidity
                 weather.temp = entity.main.temp
-                weather.icon = "http://openweathermap.org/img/w/10d.png"
+                
+                //TODO: 서버 api에서 weather는 배열이다...왜지...도큐먼트를 봐도 확실한 설명이 없어 보인다...
+                weather.icon = entity.weather.first?.icon ?? ""
                 return weather
             }
         } catch {

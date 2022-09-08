@@ -24,6 +24,8 @@
 		36B1CB9428C8DCD500D07443 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */; };
 		36B1CB9628C99EC500D07443 /* BasicCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9528C99EC500D07443 /* BasicCollectionViewModel.swift */; };
 		36B1CB9828C9A0F600D07443 /* BasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9728C9A0F600D07443 /* BasicContentView.swift */; };
+		36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */; };
+		36B1CB9D28C9E2BD00D07443 /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* BasicViewController.swift */; };
@@ -73,6 +75,8 @@
 		36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		36B1CB9528C99EC500D07443 /* BasicCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionViewModel.swift; sourceTree = "<group>"; };
 		36B1CB9728C9A0F600D07443 /* BasicContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicContentView.swift; sourceTree = "<group>"; };
+		36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCache+Extension.swift"; sourceTree = "<group>"; };
+		36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageView.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +167,14 @@
 			path = DetailViews;
 			sourceTree = "<group>";
 		};
+		36B1CB9B28C9E29400D07443 /* UIKitClasses */ = {
+			isa = PBXGroup;
+			children = (
+				36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */,
+			);
+			path = UIKitClasses;
+			sourceTree = "<group>";
+		};
 		4CCDE7F328C7211500F05AFF = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +204,7 @@
 				36B1CB8728C89DA100D07443 /* DetailViews */,
 				36B1CB7828C7867F00D07443 /* ViewPresentation */,
 				36B1CB8328C89C4800D07443 /* ViewDraw_Bind */,
+				36B1CB9B28C9E29400D07443 /* UIKitClasses */,
 				36B1CB6F28C77BFA00D07443 /* Entity */,
 				4CCDE83B28C74ADC00F05AFF /* Model */,
 				4CCDE83128C72AC600F05AFF /* Utilities */,
@@ -228,6 +241,7 @@
 				36B1CB8128C8290C00D07443 /* API.swift */,
 				36B1CB9128C8CD1200D07443 /* CityNames.swift */,
 				36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */,
+				36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -383,6 +397,8 @@
 				36B1CB8228C8290C00D07443 /* API.swift in Sources */,
 				36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */,
 				36B1CB8C28C8B20000D07443 /* BasicCellView.swift in Sources */,
+				36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */,
+				36B1CB9D28C9E2BD00D07443 /* CacheImageView.swift in Sources */,
 				36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */,
 				36B1CB9028C8B35600D07443 /* DetailCellView.swift in Sources */,
 				4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */,

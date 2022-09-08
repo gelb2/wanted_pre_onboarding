@@ -99,9 +99,8 @@ extension BasicContentView: UICollectionViewDataSource {
         cell.cellView.humidityLabel.text = String(viewModel.dataSource[indexPath.item].humid)
         cell.cellView.temperatureLabel.text = String(viewModel.dataSource[indexPath.item].temp)
         
-        //TODO: 제대로 이미지 넣기
-        //http://openweathermap.org/img/w/10d.png
-        cell.cellView.iconImageView.image = UIImage(named: "10d")
+        let imageUrlString = viewModel.dataSource[indexPath.item].icon
+        cell.cellView.iconImageView.loadImage(urlString: imageUrlString)
         return cell
     }
 }

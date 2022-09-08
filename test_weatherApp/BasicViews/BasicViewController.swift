@@ -64,5 +64,10 @@ extension BasicViewController: Presentable {
         viewModel.didReceivedViewModel = { [weak self] contentViewModel in
             self?.contentView.didReceivedViewModel(contentViewModel)
         }
+        
+        //TODO: 다른 뷰 푸시 혹은 프리젠테이션 관련 처리 추가
+        viewModel.routeSubject = {
+            
+        }
     }
 }

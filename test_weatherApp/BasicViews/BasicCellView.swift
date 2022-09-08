@@ -12,7 +12,7 @@ import SwiftUI
 class BasicCellView: UIView {
     
     var cityNameLabel: UILabel = UILabel()
-    var iconImageView: UIImageView = UIImageView()
+    var iconImageView: CacheImageView = CacheImageView()
     var temperatureLabel: UILabel = UILabel()
     var humidityLabel: UILabel = UILabel()
     

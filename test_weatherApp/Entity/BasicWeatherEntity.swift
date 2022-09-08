@@ -53,7 +53,7 @@ struct Coordination: Codable {
 struct Weather: Codable {
     var id: Double
     var main: String
-    var description: String
+    var description: String //날씨 설명
     var icon: String //날씨아이콘
     
     enum CodingKeys: String, CodingKey {
@@ -70,16 +70,25 @@ struct Weather: Codable {
         main = try container.decode(String.self, forKey: .main)
         description = try container.decode(String.self, forKey: .description)
         
-        icon = try container.decode(String.self, forKey: .icon)
+        let iconName = try container.decode(String.self, forKey: .icon)
+        icon = "http://openweathermap.org/img/w/\(iconName).png"
     }
 }
 
 struct Main: Codable {
     var temp: Double //현재기온
+    var feelsLikeTemp: Double //체감온도
+    var tempMin: Double //최저온도
+    var tempMax: Double //최고온도
+    var pressure: Double //기압
     var humidity: Double //현재습도
     
     enum CodingKeys: String, CodingKey {
         case temp = "temp"
+        case feelsLikeTemp = "feels_like"
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure = "pressure"
         case humidity = "humidity"
     }
     
@@ -87,6 +96,10 @@ struct Main: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         temp = try container.decode(Double.self, forKey: .temp)
+        feelsLikeTemp = try container.decode(Double.self, forKey: .feelsLikeTemp)
+        tempMin = try container.decode(Double.self, forKey: .tempMin)
+        tempMax = try container.decode(Double.self, forKey: .tempMax)
+        pressure = try container.decode(Double.self, forKey: .pressure)
         humidity = try container.decode(Double.self, forKey: .humidity)
     }
 }

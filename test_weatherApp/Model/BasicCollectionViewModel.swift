@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//TODO: 어떻게 해야 basicModel -> basicCollectionViewModel 방향과 basicCollectionViewModel -> basicModel 의 통신, 데이터흐름을 깔끔하게 할 수 있지...
+
 class BasicCollectionViewModel {
     
     //input
