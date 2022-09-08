@@ -77,7 +77,6 @@ extension BasicContentView: Presentable {
         collectionView.register(BasicCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         viewModel.outputCallBack = { [weak self] in
-            print("basic contentView inputCallback called")
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }

@@ -29,15 +29,9 @@ class BasicCollectionViewModel {
 
     }
     
-    private func dataIsReadyToPresent() {
-        print("BasicCollectionViewModel dataIsReady")
-        outputCallBack()
-    }
-    
     private func bind() {
         inputCallBack = { [weak self] in
-            print("BasicCollectionViewModel inputCallBack")
-            self?.dataIsReadyToPresent()
+            self?.outputCallBack()
         }
         
         didSelectItemCallBack = { indexPath in

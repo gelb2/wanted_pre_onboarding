@@ -20,32 +20,23 @@ class BasicModel {
     
     //output
     var outputCallBack = { }
-    
+
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
         self.basicViewModel = BasicCollectionViewModel(dataSource: [])
     }
-    
+
     func populateData() {
-        print("basicViewModel populatedata")
         Task {
-            await requestAPI()
-            dataIsReadyToPresent()
+            basicViewModel.dataSource = await requestAPI()
+            basicViewModel.inputCallBack()
         }
     }
-    
-    private func dataIsReadyToPresent() {
-        print("basicViewModel dataIsReady")
-        basicViewModel.inputCallBack()
-    }
-    
-    private func requestAPI() async {
 
+    private func requestAPI() async -> [BasicCellViewModel] {
+        var dataSource: [BasicCellViewModel] = []
         do {
-            
-            let timer = ParkBenchTimer()
-            
             //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
             //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...
                         
@@ -75,7 +66,7 @@ class BasicModel {
             //TODO: http://openweathermap.org/img/w/10d.png
             //엔티티에서 받은 png 파일명 가지고 이미지URLString 만들기
             
-            let dataSource = result.map { entity -> BasicCellViewModel in
+            dataSource = result.map { entity -> BasicCellViewModel in
                 let weather = BasicCellViewModel()
                 weather.cityName = entity.cityName
                 weather.humid = entity.main.humidity
@@ -83,9 +74,6 @@ class BasicModel {
                 weather.icon = "http://openweathermap.org/img/w/10d.png"
                 return weather
             }
-            basicViewModel.dataSource = dataSource
-            
-            print("elapsed Time is \(timer.stop())")
         } catch {
             //TODO: 뷰모델이 에러 핸들링 하게 하기
             let error = error as? HTTPError
@@ -104,5 +92,7 @@ class BasicModel {
                 print("noError")
             }
         }
+        
+        return dataSource
     }
 }

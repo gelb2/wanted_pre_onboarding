@@ -61,7 +61,6 @@ extension BasicViewController: Presentable {
     func bind() {
         Task {
             viewModel.populateData()
-            print("vc print")
         }
     }
 }
