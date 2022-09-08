@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SceneDelegateRoutable {
 
         self.windowScene = (scene as? UIWindowScene)
         let sceneContext = SceneContext(dependency: BasicModel(repository: Repository(httpClient: HTTPClient())))
-        route(to: .main(.firstViewController(sceneContext)))
+        route(to: .main(.basicViewController(sceneContext)))
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

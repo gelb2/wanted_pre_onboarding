@@ -7,10 +7,23 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class DetailViewController: UIViewController {
 
+    var viewModel: DetailModel
+    
+    init(viewModel: DetailModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
-        self.view = UIView()
+        initViewHierachy()
+        configureView()
+        bind()
     }
     
     override func viewDidLoad() {
@@ -30,4 +43,21 @@ class SecondViewController: UIViewController {
     }
     */
 
+}
+
+extension DetailViewController: Presentable {
+    func initViewHierachy() {
+        self.view = UIView()
+        self.view.backgroundColor = .red
+    }
+    
+    func configureView() {
+        
+    }
+    
+    func bind() {
+        
+    }
+    
+    
 }

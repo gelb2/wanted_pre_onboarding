@@ -16,7 +16,7 @@ extension SceneDelegateRoutable where Self: SceneDelegate {
     func buildScene(scene: SceneCategory) -> Scenable? {
         var nextScene: Scenable?
         switch scene {
-        case .main(.firstViewController(let context)):
+        case .main(.basicViewController(let context)):
             nextScene = buildFirstViewScene(context: context)
         default: break
         }
@@ -46,7 +46,7 @@ extension SceneDelegateSceneBuildable {
         let nextScene: Scenable
         
         let basicModel = context.dependency
-        let firstVC = FirstViewController(viewModel: basicModel)
+        let firstVC = BasicViewController(viewModel: basicModel)
         nextScene = firstVC
         return nextScene
     }
@@ -56,7 +56,7 @@ extension SceneDelegateSceneBuildable where Self: SceneDelegate {
     func buildScene(scene: SceneCategory) -> Scenable? {
         var nextScene: Scenable?
         switch scene {
-        case .main(.firstViewController(let context)):
+        case .main(.basicViewController(let context)):
             nextScene = buildFirstViewScene(context: context)
         default: break
         }
