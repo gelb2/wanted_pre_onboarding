@@ -10,27 +10,27 @@ import Foundation
 //FirstViewController용 모델
 class BasicModel {
     
-    var repository: RepositoryProtocol
-    
-    //TODO: MVVM적으로, 이 모델이 컬렉션뷰를 컨트롤 하도록...
-    var basicViewModel: BasicCollectionViewModel
-    
     //input
-    var callBack = { }
     
     //output
-    var outputCallBack = { }
+    var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
+    var outputCallBack: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
+    
+    //properties
+    private var basicViewModel: BasicCollectionViewModel
+    private var repository: RepositoryProtocol
 
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
-        self.basicViewModel = BasicCollectionViewModel(dataSource: [])
+        self.basicViewModel = BasicCollectionViewModel()
     }
 
     func populateData() {
         Task {
-            basicViewModel.dataSource = await requestAPI()
-            basicViewModel.inputCallBack()
+            let dataSource = await requestAPI()
+            basicViewModel.didReceivedDataSource(dataSource)
+            didReceivedViewModel(basicViewModel)
         }
     }
 

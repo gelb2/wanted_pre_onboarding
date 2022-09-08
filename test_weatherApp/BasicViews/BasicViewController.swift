@@ -9,14 +9,12 @@ import UIKit
 
 class BasicViewController: UIViewController {
 
-    var contentView: BasicContentView
+    var contentView: BasicContentView = BasicContentView()
     
-    //TODO: 뷰컨 init때 뷰모델 주입 받도록 하기
     var viewModel: BasicModel
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
-        self.contentView = BasicContentView(viewModel: viewModel.basicViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,6 +59,10 @@ extension BasicViewController: Presentable {
     func bind() {
         Task {
             viewModel.populateData()
+        }
+        
+        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
+            self?.contentView.didReceivedViewModel(contentViewModel)
         }
     }
 }

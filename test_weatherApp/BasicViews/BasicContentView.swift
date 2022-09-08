@@ -10,14 +10,14 @@ import UIKit
 
 class BasicContentView: UIView {
     
-    var viewModel: BasicCollectionViewModel = BasicCollectionViewModel(dataSource: [])
-    
     //input
-    var inputCallBack = { }
+    var didReceivedViewModel: (_: BasicCollectionViewModel) -> () = { viewModel in }
     
     //output
-    var outputCallBack = { }
+    var basicContentViewOutput = { }
     
+    //properties
+    private var viewModel: BasicCollectionViewModel = BasicCollectionViewModel()
     
     private let layout = UICollectionViewFlowLayout()
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -25,8 +25,7 @@ class BasicContentView: UIView {
     private let cellSpacing: CGFloat = 1
     private let columns: CGFloat = 3
     
-    init(viewModel: BasicCollectionViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(frame: .zero)
         initViewHierachy()
         configureView()
@@ -76,14 +75,11 @@ extension BasicContentView: Presentable {
         collectionView.delegate = self
         collectionView.register(BasicCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        viewModel.outputCallBack = { [weak self] in
+        didReceivedViewModel = { [weak self] model in
+            self?.viewModel = model
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
-        }
-        
-        Task {
-            viewModel.populateData()
         }
     }
 }
