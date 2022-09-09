@@ -163,27 +163,35 @@ extension DetailContentView: Presentable {
         
         presentTemperatureLabel.text = "32"
         presentTemperatureLabel.textAlignment = .center
+        presentTemperatureLabel.numberOfLines = 2
         
         feeledTemperatureLabel.text = "35"
         feeledTemperatureLabel.textAlignment = .center
+        feeledTemperatureLabel.numberOfLines = 2
         
         presentHumidityLabel.text = "77%"
         presentHumidityLabel.textAlignment = .center
+        presentHumidityLabel.numberOfLines = 2
         
         minimumTemperatureLabel.text = "15%"
         minimumTemperatureLabel.textAlignment = .center
+        minimumTemperatureLabel.numberOfLines = 2
         
         maximumTemperatureLabel.text = "54%"
         maximumTemperatureLabel.textAlignment = .center
+        maximumTemperatureLabel.numberOfLines = 2
         
         pressureLabel.text = "0.25"
         pressureLabel.textAlignment = .center
+        pressureLabel.numberOfLines = 2
         
         windSpeedLabel.text = "876"
         windSpeedLabel.textAlignment = .center
+        windSpeedLabel.numberOfLines = 2
         
         weatherDescriptionLabel.text = "청명함"
         weatherDescriptionLabel.textAlignment = .center
+        weatherDescriptionLabel.numberOfLines = 2
     }
     
     func bind() {

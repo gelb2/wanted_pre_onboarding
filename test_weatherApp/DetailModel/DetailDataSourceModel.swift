@@ -23,25 +23,32 @@ class DetailDataSourceModel {
     
     //output
     var presentTempString: String {
-        return String(describing: presentTemp).addTempratureSign()
+        let output = "현재온도" + "\n" + String(describing: presentTemp).addTempratureSign()
+        return output
     }
     var feelsLikeTempString: String {
-        return String(describing: feelsLikeTemp).addTempratureSign()
+        let output = "체감온도" + "\n" + String(describing: feelsLikeTemp).addTempratureSign()
+        return output
     }
     var presentHumidString: String {
-        return String(describing: presentHumid).addHumiditySign()
+        let output = "현재습도" + "\n" + String(describing: presentHumid).addHumiditySign()
+        return output
     }
     var min_TempString: String {
-        return String(describing: min_Temp).addTempratureSign()
+        let output = "최저온도" + "\n" + String(describing: min_Temp).addTempratureSign()
+        return output
     }
     var max_TempString: String {
-        return String(describing: max_Temp).addTempratureSign()
+        let output = "최고온도" + "\n" + String(describing: max_Temp).addTempratureSign()
+        return output
     }
     var pressureString: String {
-        return String(describing: pressure).addPressureSign()
+        let output = "기압" + "\n" + String(describing: pressure).addPressureSign()
+        return output
     }
     var windSpeedString: String {
-        return String(describing: windSpeed).addWindSpeedSign()
+        let output = "풍속" + "\n" + String(describing: windSpeed).addWindSpeedSign()
+        return output
     }
     
     init() {
