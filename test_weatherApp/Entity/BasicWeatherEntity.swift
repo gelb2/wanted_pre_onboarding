@@ -12,12 +12,14 @@ struct BasicWeatherEntity: Codable {
     var weather: [Weather]
     var cityName: String //도시이름
     var main: Main
+    var wind: Wind
     
     enum CodingKeys: String, CodingKey {
         case coor = "coord"
         case weather = "weather"
         case cityName = "name"
         case main = "main"
+        case wind = "wind"
     }
     
     init(from decoder: Decoder) throws {
@@ -27,6 +29,7 @@ struct BasicWeatherEntity: Codable {
         weather = try container.decode([Weather].self, forKey: .weather)
         cityName = try container.decode(String.self, forKey: .cityName)
         main = try container.decode(Main.self, forKey: .main)
+        wind = try container.decode(Wind.self, forKey: .wind)
     }
 }
 
@@ -103,3 +106,21 @@ struct Main: Codable {
         humidity = try container.decode(Double.self, forKey: .humidity)
     }
 }
+
+struct Wind: Codable {
+    var speed: Double
+    var deg: Double
+
+    enum CodingKeys: String, CodingKey {
+        case speed = "speed"
+        case deg = "deg"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        speed = try container.decode(Double.self, forKey: .speed)
+        deg = try container.decode(Double.self, forKey: .deg)
+    }
+}
+

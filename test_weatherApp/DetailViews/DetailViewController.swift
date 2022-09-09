@@ -9,6 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    var contentView: DetailContentView = DetailContentView()
     var viewModel: DetailModel
     
     init(viewModel: DetailModel) {
@@ -48,15 +49,35 @@ class DetailViewController: UIViewController {
 extension DetailViewController: Presentable {
     func initViewHierachy() {
         self.view = UIView()
-        self.view.backgroundColor = .red
+
+        view.addSubview(contentView)
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraints: [NSLayoutConstraint] = []
+        defer { NSLayoutConstraint.activate(constraints) }
+        
+        constraints += [
+            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ]
     }
     
+    
     func configureView() {
-        
+        self.view.backgroundColor = .white
     }
     
     func bind() {
+        Task {
+            viewModel.populateData()
+        }
         
+        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
+            self?.contentView.didReceivedViewModel(contentViewModel)
+        }
     }
     
     
