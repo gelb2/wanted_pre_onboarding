@@ -14,7 +14,7 @@ class BasicCollectionViewModel {
     var didReceivedDataSource: (_: [BasicCellViewModel]) -> () = { model in }
     
     //output
-    var propergateDidSelectItem: (_ indexPathRow: Int) -> () = { (Int) in }
+    var propergateDidSelectItem: (_ String: String) -> () = { (String) in }
     var dataSource: [BasicCellViewModel] { return privateDataSource }
     
     //properties
@@ -32,7 +32,12 @@ class BasicCollectionViewModel {
         
         didSelectItemInCollectionView = { [weak self] indexPath in
             print("BasicContentView item didSelected indexPath : \(indexPath.item)")
-            self?.propergateDidSelectItem(indexPath.item)
+            guard let cityName = self?.findAndReturnSelectedItem(indexPathItem: indexPath.item) else { return }
+            self?.propergateDidSelectItem(cityName)
         }
+    }
+    
+    private func findAndReturnSelectedItem(indexPathItem: Int) -> String {
+        privateDataSource[indexPathItem].cityName
     }
 }

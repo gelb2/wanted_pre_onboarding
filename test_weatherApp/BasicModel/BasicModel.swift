@@ -14,7 +14,7 @@ class BasicModel {
     
     //output
     var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var routeSubject = { } // TODO: routeSubject가 Scene을 핸들링 할 수 있도록
+    var routeSubject: (SceneCategory) -> () = { SceneCategory in } // TODO: routeSubject가 Scene을 핸들링 할 수 있도록
     
     //properties
     private var basicViewModel: BasicCollectionViewModel
@@ -28,9 +28,9 @@ class BasicModel {
     }
     
     func bind() {
-        basicViewModel.propergateDidSelectItem = { [weak self] indexPathRow in
-            print("basicViewModel Propergated indexPathRow \(indexPathRow)")
-            self?.routeSubject()
+        basicViewModel.propergateDidSelectItem = { [weak self] cityName in
+            let sceneContext = SceneContext(dependency: DetailModel(repository: Repository(httpClient: HTTPClient())))
+            self?.routeSubject(.detail(.detailViewController(sceneContext)))
         }
     }
 

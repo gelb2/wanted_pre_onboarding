@@ -181,6 +181,16 @@
 			path = UIKitClasses;
 			sourceTree = "<group>";
 		};
+		36B1CBA828CAEC8200D07443 /* DetailModel */ = {
+			isa = PBXGroup;
+			children = (
+				36B1CBA028C9EEF200D07443 /* DetailModel.swift */,
+				36B1CBA428CADE2700D07443 /* DetailViewModel.swift */,
+				36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */,
+			);
+			path = DetailModel;
+			sourceTree = "<group>";
+		};
 		4CCDE7F328C7211500F05AFF = {
 			isa = PBXGroup;
 			children = (
@@ -212,7 +222,8 @@
 				36B1CB8328C89C4800D07443 /* ViewDraw_Bind */,
 				36B1CB9B28C9E29400D07443 /* UIKitClasses */,
 				36B1CB6F28C77BFA00D07443 /* Entity */,
-				4CCDE83B28C74ADC00F05AFF /* Model */,
+				4CCDE83B28C74ADC00F05AFF /* BasicModel */,
+				36B1CBA828CAEC8200D07443 /* DetailModel */,
 				4CCDE83128C72AC600F05AFF /* Utilities */,
 				4CCDE80828C7211500F05AFF /* Assets.xcassets */,
 				4CCDE80A28C7211500F05AFF /* LaunchScreen.storyboard */,
@@ -252,18 +263,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		4CCDE83B28C74ADC00F05AFF /* Model */ = {
+		4CCDE83B28C74ADC00F05AFF /* BasicModel */ = {
 			isa = PBXGroup;
 			children = (
 				36B1CB7028C77C1D00D07443 /* BasicModel.swift */,
 				36B1CB9528C99EC500D07443 /* BasicCollectionViewModel.swift */,
 				36B1CB7228C77C4600D07443 /* BasicCellViewModel.swift */,
 				36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */,
-				36B1CBA028C9EEF200D07443 /* DetailModel.swift */,
-				36B1CBA428CADE2700D07443 /* DetailViewModel.swift */,
-				36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */,
 			);
-			path = Model;
+			path = BasicModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
