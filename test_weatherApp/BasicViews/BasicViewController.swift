@@ -9,9 +9,8 @@ import UIKit
 
 class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
-    var contentView: BasicContentView = BasicContentView()
-    
     var viewModel: BasicModel
+    var contentView: BasicContentView = BasicContentView()
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
@@ -66,9 +65,10 @@ extension BasicViewController: Presentable {
         }
         
         //TODO: 다른 뷰 푸시 혹은 프리젠테이션 관련 처리 추가
+        // TODO: 레포지토리, httpClient init을 여기가 아니라 모델 같은 다른 곳으로 옮겨서
         viewModel.routeSubject = { [weak self] in
-            let context = SceneContext(dependency: DetailModel())
-            self?.route(to: .detail(.detailViewController(context)))
+            let sceneContext = SceneContext(dependency: DetailModel(repository: Repository(httpClient: HTTPClient())))
+            self?.route(to: .detail(.detailViewController(sceneContext)))
         }
     }
 }

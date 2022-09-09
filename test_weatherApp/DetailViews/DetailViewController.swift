@@ -9,8 +9,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var viewModel: DetailModel
     var contentView: DetailContentView = DetailContentView()
+    var viewModel: DetailModel
     
     init(viewModel: DetailModel) {
         self.viewModel = viewModel
@@ -71,7 +71,13 @@ extension DetailViewController: Presentable {
     }
     
     func bind() {
+        Task {
+            viewModel.populateData()
+        }
         
+        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
+            self?.contentView.didReceivedViewModel(contentViewModel)
+        }
     }
     
     

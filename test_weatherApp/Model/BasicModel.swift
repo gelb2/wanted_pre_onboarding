@@ -14,7 +14,7 @@ class BasicModel {
     
     //output
     var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var routeSubject = { }
+    var routeSubject = { } // TODO: routeSubject가 Scene을 핸들링 할 수 있도록
     
     //properties
     private var basicViewModel: BasicCollectionViewModel
