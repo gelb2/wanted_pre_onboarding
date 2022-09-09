@@ -27,13 +27,11 @@ class DetailContentView: UIView {
     var scrollView: UIScrollView = UIScrollView()
         
     var verticalStackView: UIStackView = UIStackView()
-    
-    var titleStackView = UIStackView()
-    var icon_humidStackView = UIStackView()
-    var present_feelTempStackView = UIStackView()
-    var min_maxTempStackView = UIStackView()
-    var pressure_windStackView = UIStackView()
-    var weatherDescStackView = UIStackView()
+    var titleView: UIView = UIView()
+    var firstStackView = UIStackView()
+    var secondStackView = UIStackView()
+    var thirdStackView = UIStackView()
+    var fourthStackView = UIStackView()
     
     var cityNameLabel: UILabel = UILabel()
     var iconImageView: CacheImageView = CacheImageView()
@@ -64,37 +62,38 @@ extension DetailContentView: Presentable {
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
 
-        verticalStackView.addArrangedSubview(titleStackView)
-        verticalStackView.addArrangedSubview(icon_humidStackView)
-        verticalStackView.addArrangedSubview(present_feelTempStackView)
-        verticalStackView.addArrangedSubview(min_maxTempStackView)
-        verticalStackView.addArrangedSubview(pressure_windStackView)
-        verticalStackView.addArrangedSubview(weatherDescStackView)
+        verticalStackView.addArrangedSubview(titleView)
+        verticalStackView.addArrangedSubview(firstStackView)
+        verticalStackView.addArrangedSubview(secondStackView)
+        verticalStackView.addArrangedSubview(thirdStackView)
+        verticalStackView.addArrangedSubview(fourthStackView)
         
-        titleStackView.addArrangedSubview(cityNameLabel)
+        titleView.addSubview(iconImageView)
+        titleView.addSubview(cityNameLabel)
 
-        icon_humidStackView.addArrangedSubview(iconImageView)
-        icon_humidStackView.addArrangedSubview(presentHumidityLabel)
+        firstStackView.addArrangedSubview(presentHumidityLabel)
+        firstStackView.addArrangedSubview(weatherDescriptionLabel)
 
-        present_feelTempStackView.addArrangedSubview(presentTemperatureLabel)
-        present_feelTempStackView.addArrangedSubview(feeledTemperatureLabel)
+        secondStackView.addArrangedSubview(presentTemperatureLabel)
+        secondStackView.addArrangedSubview(feeledTemperatureLabel)
 
-        min_maxTempStackView.addArrangedSubview(minimumTemperatureLabel)
-        min_maxTempStackView.addArrangedSubview(maximumTemperatureLabel)
+        thirdStackView.addArrangedSubview(minimumTemperatureLabel)
+        thirdStackView.addArrangedSubview(maximumTemperatureLabel)
 
-        pressure_windStackView.addArrangedSubview(pressureLabel)
-        pressure_windStackView.addArrangedSubview(windSpeedLabel)
+        fourthStackView.addArrangedSubview(pressureLabel)
+        fourthStackView.addArrangedSubview(windSpeedLabel)
 
-        weatherDescStackView.addArrangedSubview(weatherDescriptionLabel)
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        titleStackView.translatesAutoresizingMaskIntoConstraints = false
-        icon_humidStackView.translatesAutoresizingMaskIntoConstraints = false
-        present_feelTempStackView.translatesAutoresizingMaskIntoConstraints = false
-        min_maxTempStackView.translatesAutoresizingMaskIntoConstraints = false
-        pressure_windStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        firstStackView.translatesAutoresizingMaskIntoConstraints = false
+        secondStackView.translatesAutoresizingMaskIntoConstraints = false
+        thirdStackView.translatesAutoresizingMaskIntoConstraints = false
+        fourthStackView.translatesAutoresizingMaskIntoConstraints = false
 
         cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,18 +124,28 @@ extension DetailContentView: Presentable {
         ]
         
         constraints += [
-            titleStackView.heightAnchor.constraint(equalToConstant: 200),
-            titleStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            icon_humidStackView.heightAnchor.constraint(equalToConstant: 240),
-            icon_humidStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            present_feelTempStackView.heightAnchor.constraint(equalToConstant: 350),
-            present_feelTempStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            min_maxTempStackView.heightAnchor.constraint(equalToConstant: 270),
-            min_maxTempStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            pressure_windStackView.heightAnchor.constraint(equalToConstant: 170),
-            pressure_windStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            weatherDescStackView.heightAnchor.constraint(equalToConstant: 120),
-            weatherDescStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
+            iconImageView.trailingAnchor.constraint(equalTo: cityNameLabel.leadingAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
+            iconImageView.heightAnchor.constraint(equalTo: cityNameLabel.heightAnchor),
+            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor)
+        ]
+
+        constraints += [
+            cityNameLabel.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
+            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor)
+        ]
+        
+        constraints += [
+            titleView.heightAnchor.constraint(equalToConstant: 200),
+            titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            firstStackView.heightAnchor.constraint(equalToConstant: 240),
+            firstStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            secondStackView.heightAnchor.constraint(equalToConstant: 350),
+            secondStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            thirdStackView.heightAnchor.constraint(equalToConstant: 270),
+            thirdStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            fourthStackView.heightAnchor.constraint(equalToConstant: 170),
+            fourthStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
         ]
     }
     
@@ -148,12 +157,10 @@ extension DetailContentView: Presentable {
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 8
         
-        titleStackView.distribution = .fill
-        icon_humidStackView.distribution = .fillEqually
-        present_feelTempStackView.distribution = .fillEqually
-        min_maxTempStackView.distribution = .fillEqually
-        pressure_windStackView.distribution = .fillEqually
-        weatherDescStackView.distribution = .fill
+        firstStackView.distribution = .fillEqually
+        secondStackView.distribution = .fillEqually
+        thirdStackView.distribution = .fillEqually
+        fourthStackView.distribution = .fillEqually
         
         cityNameLabel.text = "서울"
         cityNameLabel.textColor = .black
