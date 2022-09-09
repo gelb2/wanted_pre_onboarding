@@ -20,7 +20,7 @@ class DetailModel: AdditionalContextAddable {
     private var repository: RepositoryProtocol
     
     //일단 두번째 뷰가 전달받은 도시명 대로 api를 호출하는지 확인하는지 확인하고자 임의로 추가
-    private var testParam: String = ""
+    private var cityNameParam: String = ""
 
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
@@ -31,7 +31,7 @@ class DetailModel: AdditionalContextAddable {
     
     func bind() {
         addMoreContext = { [weak self] string in
-            self?.testParam = string
+            self?.cityNameParam = string
         }
     }
 
@@ -47,7 +47,7 @@ class DetailModel: AdditionalContextAddable {
         let detailDataSourceModel: DetailDataSourceModel = DetailDataSourceModel()
         //도시이름, 날씨아이콘, 현재기온, 체감기온, 현재습도, 최저기온, 최고기온, 기압, 풍속, 날씨설명
         do {
-            let result: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: testParam)))
+            let result: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: cityNameParam)))
             detailDataSourceModel.cityName = result.cityName
             detailDataSourceModel.icon = result.weather.first?.icon ?? ""
             detailDataSourceModel.presentTemp = result.main.temp

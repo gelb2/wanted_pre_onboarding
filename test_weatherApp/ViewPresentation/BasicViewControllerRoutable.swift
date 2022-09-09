@@ -16,6 +16,8 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
         switch scene {
         case .detail(.detailViewController(let context)):
             nextScene = buildDetailViewScene(context: context)
+        case .alert(.networkAlert(.normalErrorAlert(let context))):
+            nextScene = buildAlert(context: context)
         default: break
         }
         return nextScene
@@ -39,6 +41,14 @@ extension BasicViewControllerSceneBuildable {
         let detailModel = context.dependency
         let detailVC = DetailViewController(viewModel: detailModel)
         nextScene = detailVC
+        return nextScene
+    }
+    
+    func buildAlert(context: AlertDependency) -> Scenable {
+        let nextScene: Scenable
+        
+        let alert = AlertFactory(dependency: context).createAlert()
+        nextScene = alert
         return nextScene
     }
 }
