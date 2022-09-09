@@ -36,8 +36,8 @@ enum API {
     var querySet: URLQueryItem {
         switch self {
         case .weatherData(.cityName(let name)):
-            let encodedName = String(name).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            return URLQueryItem(name: "q", value: encodedName)
+            print("cityName Query check \(name)")
+            return URLQueryItem(name: "q", value: name)
         case .weatherData(.cityCoordination(lat: let lat, lon: let lon)):
             return URLQueryItem(name: "q", value: String(lat))
         }
