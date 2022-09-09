@@ -29,7 +29,10 @@ class BasicModel {
     
     func bind() {
         basicViewModel.propergateDidSelectItem = { [weak self] cityName in
-            let sceneContext = SceneContext(dependency: DetailModel(repository: Repository(httpClient: HTTPClient()), testParam: cityName))
+            
+            let detailModel = DetailModel(repository: Repository(httpClient: HTTPClient()))
+            detailModel.addMoreContext(cityName)
+            let sceneContext = SceneContext(dependency: detailModel)
             self?.routeSubject(.detail(.detailViewController(sceneContext)))
         }
     }
