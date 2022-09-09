@@ -14,7 +14,7 @@ class BasicModel {
     
     //output
     var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var routeSubject: (SceneCategory) -> () = { SceneCategory in } // TODO: routeSubject가 Scene을 핸들링 할 수 있도록
+    var routeSubject: (SceneCategory) -> () = { SceneCategory in }
     
     //properties
     private var basicViewModel: BasicCollectionViewModel
@@ -33,6 +33,7 @@ class BasicModel {
             let detailModel = DetailModel(repository: Repository(httpClient: HTTPClient()))
             detailModel.addMoreContext(cityName)
             let sceneContext = SceneContext(dependency: detailModel)
+            
             self?.routeSubject(.detail(.detailViewController(sceneContext)))
         }
     }
@@ -85,24 +86,24 @@ class BasicModel {
                 return weather
             }
         } catch {
-            //TODO: 뷰모델이 에러 핸들링 하게 하기
-            let error = error as? HTTPError
-            switch error {
-            case .invalidURL:
-                print("❌ Error: \(String(describing: error))")
-            case .errorDecodingData:
-                print("❌ Error: \(String(describing: error))")
-            case .badResponse:
-                print("❌ Error: \(String(describing: error))")
-            case .badURL:
-                print("❌ Error: \(String(describing: error))")
-            case .iosDevloperIsStupid:
-                print("❌ Error: \(String(describing: error))")
-            case .none:
-                print("noError")
-            }
+            handleError(error: error)
         }
-        
         return dataSource
     }
+    
+    private func handleError(error: Error) {
+        
+        let error = error as? HTTPError
+        
+        switch error {
+        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
+            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            routeSubject(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
+        case .none:
+            break
+        }
+    }
+
 }

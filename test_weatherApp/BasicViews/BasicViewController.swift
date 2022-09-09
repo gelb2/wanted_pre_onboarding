@@ -64,10 +64,13 @@ extension BasicViewController: Presentable {
             self?.contentView.didReceivedViewModel(contentViewModel)
         }
         
-        //TODO: 다른 뷰 푸시 혹은 프리젠테이션 관련 처리 추가
-        // TODO: 레포지토리, httpClient init을 여기가 아니라 모델 같은 다른 곳으로 옮겨서
         viewModel.routeSubject = { [weak self] sceneCategory in
-            self?.route(to: sceneCategory)
+            //TODO: route는 다른 뷰를 푸시, 프리젠트 하게 되므로 메인스레드에서 돌아야 한다.
+            //DispatchQueue를 여기에 박는 방법 이외에 더 깔끔한 방법을 찾아야 한다
+            //ex. RxSwift.asDriver.drive 같이 메인스레드에서 UI수정을 위해 쓸 수 있는것 같은
+            DispatchQueue.main.async {
+                self?.route(to: sceneCategory)
+            }
         }
     }
 }
