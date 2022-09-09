@@ -8,6 +8,8 @@
 import Foundation
 
 class DetailDataSourceModel {
+    
+    //input
     var cityName: String
     var icon: String
     var presentTemp: Double
@@ -18,6 +20,29 @@ class DetailDataSourceModel {
     var pressure: Double
     var windSpeed: Double
     var weatherDesc: String
+    
+    //output
+    var presentTempString: String {
+        return String(describing: presentTemp).addTempratureSign()
+    }
+    var feelsLikeTempString: String {
+        return String(describing: feelsLikeTemp).addTempratureSign()
+    }
+    var presentHumidString: String {
+        return String(describing: presentHumid).addHumiditySign()
+    }
+    var min_TempString: String {
+        return String(describing: min_Temp).addTempratureSign()
+    }
+    var max_TempString: String {
+        return String(describing: max_Temp).addTempratureSign()
+    }
+    var pressureString: String {
+        return String(describing: pressure).addPressureSign()
+    }
+    var windSpeedString: String {
+        return String(describing: windSpeed).addWindSpeedSign()
+    }
     
     init() {
         self.cityName = ""

@@ -202,21 +202,21 @@ extension DetailContentView: Presentable {
         
         iconImageView.loadImage(urlString: viewModel.dataSource.icon)
         
-        presentTemperatureLabel.text = String(describing: viewModel.dataSource.presentTemp)
+        presentTemperatureLabel.text = viewModel.dataSource.presentTempString
         
-        feeledTemperatureLabel.text = String(describing: viewModel.dataSource.feelsLikeTemp)
+        feeledTemperatureLabel.text = viewModel.dataSource.feelsLikeTempString
         
-        presentHumidityLabel.text = String(describing: viewModel.dataSource.presentHumid)
+        presentHumidityLabel.text = viewModel.dataSource.presentHumidString
         
-        minimumTemperatureLabel.text = String(describing: viewModel.dataSource.min_Temp)
+        minimumTemperatureLabel.text = viewModel.dataSource.min_TempString
         
-        maximumTemperatureLabel.text = String(describing: viewModel.dataSource.max_Temp)
+        maximumTemperatureLabel.text = viewModel.dataSource.max_TempString
         
-        pressureLabel.text = String(describing: viewModel.dataSource.pressure)
+        pressureLabel.text = viewModel.dataSource.pressureString
         
-        windSpeedLabel.text = String(describing: viewModel.dataSource.windSpeed)
+        windSpeedLabel.text = viewModel.dataSource.windSpeedString
         
-        weatherDescriptionLabel.text = String(describing: viewModel.dataSource.weatherDesc)
+        weatherDescriptionLabel.text = viewModel.dataSource.weatherDesc
     }
 }
 
