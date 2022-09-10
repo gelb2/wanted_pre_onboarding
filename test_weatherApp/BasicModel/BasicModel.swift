@@ -48,7 +48,31 @@ class BasicModel {
     }
 
     private func requestAPI() async -> [BasicWeatherEntity]? {
-        return await testFuncWithNormalLoop()
+        //0.9초
+        let timer = ParkBenchTimer()
+        var closures: [(String, (String) -> Task<BasicWeatherEntity, Error>)] = []
+        for value in CityNames.allCases {
+            async let closure: (String) -> Task<BasicWeatherEntity, Error> = { (String) -> Task<BasicWeatherEntity, Error> in
+                Task { () -> (BasicWeatherEntity) in
+                    return try await self.repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
+                }
+            }
+            await closures.append((value.rawValue, closure))
+        }
+        
+        let mappedClosure = closures.map { value in value.1(value.0) }
+        
+        do {
+            let asyncMapped: [BasicWeatherEntity] = try await mappedClosure.asyncMap { task in
+                let result = try await task.result.get()
+                return result
+            }
+            print("timecheck : \(timer.stop())")
+            return asyncMapped
+        } catch {
+            handleError(error: error)
+            return nil
+        }
     }
     
     private func testFuncWithTask() async -> [BasicWeatherEntity]? {
@@ -65,8 +89,6 @@ class BasicModel {
 
         do {
             let result = try await iteratedTask.result.get()
-            print("entities check :\(result.count)")
-            print("elapsed time : \(timer.stop())")
             return result
         } catch {
             handleError(error: error)
@@ -75,15 +97,25 @@ class BasicModel {
     }
     
     private func testFuncWithNormalLoop() async -> [BasicWeatherEntity]? {
-        let timer = ParkBenchTimer()
-        var result: [BasicWeatherEntity] = []
+        //3.5초
         do {
-            for value in CityNames.allCases {
-                async let entity: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
-                try await result.append(entity)
+            
+            let task = Task { () -> [BasicWeatherEntity] in
+                var result: [BasicWeatherEntity] = []
+                for value in CityNames.allCases {
+                    async let entity: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
+                    try await result.append(entity)
+                }
+                return result
             }
-            print("elapsed time : \(timer.stop())")
-            return result
+            
+            do {
+                let result = try await task.result.get()
+                return result
+            } catch {
+                handleError(error: error)
+                return nil
+            }
         } catch {
             handleError(error: error)
             return nil
@@ -91,10 +123,8 @@ class BasicModel {
     }
     
     private func testFuncWithHardcorded() async -> [BasicWeatherEntity]? {
+        //0.97초
         do {
-//            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
-//            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...async let 방식으로 메소드를 돌리는 것과 루프를 돌리는것 둘다 가능하게 수정해보자...
-            //0.97초
             let timer = ParkBenchTimer()
             async let gongju: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gongju.rawValue)))
             async let gwangu: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gwangju.rawValue)))
@@ -118,7 +148,6 @@ class BasicModel {
             async let chuncheon: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.chuncheon.rawValue)))
 
             let result = try await [gongju,gwangu,gumi,gunsan,daegu,daejeon,mokpo,busan,seosan,seoul,sokcho,suwon,suncheon,ulsan,iksan,jeonju,jeju,cheonan,cheongju,chuncheon]
-            print("elapsed time : \(timer.stop())")
             return result
 
         } catch {
