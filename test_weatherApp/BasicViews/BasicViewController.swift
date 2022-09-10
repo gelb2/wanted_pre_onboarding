@@ -10,7 +10,7 @@ import UIKit
 class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
     var viewModel: BasicModel
-    var contentView: BasicContentView = BasicContentView()
+    lazy var contentView: BasicContentView = BasicContentView()
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
@@ -22,7 +22,6 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
     }
     
     override func loadView() {
-        super.loadView()
         initViewHierarchy()
         configureView()
         
@@ -37,24 +36,23 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
 extension BasicViewController: Presentable {
     func initViewHierarchy() {
-        self.view = UIView()
-        view.addSubview(contentView)
+        self.view = contentView
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
-        var constraints: [NSLayoutConstraint] = []
-        defer { NSLayoutConstraint.activate(constraints) }
-        
-        constraints += [
-            contentView.topAnchor.constraint(equalTo: view.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ]
+//        var constraints: [NSLayoutConstraint] = []
+//        defer { NSLayoutConstraint.activate(constraints) }
+//
+//        constraints += [
+//            contentView.topAnchor.constraint(equalTo: view.topAnchor),
+//            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        ]
     }
     
     func configureView() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .red
     }
     
     func bind() {

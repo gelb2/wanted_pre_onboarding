@@ -9,12 +9,11 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var contentView: DetailContentView
+    lazy var contentView: DetailContentView = DetailContentView(viewModel: self.viewModel.detailViewModel)
     var viewModel: DetailModel
     
     init(viewModel: DetailModel) {
         self.viewModel = viewModel
-        self.contentView = DetailContentView(viewModel: self.viewModel.detailViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -23,7 +22,6 @@ class DetailViewController: UIViewController {
     }
     
     override func loadView() {
-        super.loadView()
         initViewHierarchy()
         configureView()
         bind()
@@ -50,21 +48,19 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: Presentable {
     func initViewHierarchy() {
-        self.view = UIView()
-
-        view.addSubview(contentView)
+        self.view = contentView
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
-        var constraints: [NSLayoutConstraint] = []
-        defer { NSLayoutConstraint.activate(constraints) }
-        
-        constraints += [
-            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ]
+//        var constraints: [NSLayoutConstraint] = []
+//        defer { NSLayoutConstraint.activate(constraints) }
+//
+//        constraints += [
+//            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
+//            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+//            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+//            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+//        ]
     }
     
     
