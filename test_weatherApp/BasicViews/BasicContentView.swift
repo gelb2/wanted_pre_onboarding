@@ -19,6 +19,8 @@ class BasicContentView: UIView {
     //properties
     private var viewModel: BasicCollectionViewModel = BasicCollectionViewModel()
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     private let layout = UICollectionViewFlowLayout()
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     private let reuseIdentifier = "BasicCell"
@@ -39,10 +41,14 @@ class BasicContentView: UIView {
     
 }
 
+extension BasicContentView: LoadingIndicatorPresentable { }
+
 extension BasicContentView: Presentable {
     func initViewHierachy() {
         self.addSubview(collectionView)
+        self.addSubview(activityIndicator)
         
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         var constraints: [NSLayoutConstraint] = []
@@ -54,11 +60,20 @@ extension BasicContentView: Presentable {
             collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
+        
+        constraints += [
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ]
     }
     
     func configureView() {
         self.backgroundColor = .white
         collectionView.backgroundColor = .white
+        activityIndicator.tintColor = .red
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
+        activityIndicator.color = .red
         
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -73,10 +88,13 @@ extension BasicContentView: Presentable {
         collectionView.delegate = self
         collectionView.register(BasicCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
+        activityIndicator.startAnimating()
+        
         didReceivedViewModel = { [weak self] model in
             self?.viewModel = model
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
+                self?.activityIndicator.stopAnimating()
             }
         }
     }

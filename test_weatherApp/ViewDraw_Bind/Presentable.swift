@@ -13,3 +13,7 @@ protocol Presentable {
     func configureView()
     func bind()
 }
+
+protocol LoadingIndicatorPresentable {
+    var activityIndicator: UIActivityIndicatorView { get set }
+}

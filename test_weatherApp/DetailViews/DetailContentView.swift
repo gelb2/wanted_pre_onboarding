@@ -20,7 +20,7 @@ class DetailContentView: UIView {
     //properties
     private var viewModel: DetailViewModel = DetailViewModel()
     
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var scrollView: UIScrollView = UIScrollView()
         
     var verticalStackView: UIStackView = UIStackView()
@@ -53,11 +53,14 @@ class DetailContentView: UIView {
     }
 }
 
+extension DetailContentView: LoadingIndicatorPresentable { }
+
 extension DetailContentView: Presentable {
     func initViewHierachy() {
-
+        
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
+        self.addSubview(activityIndicator)
 
         verticalStackView.addArrangedSubview(titleView)
         verticalStackView.addArrangedSubview(firstStackView)
@@ -79,8 +82,9 @@ extension DetailContentView: Presentable {
 
         fourthStackView.addArrangedSubview(pressureLabel)
         fourthStackView.addArrangedSubview(windSpeedLabel)
-
-
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,12 +148,22 @@ extension DetailContentView: Presentable {
             fourthStackView.heightAnchor.constraint(equalToConstant: 200),
             fourthStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
         ]
+        
+        constraints += [
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ]
     }
     
     func configureView() {
         self.backgroundColor = .white
         
         scrollView.showsHorizontalScrollIndicator = true
+        
+        activityIndicator.tintColor = .red
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
+        activityIndicator.color = .red
         
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 8
@@ -200,10 +214,14 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
+        scrollView.isHidden = true
+        activityIndicator.startAnimating()
         didReceivedViewModel = { [weak self] viewModel in
             self?.viewModel = viewModel
             DispatchQueue.main.async {
+                self?.scrollView.isHidden = false
                 self?.setData()
+                self?.activityIndicator.stopAnimating()
             }
         }
     }
