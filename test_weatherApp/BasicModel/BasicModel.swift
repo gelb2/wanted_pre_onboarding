@@ -48,7 +48,7 @@ class BasicModel {
     }
 
     private func requestAPI() async -> [BasicWeatherEntity]? {
-        return await testFuncWithTask()
+        return await testFuncWithNormalLoop()
     }
     
     private func testFuncWithTask() async -> [BasicWeatherEntity]? {
@@ -66,6 +66,22 @@ class BasicModel {
         do {
             let result = try await iteratedTask.result.get()
             print("entities check :\(result.count)")
+            print("elapsed time : \(timer.stop())")
+            return result
+        } catch {
+            handleError(error: error)
+            return nil
+        }
+    }
+    
+    private func testFuncWithNormalLoop() async -> [BasicWeatherEntity]? {
+        let timer = ParkBenchTimer()
+        var result: [BasicWeatherEntity] = []
+        do {
+            for value in CityNames.allCases {
+                async let entity: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
+                try await result.append(entity)
+            }
             print("elapsed time : \(timer.stop())")
             return result
         } catch {
