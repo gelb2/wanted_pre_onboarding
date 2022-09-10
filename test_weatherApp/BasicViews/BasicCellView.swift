@@ -15,6 +15,7 @@ class BasicCellView: UIView {
     var iconImageView: CacheImageView = CacheImageView()
     var temperatureLabel: UILabel = UILabel()
     var humidityLabel: UILabel = UILabel()
+    var bottomStackView: UIStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,11 +33,13 @@ extension BasicCellView: Presentable {
     func initViewHierachy() {
         self.addSubview(cityNameLabel)
         self.addSubview(iconImageView)
-        self.addSubview(temperatureLabel)
-        self.addSubview(humidityLabel)
+        self.addSubview(bottomStackView)
+        bottomStackView.addArrangedSubview(temperatureLabel)
+        bottomStackView.addArrangedSubview(humidityLabel)
         
         cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         humidityLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -45,42 +48,46 @@ extension BasicCellView: Presentable {
         defer { NSLayoutConstraint.activate(constraints) }
         
         constraints += [
-            cityNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            cityNameLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 4),
-            cityNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
-            cityNameLabel.centerYAnchor.constraint(equalTo: iconImageView.centerYAnchor)
+            cityNameLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            cityNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            cityNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cityNameLabel.bottomAnchor.constraint(equalTo: iconImageView.topAnchor)
         ]
         
         constraints += [
-            iconImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            iconImageView.heightAnchor.constraint(equalTo: iconImageView.widthAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 32)
+            iconImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
+            iconImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
+            iconImageView.heightAnchor.constraint(equalTo: self.iconImageView.widthAnchor)
         ]
         
         constraints += [
-            temperatureLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 8),
-            temperatureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            temperatureLabel.trailingAnchor.constraint(equalTo: humidityLabel.leadingAnchor, constant: -8),
-            temperatureLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
-        ]
-        
-        constraints += [
-            humidityLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 8),
-            humidityLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            humidityLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            bottomStackView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 16),
+            bottomStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            bottomStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            bottomStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
     }
     
     func configureView() {
         self.backgroundColor = .white
-        cityNameLabel.text = "서울"
+        cityNameLabel.text = "seoul"
         cityNameLabel.textColor = .black
+        cityNameLabel.textAlignment = .center
+        cityNameLabel.font = UIFont.systemFont(ofSize: 24)
+        
         iconImageView.image = UIImage(named: "10d")
-        temperatureLabel.text = "32"
-        temperatureLabel.textAlignment = .left
-        humidityLabel.text = "77"
-        humidityLabel.textAlignment = .right
+        
+        temperatureLabel.text = "32.14".addTempratureSign()
+        temperatureLabel.textAlignment = .center
+        temperatureLabel.font = UIFont.systemFont(ofSize: 16)
+        
+        humidityLabel.text = "77".addHumiditySign()
+        humidityLabel.textAlignment = .center
+        humidityLabel.font = UIFont.systemFont(ofSize: 16)
+        
+        bottomStackView.axis = .horizontal
+        bottomStackView.distribution = .fill
     }
     
     func bind() {
@@ -116,7 +123,7 @@ struct BasicCellViewPreviewProvider: PreviewProvider {
             let cell = BasicCellView(frame: .zero)
             
             return cell
-        }.previewLayout(.fixed(width: 80, height: 80))
+        }.previewLayout(.fixed(width: 100, height: 100))
     }
 }
 

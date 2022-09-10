@@ -27,13 +27,11 @@ class DetailContentView: UIView {
     var scrollView: UIScrollView = UIScrollView()
         
     var verticalStackView: UIStackView = UIStackView()
-    
-    var titleStackView = UIStackView()
-    var icon_humidStackView = UIStackView()
-    var present_feelTempStackView = UIStackView()
-    var min_maxTempStackView = UIStackView()
-    var pressure_windStackView = UIStackView()
-    var weatherDescStackView = UIStackView()
+    var titleView: UIView = UIView()
+    var firstStackView = UIStackView()
+    var secondStackView = UIStackView()
+    var thirdStackView = UIStackView()
+    var fourthStackView = UIStackView()
     
     var cityNameLabel: UILabel = UILabel()
     var iconImageView: CacheImageView = CacheImageView()
@@ -64,37 +62,38 @@ extension DetailContentView: Presentable {
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
 
-        verticalStackView.addArrangedSubview(titleStackView)
-        verticalStackView.addArrangedSubview(icon_humidStackView)
-        verticalStackView.addArrangedSubview(present_feelTempStackView)
-        verticalStackView.addArrangedSubview(min_maxTempStackView)
-        verticalStackView.addArrangedSubview(pressure_windStackView)
-        verticalStackView.addArrangedSubview(weatherDescStackView)
+        verticalStackView.addArrangedSubview(titleView)
+        verticalStackView.addArrangedSubview(firstStackView)
+        verticalStackView.addArrangedSubview(secondStackView)
+        verticalStackView.addArrangedSubview(thirdStackView)
+        verticalStackView.addArrangedSubview(fourthStackView)
         
-        titleStackView.addArrangedSubview(cityNameLabel)
+        titleView.addSubview(iconImageView)
+        titleView.addSubview(cityNameLabel)
 
-        icon_humidStackView.addArrangedSubview(iconImageView)
-        icon_humidStackView.addArrangedSubview(presentHumidityLabel)
+        firstStackView.addArrangedSubview(presentHumidityLabel)
+        firstStackView.addArrangedSubview(weatherDescriptionLabel)
 
-        present_feelTempStackView.addArrangedSubview(presentTemperatureLabel)
-        present_feelTempStackView.addArrangedSubview(feeledTemperatureLabel)
+        secondStackView.addArrangedSubview(presentTemperatureLabel)
+        secondStackView.addArrangedSubview(feeledTemperatureLabel)
 
-        min_maxTempStackView.addArrangedSubview(minimumTemperatureLabel)
-        min_maxTempStackView.addArrangedSubview(maximumTemperatureLabel)
+        thirdStackView.addArrangedSubview(minimumTemperatureLabel)
+        thirdStackView.addArrangedSubview(maximumTemperatureLabel)
 
-        pressure_windStackView.addArrangedSubview(pressureLabel)
-        pressure_windStackView.addArrangedSubview(windSpeedLabel)
+        fourthStackView.addArrangedSubview(pressureLabel)
+        fourthStackView.addArrangedSubview(windSpeedLabel)
 
-        weatherDescStackView.addArrangedSubview(weatherDescriptionLabel)
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        titleStackView.translatesAutoresizingMaskIntoConstraints = false
-        icon_humidStackView.translatesAutoresizingMaskIntoConstraints = false
-        present_feelTempStackView.translatesAutoresizingMaskIntoConstraints = false
-        min_maxTempStackView.translatesAutoresizingMaskIntoConstraints = false
-        pressure_windStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        firstStackView.translatesAutoresizingMaskIntoConstraints = false
+        secondStackView.translatesAutoresizingMaskIntoConstraints = false
+        thirdStackView.translatesAutoresizingMaskIntoConstraints = false
+        fourthStackView.translatesAutoresizingMaskIntoConstraints = false
 
         cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,18 +124,28 @@ extension DetailContentView: Presentable {
         ]
         
         constraints += [
-            titleStackView.heightAnchor.constraint(equalToConstant: 200),
-            titleStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            icon_humidStackView.heightAnchor.constraint(equalToConstant: 240),
-            icon_humidStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            present_feelTempStackView.heightAnchor.constraint(equalToConstant: 350),
-            present_feelTempStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            min_maxTempStackView.heightAnchor.constraint(equalToConstant: 270),
-            min_maxTempStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            pressure_windStackView.heightAnchor.constraint(equalToConstant: 170),
-            pressure_windStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            weatherDescStackView.heightAnchor.constraint(equalToConstant: 120),
-            weatherDescStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
+            iconImageView.trailingAnchor.constraint(equalTo: cityNameLabel.leadingAnchor),
+            iconImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
+            iconImageView.heightAnchor.constraint(equalTo: cityNameLabel.heightAnchor),
+            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor)
+        ]
+
+        constraints += [
+            cityNameLabel.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
+            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor)
+        ]
+        
+        constraints += [
+            titleView.heightAnchor.constraint(equalToConstant: 200),
+            titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            firstStackView.heightAnchor.constraint(equalToConstant: 200),
+            firstStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            secondStackView.heightAnchor.constraint(equalToConstant: 200),
+            secondStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            thirdStackView.heightAnchor.constraint(equalToConstant: 200),
+            thirdStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            fourthStackView.heightAnchor.constraint(equalToConstant: 200),
+            fourthStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
         ]
     }
     
@@ -148,42 +157,49 @@ extension DetailContentView: Presentable {
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 8
         
-        titleStackView.distribution = .fill
-        icon_humidStackView.distribution = .fillEqually
-        present_feelTempStackView.distribution = .fillEqually
-        min_maxTempStackView.distribution = .fillEqually
-        pressure_windStackView.distribution = .fillEqually
-        weatherDescStackView.distribution = .fill
+        firstStackView.distribution = .fillEqually
+        secondStackView.distribution = .fillEqually
+        thirdStackView.distribution = .fillEqually
+        fourthStackView.distribution = .fillEqually
         
         cityNameLabel.text = "서울"
         cityNameLabel.textColor = .black
         cityNameLabel.textAlignment = .center
+        cityNameLabel.font = UIFont.systemFont(ofSize: 48)
         
         iconImageView.image = UIImage(named: "10d")
         
         presentTemperatureLabel.text = "32"
         presentTemperatureLabel.textAlignment = .center
+        presentTemperatureLabel.numberOfLines = 2
         
         feeledTemperatureLabel.text = "35"
         feeledTemperatureLabel.textAlignment = .center
+        feeledTemperatureLabel.numberOfLines = 2
         
         presentHumidityLabel.text = "77%"
         presentHumidityLabel.textAlignment = .center
+        presentHumidityLabel.numberOfLines = 2
         
         minimumTemperatureLabel.text = "15%"
         minimumTemperatureLabel.textAlignment = .center
+        minimumTemperatureLabel.numberOfLines = 2
         
         maximumTemperatureLabel.text = "54%"
         maximumTemperatureLabel.textAlignment = .center
+        maximumTemperatureLabel.numberOfLines = 2
         
         pressureLabel.text = "0.25"
         pressureLabel.textAlignment = .center
+        pressureLabel.numberOfLines = 2
         
         windSpeedLabel.text = "876"
         windSpeedLabel.textAlignment = .center
+        windSpeedLabel.numberOfLines = 2
         
         weatherDescriptionLabel.text = "청명함"
         weatherDescriptionLabel.textAlignment = .center
+        weatherDescriptionLabel.numberOfLines = 2
     }
     
     func bind() {
@@ -202,21 +218,21 @@ extension DetailContentView: Presentable {
         
         iconImageView.loadImage(urlString: viewModel.dataSource.icon)
         
-        presentTemperatureLabel.text = String(describing: viewModel.dataSource.presentTemp)
+        presentTemperatureLabel.text = viewModel.dataSource.presentTempString
         
-        feeledTemperatureLabel.text = String(describing: viewModel.dataSource.feelsLikeTemp)
+        feeledTemperatureLabel.text = viewModel.dataSource.feelsLikeTempString
         
-        presentHumidityLabel.text = String(describing: viewModel.dataSource.presentHumid)
+        presentHumidityLabel.text = viewModel.dataSource.presentHumidString
         
-        minimumTemperatureLabel.text = String(describing: viewModel.dataSource.min_Temp)
+        minimumTemperatureLabel.text = viewModel.dataSource.min_TempString
         
-        maximumTemperatureLabel.text = String(describing: viewModel.dataSource.max_Temp)
+        maximumTemperatureLabel.text = viewModel.dataSource.max_TempString
         
-        pressureLabel.text = String(describing: viewModel.dataSource.pressure)
+        pressureLabel.text = viewModel.dataSource.pressureString
         
-        windSpeedLabel.text = String(describing: viewModel.dataSource.windSpeed)
+        windSpeedLabel.text = viewModel.dataSource.windSpeedString
         
-        weatherDescriptionLabel.text = String(describing: viewModel.dataSource.weatherDesc)
+        weatherDescriptionLabel.text = viewModel.dataSource.weatherDesc
     }
 }
 

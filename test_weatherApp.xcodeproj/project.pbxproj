@@ -30,6 +30,7 @@
 		36B1CBA528CADE2700D07443 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBA428CADE2700D07443 /* DetailViewModel.swift */; };
 		36B1CBA728CAE10F00D07443 /* DetailDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */; };
 		36B1CBAB28CB0FD900D07443 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */; };
+		36B1CBAD28CB2D8300D07443 /* +Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAC28CB2D8300D07443 /* +Extensions.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* BasicViewController.swift */; };
@@ -85,6 +86,7 @@
 		36B1CBA428CADE2700D07443 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDataSourceModel.swift; sourceTree = "<group>"; };
 		36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
+		36B1CBAC28CB2D8300D07443 /* +Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Extensions.swift"; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				36B1CB9128C8CD1200D07443 /* CityNames.swift */,
 				36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */,
 				36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */,
+				36B1CBAC28CB2D8300D07443 /* +Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				36B1CB7C28C7870D00D07443 /* SceneCategory.swift in Sources */,
 				36B1CB9428C8DCD500D07443 /* ParkBenchTimer.swift in Sources */,
 				4CCDE83028C729F100F05AFF /* DetailViewController.swift in Sources */,
+				36B1CBAD28CB2D8300D07443 /* +Extensions.swift in Sources */,
 				4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */,
 				36B1CB9228C8CD1200D07443 /* CityNames.swift in Sources */,
 				36B1CB8228C8290C00D07443 /* API.swift in Sources */,

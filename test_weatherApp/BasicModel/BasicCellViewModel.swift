@@ -9,10 +9,21 @@ import Foundation
 
 //FirstVC에서 날씨 보여줄때 사용할 뷰의 뷰모델
 class BasicCellViewModel {
+    
+    //input
     var cityName: String
     var icon: String
     var temp: Double
     var humid: Double
+    
+    //output
+    var tempString: String {
+        return String(describing: temp).addTempratureSign()
+    }
+    
+    var humidString: String {
+        return String(describing: humid).addHumiditySign()
+    }
     
     init() {
         self.cityName = ""
