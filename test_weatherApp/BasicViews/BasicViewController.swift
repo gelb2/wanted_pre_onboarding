@@ -37,18 +37,6 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
 extension BasicViewController: Presentable {
     func initViewHierarchy() {
         self.view = contentView
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        var constraints: [NSLayoutConstraint] = []
-//        defer { NSLayoutConstraint.activate(constraints) }
-//
-//        constraints += [
-//            contentView.topAnchor.constraint(equalTo: view.topAnchor),
-//            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ]
     }
     
     func configureView() {

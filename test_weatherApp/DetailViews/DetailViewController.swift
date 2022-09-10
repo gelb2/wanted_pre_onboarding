@@ -24,7 +24,6 @@ class DetailViewController: UIViewController {
     override func loadView() {
         initViewHierarchy()
         configureView()
-        bind()
     }
     
     override func viewDidLoad() {
@@ -49,18 +48,6 @@ class DetailViewController: UIViewController {
 extension DetailViewController: Presentable {
     func initViewHierarchy() {
         self.view = contentView
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        var constraints: [NSLayoutConstraint] = []
-//        defer { NSLayoutConstraint.activate(constraints) }
-//
-//        constraints += [
-//            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
-//            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-//            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-//            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-//        ]
     }
     
     
