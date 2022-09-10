@@ -6,24 +6,59 @@
 //
 
 import Foundation
-//TODO: 그냥 데이터소스 배열을 주입받게 하는 것이 아닌 얘가 어떤 밸류를 받으면 그 밸류로 데이터소스를 만드는 로직을 수행하게끔 연관된 로직을 수정...
+
 class DetailViewModel {
     //input
-    var didReceivedDataSource: (_: DetailDataSourceModel) -> () = { model in }
+    var didReceiveEntity: (_: BasicWeatherEntity) -> () = { entity in }
     
     //output
+    var didReceiveViewModel = { }
     var dataSource: DetailDataSourceModel { return privateDataSource }
+    var beginLoading = { }
+    var endLoading = { }
+    
+    var isLoading: Bool = true {
+        didSet {
+            if oldValue == false {
+                beginLoading()
+            } else {
+                endLoading()
+            }
+        }
+        
+        willSet {
+            if newValue == false {
+                beginLoading()
+            } else {
+                endLoading()
+            }
+        }
+    }
     
     //properties
-    var privateDataSource: DetailDataSourceModel = DetailDataSourceModel()
+    private var privateDataSource: DetailDataSourceModel = DetailDataSourceModel()
     
     init() {
         bind()
     }
 
     private func bind() {
-        didReceivedDataSource = { [weak self] model in
-            self?.privateDataSource = model
+        didReceiveEntity = { [weak self] entity in
+            self?.populateEntity(result: entity)
+            self?.didReceiveViewModel()
         }
+    }
+    
+    private func populateEntity(result: BasicWeatherEntity) {
+        privateDataSource.cityName = result.cityName
+        privateDataSource.icon = result.weather.first?.icon ?? ""
+        privateDataSource.presentTemp = result.main.temp
+        privateDataSource.feelsLikeTemp = result.main.feelsLikeTemp
+        privateDataSource.presentHumid = result.main.humidity
+        privateDataSource.min_Temp = result.main.tempMin
+        privateDataSource.max_Temp = result.main.tempMax
+        privateDataSource.pressure = result.main.pressure
+        privateDataSource.windSpeed = result.wind.speed
+        privateDataSource.weatherDesc = result.weather.first?.description ?? ""
     }
 }

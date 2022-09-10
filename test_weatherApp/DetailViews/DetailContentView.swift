@@ -12,13 +12,11 @@ import SwiftUI
 class DetailContentView: UIView {
     
     //input
-    var didReceivedViewModel: (_: DetailViewModel) -> () = { viewModel in }
     
     //output
     
-    
     //properties
-    private var viewModel: DetailViewModel = DetailViewModel()
+    private var viewModel: DetailViewModel
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var scrollView: UIScrollView = UIScrollView()
@@ -41,8 +39,10 @@ class DetailContentView: UIView {
     var windSpeedLabel: UILabel = UILabel()
     var weatherDescriptionLabel: UILabel = UILabel()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(frame: .zero)
         initViewHierachy()
         configureView()
         bind()
@@ -214,16 +214,35 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
-        scrollView.isHidden = true
-        activityIndicator.startAnimating()
-        didReceivedViewModel = { [weak self] viewModel in
-            self?.viewModel = viewModel
+        viewModel.beginLoading = { [weak self] in
+            self?.scrollView.isHidden = true
+            self?.activityIndicator.startAnimating()
+        }
+        
+        viewModel.endLoading = { [weak self] in
+            self?.scrollView.isHidden = false
+            self?.setData()
+            self?.activityIndicator.stopAnimating()
+        }
+        
+        viewModel.beginLoading()
+        viewModel.didReceiveViewModel = { [weak self] in
             DispatchQueue.main.async {
-                self?.scrollView.isHidden = false
-                self?.setData()
-                self?.activityIndicator.stopAnimating()
+                self?.viewModel.endLoading()
             }
         }
+
+//        scrollView.isHidden = true
+//        activityIndicator.startAnimating()
+//TODO: 뷰모델을 클로저 같은 걸로전달받은 로직 자체는 존재해선 안되느 것으로 결론났다.
+//위에서 클로저 주입받은 뷰모델과 아래 클로저에서 self?.viewModel로 접근 가능한 뷰모델은 서로 다른 객체라는 것이 드러났다. 따라서 뷰모델을 주입해주는 로직을 전면 수정해야 한다. 첫번째 뷰컨과 관련된 뷰모델, 뷰, 모델들도 싹 고쳐야 한다. 고칠땐 이 두번째 뷰컨, 뷰, 뷰모델을 참고하도록
+//        viewModel.beginLoading()
+//        didReceivedViewModel = { [weak self] viewModel in
+//            self?.viewModel = viewModel
+//            DispatchQueue.main.async {
+//                self?.viewModel.endLoading()
+//            }
+//        }
     }
     
     func setData() {
@@ -274,7 +293,7 @@ struct DetailContentViewPreview<View: UIView>: UIViewRepresentable {
 struct DetailContentViewPreviewProvider: PreviewProvider {
     static var previews: some View {
         DetailContentViewPreview {
-            let cell = DetailContentView(frame: .zero)
+            let cell = DetailContentView(viewModel: DetailViewModel())
             
             return cell
         }.previewLayout(.fixed(width: 180, height:300))

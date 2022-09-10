@@ -9,11 +9,12 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var contentView: DetailContentView = DetailContentView()
+    var contentView: DetailContentView
     var viewModel: DetailModel
     
     init(viewModel: DetailModel) {
         self.viewModel = viewModel
+        self.contentView = DetailContentView(viewModel: self.viewModel.detailViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,11 +75,5 @@ extension DetailViewController: Presentable {
         Task {
             viewModel.populateData()
         }
-        
-        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
-            self?.contentView.didReceivedViewModel(contentViewModel)
-        }
     }
-    
-    
 }
