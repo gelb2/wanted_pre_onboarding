@@ -10,7 +10,7 @@ import UIKit
 class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
     var viewModel: BasicModel
-    lazy var contentView: BasicContentView = BasicContentView()
+    lazy var contentView: BasicContentView = BasicContentView(viewModel: self.viewModel.collectionViewModel)
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
@@ -47,11 +47,7 @@ extension BasicViewController: Presentable {
         Task {
             viewModel.populateData()
         }
-        
-        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
-            self?.contentView.didReceivedViewModel(contentViewModel)
-        }
-        
+
         viewModel.routeSubject = { [weak self] sceneCategory in
             self?.route(to: sceneCategory)
         }

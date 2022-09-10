@@ -6,14 +6,15 @@
 //
 
 import Foundation
-//TODO: 그냥 데이터소스 배열을 주입받게 하는 것이 아닌 얘가 어떤 밸류를 받으면 그 밸류로 데이터소스를 만드는 로직을 수행하게끔 연관된 로직을 수정...
+
 class BasicCollectionViewModel {
     
     //input
     var didSelectItemInCollectionView:(_ indexPath: IndexPath) -> () = { (IndexPath) in }
-    var didReceivedDataSource: (_: [BasicCellViewModel]) -> () = { model in }
+    var didReceiveEntity: ([BasicWeatherEntity]) -> () = { entity in }
     
     //output
+    var didReceiveViewModel = { }
     var propergateDidSelectItem: (_ String: String) -> () = { (String) in }
     var dataSource: [BasicCellViewModel] { return privateDataSource }
     
@@ -26,14 +27,28 @@ class BasicCollectionViewModel {
 
     private func bind() {
 
-        didReceivedDataSource = { [weak self] model in
-            self?.privateDataSource = model
+        didReceiveEntity = { [weak self] entity in
+            self?.populateEntity(result: entity)
+            self?.didReceiveViewModel()
         }
         
         didSelectItemInCollectionView = { [weak self] indexPath in
             print("BasicContentView item didSelected indexPath : \(indexPath.item)")
             guard let cityName = self?.findAndReturnSelectedItem(indexPathItem: indexPath.item) else { return }
             self?.propergateDidSelectItem(cityName)
+        }
+    }
+    
+    private func populateEntity(result:[BasicWeatherEntity]) {
+        privateDataSource = result.map { entity -> BasicCellViewModel in
+            let weather = BasicCellViewModel()
+            weather.cityName = entity.cityName
+            weather.humid = entity.main.humidity
+            weather.temp = entity.main.temp
+            
+            //TODO: 서버 api에서 weather는 배열이다...왜지...도큐먼트를 봐도 확실한 설명이 없어 보인다...
+            weather.icon = entity.weather.first?.icon ?? ""
+            return weather
         }
     }
     

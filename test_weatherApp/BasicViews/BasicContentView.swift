@@ -11,13 +11,12 @@ import UIKit
 class BasicContentView: UIView {
     
     //input
-    var didReceivedViewModel: (_: BasicCollectionViewModel) -> () = { viewModel in }
     
     //output
     var basicContentViewOutput = { }
     
     //properties
-    private var viewModel: BasicCollectionViewModel = BasicCollectionViewModel()
+    private var viewModel: BasicCollectionViewModel
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -27,7 +26,8 @@ class BasicContentView: UIView {
     private let cellSpacing: CGFloat = 1
     private let columns: CGFloat = 3
     
-    init() {
+    init(viewModel: BasicCollectionViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         initViewHierarchy()
         configureView()
@@ -90,8 +90,7 @@ extension BasicContentView: Presentable {
 
         activityIndicator.startAnimating()
         
-        didReceivedViewModel = { [weak self] model in
-            self?.viewModel = model
+        viewModel.didReceiveViewModel = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
                 self?.activityIndicator.stopAnimating()
