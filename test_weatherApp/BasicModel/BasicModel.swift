@@ -48,10 +48,38 @@ class BasicModel {
     }
 
     private func requestAPI() async -> [BasicWeatherEntity]? {
+        return await testFuncWithTask()
+    }
+    
+    private func testFuncWithTask() async -> [BasicWeatherEntity]? {
+        //3.7초 //Task로 감싸는 처리는 맞는거 같은데 속도 최적화가 안된다...어딜 건드려야하지...
+        let timer = ParkBenchTimer()
+
+        let iteratedTask = Task { () -> [BasicWeatherEntity] in
+            var entities: [BasicWeatherEntity] = []
+            for try await value in Counter(cityNames: CityNames.allCases, repository: repository) {
+                entities.append(value)
+            }
+            return entities
+        }
+
         do {
-            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
-            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...async let 방식으로 메소드를 돌리는 것과 루프를 돌리는것 둘다 가능하게 수정해보자...
-                        
+            let result = try await iteratedTask.result.get()
+            print("entities check :\(result.count)")
+            print("elapsed time : \(timer.stop())")
+            return result
+        } catch {
+            handleError(error: error)
+            return nil
+        }
+    }
+    
+    private func testFuncWithHardcorded() async -> [BasicWeatherEntity]? {
+        do {
+//            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
+//            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...async let 방식으로 메소드를 돌리는 것과 루프를 돌리는것 둘다 가능하게 수정해보자...
+            //0.97초
+            let timer = ParkBenchTimer()
             async let gongju: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gongju.rawValue)))
             async let gwangu: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gwangju.rawValue)))
             async let gumi: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gumi.rawValue)))
@@ -74,11 +102,14 @@ class BasicModel {
             async let chuncheon: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.chuncheon.rawValue)))
 
             let result = try await [gongju,gwangu,gumi,gunsan,daegu,daejeon,mokpo,busan,seosan,seoul,sokcho,suwon,suncheon,ulsan,iksan,jeonju,jeju,cheonan,cheongju,chuncheon]
+            print("elapsed time : \(timer.stop())")
             return result
+
         } catch {
             handleError(error: error)
             return nil
         }
+
     }
     
     private func handleError(error: Error) {

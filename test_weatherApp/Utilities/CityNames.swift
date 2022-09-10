@@ -7,7 +7,46 @@
 
 import Foundation
 
+class Counter: AsyncSequence {
+    typealias Element = BasicWeatherEntity
+    let cityNames: [CityNames]
+    var repository: RepositoryProtocol
+    
+    init(cityNames: [CityNames], repository: RepositoryProtocol) {
+        self.cityNames = cityNames
+        self.repository = repository
+    }
+    
+    class AsyncIterator: AsyncIteratorProtocol {
+        
+        let repository: RepositoryProtocol
+        let howHigh: [CityNames]
+        var current = 0
+        
+        init(repository: RepositoryProtocol, howHigh: [CityNames]) {
+            self.repository = repository
+            self.howHigh = howHigh
+        }
+        
+        func next() async throws -> Element? {
+            guard current < howHigh.count else {
+                return nil
+            }
+            
+            let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: howHigh[current].rawValue)))
+            print("current check : \(current)")
+            current += 1
+            return value
+        }
+    }
+    
+    func makeAsyncIterator() -> AsyncIterator {
+        return AsyncIterator(repository: repository, howHigh: cityNames)
+    }
+}
+
 enum CityNames: String, CaseIterable {
+
     case gongju
     case gwangju
     case gumi
