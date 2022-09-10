@@ -138,13 +138,13 @@ extension DetailContentView: Presentable {
         constraints += [
             titleView.heightAnchor.constraint(equalToConstant: 200),
             titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            firstStackView.heightAnchor.constraint(equalToConstant: 240),
+            firstStackView.heightAnchor.constraint(equalToConstant: 200),
             firstStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            secondStackView.heightAnchor.constraint(equalToConstant: 350),
+            secondStackView.heightAnchor.constraint(equalToConstant: 200),
             secondStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            thirdStackView.heightAnchor.constraint(equalToConstant: 270),
+            thirdStackView.heightAnchor.constraint(equalToConstant: 200),
             thirdStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            fourthStackView.heightAnchor.constraint(equalToConstant: 170),
+            fourthStackView.heightAnchor.constraint(equalToConstant: 200),
             fourthStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
         ]
     }
@@ -165,6 +165,7 @@ extension DetailContentView: Presentable {
         cityNameLabel.text = "서울"
         cityNameLabel.textColor = .black
         cityNameLabel.textAlignment = .center
+        cityNameLabel.font = UIFont.systemFont(ofSize: 48)
         
         iconImageView.image = UIImage(named: "10d")
         
