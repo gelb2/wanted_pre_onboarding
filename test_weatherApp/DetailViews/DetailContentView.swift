@@ -214,24 +214,17 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
-        viewModel.beginLoading = { [weak self] in
-            self?.scrollView.isHidden = true
-            self?.activityIndicator.startAnimating()
-        }
         
-        viewModel.endLoading = { [weak self] in
-            self?.scrollView.isHidden = false
-            self?.setData()
-            self?.activityIndicator.stopAnimating()
-        }
-        
-        viewModel.beginLoading()
+        scrollView.isHidden = true
+        activityIndicator.startAnimating()
         viewModel.didReceiveViewModel = { [weak self] in
             DispatchQueue.main.async {
-                self?.viewModel.endLoading()
+                self?.scrollView.isHidden = false
+                self?.setData()
+                self?.activityIndicator.stopAnimating()
             }
         }
-
+        
 //        scrollView.isHidden = true
 //        activityIndicator.startAnimating()
 //TODO: 뷰모델을 클로저 같은 걸로전달받은 로직 자체는 존재해선 안되느 것으로 결론났다.
@@ -245,6 +238,7 @@ extension DetailContentView: Presentable {
 //        }
     }
     
+    //TODO: dataSet 해주는 과정 자체가 MVVM 스럽지 못하다. 더 MVVM 스럽게 수정필요
     func setData() {
         cityNameLabel.text = viewModel.dataSource.cityName
         

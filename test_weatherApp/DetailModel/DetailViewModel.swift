@@ -14,27 +14,7 @@ class DetailViewModel {
     //output
     var didReceiveViewModel = { }
     var dataSource: DetailDataSourceModel { return privateDataSource }
-    var beginLoading = { }
-    var endLoading = { }
-    
-    var isLoading: Bool = true {
-        didSet {
-            if oldValue == false {
-                beginLoading()
-            } else {
-                endLoading()
-            }
-        }
-        
-        willSet {
-            if newValue == false {
-                beginLoading()
-            } else {
-                endLoading()
-            }
-        }
-    }
-    
+
     //properties
     private var privateDataSource: DetailDataSourceModel = DetailDataSourceModel()
     
