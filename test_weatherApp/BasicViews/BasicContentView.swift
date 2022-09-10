@@ -29,7 +29,7 @@ class BasicContentView: UIView {
     
     init() {
         super.init(frame: .zero)
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -44,7 +44,7 @@ class BasicContentView: UIView {
 extension BasicContentView: LoadingIndicatorPresentable { }
 
 extension BasicContentView: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.addSubview(collectionView)
         self.addSubview(activityIndicator)
         

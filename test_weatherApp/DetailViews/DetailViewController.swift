@@ -23,14 +23,15 @@ class DetailViewController: UIViewController {
     }
     
     override func loadView() {
-        initViewHierachy()
+        super.loadView()
+        initViewHierarchy()
         configureView()
         bind()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bind()
         // Do any additional setup after loading the view.
     }
     
@@ -48,7 +49,7 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.view = UIView()
 
         view.addSubview(contentView)

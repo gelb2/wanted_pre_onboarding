@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol Presentable {
-    func initViewHierachy()
+    func initViewHierarchy()
     func configureView()
     func bind()
 }

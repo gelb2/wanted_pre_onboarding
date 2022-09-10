@@ -22,19 +22,21 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
     }
     
     override func loadView() {
-        initViewHierachy()
+        super.loadView()
+        initViewHierarchy()
         configureView()
-        bind()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         // Do any additional setup after loading the view.
     }
 }
 
 extension BasicViewController: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.view = UIView()
         view.addSubview(contentView)
         

@@ -43,7 +43,7 @@ class DetailContentView: UIView {
         self.viewModel = viewModel
         
         super.init(frame: .zero)
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -56,7 +56,7 @@ class DetailContentView: UIView {
 extension DetailContentView: LoadingIndicatorPresentable { }
 
 extension DetailContentView: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
@@ -214,7 +214,7 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
-        
+        print("detailContentViewBind")
         scrollView.isHidden = true
         activityIndicator.startAnimating()
         viewModel.didReceiveViewModel = { [weak self] in

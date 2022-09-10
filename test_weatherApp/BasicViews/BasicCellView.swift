@@ -19,7 +19,7 @@ class BasicCellView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -30,7 +30,7 @@ class BasicCellView: UIView {
 }
 
 extension BasicCellView: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.addSubview(cityNameLabel)
         self.addSubview(iconImageView)
         self.addSubview(bottomStackView)

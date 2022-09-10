@@ -13,7 +13,7 @@ class BasicCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -24,7 +24,7 @@ class BasicCell: UICollectionViewCell {
 }
 
 extension BasicCell: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.contentView.addSubview(cellView)
         cellView.translatesAutoresizingMaskIntoConstraints = false
         
