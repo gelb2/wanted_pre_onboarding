@@ -16,10 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SceneDelegateRoutable {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        
-        //TODO: 뷰컨트롤러 프리젠테이션 관련 로직 추가 및 보강
-        //뷰모덜 -> 뷰컨트롤러 주입
-        //세그, 뷰컨에서 present 하는 방식 아닌 다른 방식으로 프리젠테이션 처리
 
         self.windowScene = (scene as? UIWindowScene)
         let sceneContext = SceneContext(dependency: BasicModel(repository: Repository(httpClient: HTTPClient())))

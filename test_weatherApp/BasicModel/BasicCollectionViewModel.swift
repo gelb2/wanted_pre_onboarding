@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//TODO: 그냥 데이터소스 배열을 주입받게 하는 것이 아닌 얘가 어떤 밸류를 받으면 그 밸류로 데이터소스를 만드는 로직을 수행하게끔 연관된 로직을 수정...
 class BasicCollectionViewModel {
     
     //input

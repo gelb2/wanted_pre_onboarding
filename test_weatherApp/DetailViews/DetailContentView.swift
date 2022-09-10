@@ -8,10 +8,7 @@
 import UIKit
 import SwiftUI
 
-//TODO: ui개선
-//특히 날씨아이콘 다른데로 옮기고 작게 띄우도록, 크니까 깨진다
-//필수로 표시해야 하는 정보
-//도시이름, 날씨아이콘, 현재기온, 체감기온, 현재습도, 최저기온, 최고기온, 기압, 풍속, 날씨설명
+//TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
 class DetailContentView: UIView {
     
     //input
@@ -211,8 +208,6 @@ extension DetailContentView: Presentable {
         }
     }
     
-    //TODO: ViewModel이 데이터 형식에 맞게 수정하도록
-    //ex. %, 섭씨 기호 추가 등
     func setData() {
         cityNameLabel.text = viewModel.dataSource.cityName
         

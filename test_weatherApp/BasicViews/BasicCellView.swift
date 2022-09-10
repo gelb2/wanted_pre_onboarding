@@ -8,7 +8,7 @@
 import UIKit
 import SwiftUI
 
-//TODO: ui개선
+//TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
 class BasicCellView: UIView {
     
     var cityNameLabel: UILabel = UILabel()

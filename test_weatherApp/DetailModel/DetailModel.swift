@@ -13,7 +13,7 @@ class DetailModel: AdditionalContextAddable {
     
     //output
     var didReceivedViewModel: (_ viewModel: DetailViewModel) -> () = { viewModel in }
-    var routeSubject = { } // TODO: routeSubject가 Scene을 핸들링 할 수 있도록
+    var routeSubject = { } 
     
     //properties
     private var detailViewModel: DetailViewModel

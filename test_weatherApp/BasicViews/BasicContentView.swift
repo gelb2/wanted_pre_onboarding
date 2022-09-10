@@ -56,8 +56,6 @@ extension BasicContentView: Presentable {
         ]
     }
     
-    //TODO: CollectionView layout 수정
-    //셀 더 크게 만들자...
     func configureView() {
         self.backgroundColor = .white
         collectionView.backgroundColor = .white

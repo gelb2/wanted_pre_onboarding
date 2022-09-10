@@ -22,7 +22,6 @@ class Repository: RepositoryProtocol {
         self.httpClient = httpClient
     }
     
-    //TODO: repository가 httpClient의 메소드를 호출 및 콜백 처리 할 수 있게끔 추가
     func fetch<T: Codable>(api: API) async throws -> T {
         let result: T = try await httpClient.fetch(api: api)
         return result
