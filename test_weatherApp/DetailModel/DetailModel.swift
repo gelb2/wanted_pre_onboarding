@@ -13,7 +13,7 @@ class DetailModel: AdditionalContextAddable {
     
     //output
     var didReceivedViewModel: (_ viewModel: DetailViewModel) -> () = { viewModel in }
-    var routeSubject = { } 
+    @MainThreadActor var routeSubject: ((SceneCategory) -> ())?
     
     //properties
     private var detailViewModel: DetailViewModel

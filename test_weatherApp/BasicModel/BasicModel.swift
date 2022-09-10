@@ -7,14 +7,13 @@
 
 import Foundation
 
-//FirstViewController용 모델
 class BasicModel {
     
     //input
     
     //output
     var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var routeSubject: (SceneCategory) -> () = { SceneCategory in }
+    @MainThreadActor var routeSubject: ( (SceneCategory) -> () )?
     
     //properties
     private var basicViewModel: BasicCollectionViewModel
@@ -34,7 +33,7 @@ class BasicModel {
             detailModel.addMoreContext(cityName)
             let sceneContext = SceneContext(dependency: detailModel)
             
-            self?.routeSubject(.detail(.detailViewController(sceneContext)))
+            self?.routeSubject?(.detail(.detailViewController(sceneContext)))
         }
     }
 
@@ -100,7 +99,7 @@ class BasicModel {
             let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
             let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
             let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
-            routeSubject(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
+            routeSubject?(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
         case .none:
             break
         }

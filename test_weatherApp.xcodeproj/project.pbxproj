@@ -43,6 +43,7 @@
 		4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83228C72ADC00F05AFF /* HTTPClient.swift */; };
 		4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83428C7356C00F05AFF /* Repository.swift */; };
 		4CCDE83D28C74AF200F05AFF /* BasicWeatherEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */; };
+		4CCDE84028CC7CB600F05AFF /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE83F28CC7CB600F05AFF /* PropertyWrappers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		4CCDE83228C72ADC00F05AFF /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4CCDE83428C7356C00F05AFF /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		4CCDE83C28C74AF200F05AFF /* BasicWeatherEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWeatherEntity.swift; sourceTree = "<group>"; };
+		4CCDE83F28CC7CB600F05AFF /* PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrappers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 				36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */,
 				36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */,
 				36B1CBAC28CB2D8300D07443 /* +Extensions.swift */,
+				4CCDE83F28CC7CB600F05AFF /* PropertyWrappers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				36B1CB9228C8CD1200D07443 /* CityNames.swift in Sources */,
 				36B1CB8228C8290C00D07443 /* API.swift in Sources */,
 				36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */,
+				4CCDE84028CC7CB600F05AFF /* PropertyWrappers.swift in Sources */,
 				36B1CB8C28C8B20000D07443 /* BasicCellView.swift in Sources */,
 				36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */,
 				36B1CBAB28CB0FD900D07443 /* AlertFactory.swift in Sources */,
