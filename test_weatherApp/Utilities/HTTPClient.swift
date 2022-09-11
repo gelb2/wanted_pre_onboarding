@@ -34,18 +34,12 @@ protocol HTTPClientProtocol {
 class HTTPClient: HTTPClientProtocol {
     
     func fetch<T: Codable>(api: API) async throws -> T {
-        //TODO: 쿼리 넣는 방법 개선
-        //TODO: get인지, post인지, patch인지 등 암튼 쿼리로 넣어야 할 지 파라미터로 넣어야 할 지에 대한 분기 및 로직 개선
-        var baseComponent = api.baseURLSet
-        let cityName = api.querySet
-        let appID = api.appIDSet
-        let langQuery = api.langSet
-        let unitQuery = api.unitSet
-        baseComponent?.queryItems = [cityName, appID, langQuery, unitQuery]
+        let baseComponent = api.urlComponets
+        let httpMethod = api.httpMethod.rawValue
         
         guard let url = baseComponent?.url else { throw HTTPError.badURL }
         var request = URLRequest(url: url)
-        request.httpMethod = api.httpMethod.rawValue
+        request.httpMethod = httpMethod
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
