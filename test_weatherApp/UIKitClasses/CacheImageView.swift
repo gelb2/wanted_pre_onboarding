@@ -9,15 +9,55 @@ import UIKit
 
 //TODO: Repository와 어떻게 엮어야 하나 고려...특히 아래 URLSessionRequest도...
 class CacheImageView: UIImageView {
-    
+
+    //TODO: 싱글턴으로 만들긴 했는데 좀 이상하다 리턴이 계속 된다...로그 찍어보니...수정이 필요해보인다.
     private var sharedCache = NSCache<AnyObject, AnyObject>.sharedCache
-    private var lastImageURLString: String?
-    
+    var lastImageURLString: String?
+
+    private let sharedHandler = CacheHandler.sharedInstance
     
     func loadImage(urlString: String) {
         self.image = nil
         self.lastImageURLString = urlString
-        
+        if let image = sharedCache.object(forKey: urlString as NSString) as? UIImage {
+            self.image = image
+            return
+        }
+        Task {
+            await requestImage(urlString: urlString)
+        }
+    }
+    
+    private func requestImage(urlString: String) async {
+        do {
+            let data = try await sharedHandler.fetch(with: urlString)
+            guard let absoluteString = data.1?.absoluteString else { return }
+            guard lastImageURLString == absoluteString else { return }
+            guard let image = UIImage(data: data.0) else { return }
+            
+            sharedCache.setObject(image, forKey: absoluteString as NSString)
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image
+            }
+        } catch {
+            handleError(error: error)
+        }
+    }
+    
+    func handleError(error: Error) {
+        let error = error as? HTTPError
+        switch error {
+        case .badURL, .badResponse, .errorDecodingData, .invalidURL, .iosDevloperIsStupid:
+            print("error : \(String(describing: error))")
+        default:
+            break
+        }
+    }
+    
+    func deprecated_requestImage(urlString: String) {
+        self.image = nil
+        self.lastImageURLString = urlString
+
         if let image = sharedCache.object(forKey: urlString as NSString) as? UIImage {
             self.image = image
             return
@@ -49,7 +89,4 @@ class CacheImageView: UIImageView {
         }.resume()
         
     }
-    
-    
-
 }

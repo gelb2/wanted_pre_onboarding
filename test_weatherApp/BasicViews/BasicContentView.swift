@@ -113,9 +113,7 @@ extension BasicContentView: UICollectionViewDataSource {
         cell.cellView.cityNameLabel.text = viewModel.dataSource[indexPath.item].cityName
         cell.cellView.humidityLabel.text = viewModel.dataSource[indexPath.item].humidString
         cell.cellView.temperatureLabel.text = viewModel.dataSource[indexPath.item].tempString
-        
-        let imageUrlString = viewModel.dataSource[indexPath.item].icon
-        cell.cellView.iconImageView.loadImage(urlString: imageUrlString)
+        cell.cellView.iconImageView.loadImage(urlString: viewModel.dataSource[indexPath.item].icon)
         return cell
     }
 }

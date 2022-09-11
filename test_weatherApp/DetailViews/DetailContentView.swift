@@ -214,7 +214,6 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
-        print("detailContentViewBind")
         scrollView.isHidden = true
         activityIndicator.startAnimating()
         viewModel.didReceiveViewModel = { [weak self] in

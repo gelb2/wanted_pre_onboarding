@@ -24,6 +24,15 @@ enum API {
         }
     }
     
+    var httpMethod: HTTPMethod {
+        switch self {
+        case .weatherData(.cityName(_)):
+            return HTTPMethod.GET
+        case .weatherData(.cityCoordination(_, _)):
+            return HTTPMethod.GET
+        }
+    }
+    
     private var baseURLSet: URLComponents? {
         get {
             return URLComponents(string: "https://api.openweathermap.org/data/2.5/weather")
@@ -51,15 +60,6 @@ enum API {
             let latQuery = [URLQueryItem(name: "lat", value: String(lat))]
             let lonQuery = [URLQueryItem(name: "lon", value: String(lon))]
             return latQuery + lonQuery
-        }
-    }
-    
-    var httpMethod: HTTPMethod {
-        switch self {
-        case .weatherData(.cityName(_)):
-            return HTTPMethod.GET
-        case .weatherData(.cityCoordination(_, _)):
-            return HTTPMethod.GET
         }
     }
 }

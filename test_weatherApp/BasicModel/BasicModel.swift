@@ -75,7 +75,22 @@ class BasicModel {
         }
     }
     
-    private func testFuncWithTask() async -> [BasicWeatherEntity]? {
+    private func handleError(error: Error) {
+        
+        let error = error as? HTTPError
+        
+        switch error {
+        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
+            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            routeSubject?(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
+        case .none:
+            break
+        }
+    }
+    
+    private func deprecated1_requestAPI() async -> [BasicWeatherEntity]? {
         //3.7초 //Task로 감싸는 처리는 맞는거 같은데 속도 최적화가 안된다...어딜 건드려야하지...
         let timer = ParkBenchTimer()
 
@@ -96,7 +111,7 @@ class BasicModel {
         }
     }
     
-    private func testFuncWithNormalLoop() async -> [BasicWeatherEntity]? {
+    private func deprecated2_requestAPI() async -> [BasicWeatherEntity]? {
         //3.5초
         do {
             
@@ -122,7 +137,7 @@ class BasicModel {
         }
     }
     
-    private func testFuncWithHardcorded() async -> [BasicWeatherEntity]? {
+    private func deprecated3_requestAPI() async -> [BasicWeatherEntity]? {
         //0.97초
         do {
             let timer = ParkBenchTimer()
@@ -154,22 +169,5 @@ class BasicModel {
             handleError(error: error)
             return nil
         }
-
     }
-    
-    private func handleError(error: Error) {
-        
-        let error = error as? HTTPError
-        
-        switch error {
-        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
-            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
-            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
-            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
-            routeSubject?(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
-        case .none:
-            break
-        }
-    }
-
 }

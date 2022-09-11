@@ -67,4 +67,24 @@ enum CityNames: String, CaseIterable {
     case cheonan
     case cheongju
     case chuncheon
+    
+    //temp testvalues
+    case newyork = "new york"
+    case london
+    case berlin
+    case sydney
+    case tokyo
+    case hongkong
+    case moscow
+    case hamburg
+    case paris
+    case madrid
+    case rome
+    case kiev
+    case belgrade
+    case osaka
+    case daka
+    case karachi
+    case mumbai
+    case prague
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//TODO: Init이 여러번 불리는데 이거 수정필요...
 extension NSCache {
     @objc static var sharedCache: NSCache<AnyObject, AnyObject> {
         let cache = NSCache<AnyObject, AnyObject>()

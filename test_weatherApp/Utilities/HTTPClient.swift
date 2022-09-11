@@ -28,9 +28,33 @@ protocol HTTPClientProtocol {
     func fetch<T: Codable>(api: API) async throws -> T
 }
 
-//TODO: 클래스 전면 리팩토링
-//http메소드 주입처리
-//repository 클래스와의 연관성 처리
+class CacheHandler: ImageCacheable {
+    
+    static let sharedInstance = CacheHandler()
+    
+    private init() {
+        print("cacheHandler init and return")
+    }
+}
+
+protocol ImageCacheable {
+    
+}
+
+extension ImageCacheable where Self: CacheHandler {
+    
+    func fetch(with urlString: String) async throws -> (Data, URL?) {
+        guard let url = URL(string: urlString) else { throw HTTPError.badURL }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+            throw HTTPError.badResponse
+        }
+
+        return (data, response.url)
+    }
+}
+
 class HTTPClient: HTTPClientProtocol {
     
     func fetch<T: Codable>(api: API) async throws -> T {
