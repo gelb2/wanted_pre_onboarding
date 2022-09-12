@@ -85,7 +85,7 @@ extension BasicCellView: Presentable {
         cityNameLabel.textAlignment = .center
         cityNameLabel.font = UIFont.systemFont(ofSize: 24)
         
-        iconImageView.image = UIImage(named: "10d")
+        iconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
         
         temperatureLabel.text = "32.14".addTempratureSign()
         temperatureLabel.textAlignment = .center

@@ -28,9 +28,12 @@ class CacheImageView: UIImageView {
     private func requestImage(urlString: String) async {
         do {
             let data = try await sharedHandler.fetch(with: urlString)
-            guard let absoluteString = data.1?.absoluteString else { return }
-            guard lastImageURLString == absoluteString else { return }
-            guard let image = UIImage(data: data.0) else { return }
+            guard let absoluteString = data.1?.absoluteString else { setErrorImage()
+                return }
+            guard lastImageURLString == absoluteString else { setErrorImage()
+                return }
+            guard let image = UIImage(data: data.0) else { setErrorImage()
+                return }
             
             sharedHandler.setObject(image, forKey: absoluteString)
             DispatchQueue.main.async { [weak self] in
@@ -41,11 +44,15 @@ class CacheImageView: UIImageView {
         }
     }
     
+    private func setErrorImage() {
+        self.image = UIImage(systemName: .errorImage)
+    }
+    
     func handleError(error: Error) {
         let error = error as? HTTPError
         switch error {
         case .badURL, .badResponse, .errorDecodingData, .invalidURL, .iosDevloperIsStupid:
-            print("error : \(String(describing: error))")
+            setErrorImage()
         default:
             break
         }
@@ -61,19 +68,20 @@ class CacheImageView: UIImageView {
         }
         
         guard let url = URL(string: urlString) else {
-            //TODO: 기본이미지 set
+            setErrorImage()
             return }
         
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            //TODO: 에러 핸들링
+            
             if let error = error {
-                print("이미지 로딩 실패 : \(String(describing: error))")
+                self?.handleError(error: error)
             }
-            //TODO: 예외처리
+            
             if self?.lastImageURLString != url.absoluteString {
+                self?.setErrorImage()
                 return
             }
-            //TODO: 예외처리
+            
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { return }
             

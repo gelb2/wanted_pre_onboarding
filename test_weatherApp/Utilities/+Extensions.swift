@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     func addTempratureSign() -> Self {
@@ -57,4 +58,14 @@ extension NSCache {
         print("ns cache return called")
         return cache
     }
+}
+
+extension UIImage {
+    convenience init?(systemName: ImageName) {
+        self.init(systemName: systemName.rawValue)
+    }
+}
+
+enum ImageName: String {
+    case errorImage = "exclamationmark.circle.fill"
 }
