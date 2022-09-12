@@ -20,7 +20,7 @@ class DetailModel: AdditionalContextAddable {
     
     //properties
     var privateDetailViewModel: DetailViewModel
-    private var repository: RepositoryProtocol
+    private let repository: RepositoryProtocol
     
     //일단 두번째 뷰가 전달받은 도시명 대로 api를 호출하는지 확인하는지 확인하고자 임의로 추가
     private var cityNameParam: String = ""

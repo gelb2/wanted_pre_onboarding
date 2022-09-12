@@ -12,8 +12,6 @@ protocol RepositoryProtocol {
     func fetch<T: Codable>(api: API) async throws -> T
 }
 
-//네트워크 콜 관련, 캐쉬 관련 클래스들을 담고 있게끔
-//TODO: httpClient, viewModel 클래스들과의 관계, 주입 관련 처리
 class Repository: RepositoryProtocol {
     
     var httpClient: HTTPClientProtocol

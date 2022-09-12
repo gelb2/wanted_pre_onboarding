@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//deprecated class for testing
 class Counter: AsyncSequence {
     typealias Element = BasicWeatherEntity
     let cityNames: [CityNames]
