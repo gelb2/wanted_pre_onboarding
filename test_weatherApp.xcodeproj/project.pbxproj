@@ -23,7 +23,6 @@
 		36B1CB9428C8DCD500D07443 /* ParkBenchTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */; };
 		36B1CB9628C99EC500D07443 /* BasicContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9528C99EC500D07443 /* BasicContentViewModel.swift */; };
 		36B1CB9828C9A0F600D07443 /* BasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9728C9A0F600D07443 /* BasicContentView.swift */; };
-		36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */; };
 		36B1CB9D28C9E2BD00D07443 /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */; };
 		36B1CB9F28C9ED3600D07443 /* BasicViewControllerRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB9E28C9ED3600D07443 /* BasicViewControllerRoutable.swift */; };
 		36B1CBA128C9EEF200D07443 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBA028C9EEF200D07443 /* DetailModel.swift */; };
@@ -32,6 +31,7 @@
 		36B1CBAB28CB0FD900D07443 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */; };
 		36B1CBAD28CB2D8300D07443 /* +Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAC28CB2D8300D07443 /* +Extensions.swift */; };
 		36F0419328CF338E00F772BF /* BasicCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0419228CF338E00F772BF /* BasicCellViewModel.swift */; };
+		36F0419528CF480D00F772BF /* CacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0419428CF480D00F772BF /* CacheHandler.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* BasicViewController.swift */; };
@@ -81,7 +81,6 @@
 		36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParkBenchTimer.swift; sourceTree = "<group>"; };
 		36B1CB9528C99EC500D07443 /* BasicContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicContentViewModel.swift; sourceTree = "<group>"; };
 		36B1CB9728C9A0F600D07443 /* BasicContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicContentView.swift; sourceTree = "<group>"; };
-		36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCache+Extension.swift"; sourceTree = "<group>"; };
 		36B1CB9C28C9E2BD00D07443 /* CacheImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageView.swift; sourceTree = "<group>"; };
 		36B1CB9E28C9ED3600D07443 /* BasicViewControllerRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewControllerRoutable.swift; sourceTree = "<group>"; };
 		36B1CBA028C9EEF200D07443 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
@@ -90,6 +89,7 @@
 		36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		36B1CBAC28CB2D8300D07443 /* +Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Extensions.swift"; sourceTree = "<group>"; };
 		36F0419228CF338E00F772BF /* BasicCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCellViewModel.swift; sourceTree = "<group>"; };
+		36F0419428CF480D00F772BF /* CacheHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheHandler.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -275,9 +275,9 @@
 				36B1CB8128C8290C00D07443 /* API.swift */,
 				36B1CB9128C8CD1200D07443 /* CityNames.swift */,
 				36B1CB9328C8DCD400D07443 /* ParkBenchTimer.swift */,
-				36B1CB9928C9E1B400D07443 /* NSCache+Extension.swift */,
-				36B1CBAC28CB2D8300D07443 /* +Extensions.swift */,
 				4CCDE83F28CC7CB600F05AFF /* PropertyWrappers.swift */,
+				36F0419428CF480D00F772BF /* CacheHandler.swift */,
+				36B1CBAC28CB2D8300D07443 /* +Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -433,10 +433,10 @@
 				4CCDE83328C72ADC00F05AFF /* HTTPClient.swift in Sources */,
 				36B1CB9228C8CD1200D07443 /* CityNames.swift in Sources */,
 				36B1CB8228C8290C00D07443 /* API.swift in Sources */,
+				36F0419528CF480D00F772BF /* CacheHandler.swift in Sources */,
 				36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */,
 				4CCDE84028CC7CB600F05AFF /* PropertyWrappers.swift in Sources */,
 				36B1CB8C28C8B20000D07443 /* BasicCellView.swift in Sources */,
-				36B1CB9A28C9E1B400D07443 /* NSCache+Extension.swift in Sources */,
 				36B1CBAB28CB0FD900D07443 /* AlertFactory.swift in Sources */,
 				36B1CB9F28C9ED3600D07443 /* BasicViewControllerRoutable.swift in Sources */,
 				36B1CBA728CAE10F00D07443 /* DetailDataSourceModel.swift in Sources */,

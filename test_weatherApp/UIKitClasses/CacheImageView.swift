@@ -7,7 +7,6 @@
 
 import UIKit
 
-//TODO: Repository와 어떻게 엮어야 하나 고려...특히 아래 URLSessionRequest도...
 class CacheImageView: UIImageView {
 
     var lastImageURLString: String?
