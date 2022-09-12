@@ -11,9 +11,12 @@ class DetailViewModel {
     //input
     var didReceiveEntity: (_: BasicWeatherEntity) -> () = { entity in }
     
+    var dismissButtonPressed = { }
+    
     //output
     var didReceiveViewModel = { }
     var dataSource: DetailDataSourceModel { return privateDataSource }
+    var propergateDismissEvent = { }
 
     //properties
     private var privateDataSource: DetailDataSourceModel = DetailDataSourceModel()
@@ -27,6 +30,10 @@ class DetailViewModel {
         didReceiveEntity = { [weak self] entity in
             self?.populateEntity(result: entity)
             self?.didReceiveViewModel()
+        }
+        
+        dismissButtonPressed = { [weak self] in
+            self?.propergateDismissEvent()
         }
     }
     

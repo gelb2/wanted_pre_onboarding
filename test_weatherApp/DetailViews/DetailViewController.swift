@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, DetailViewControllerRoutable {
 
     lazy var contentView: DetailContentView = DetailContentView(viewModel: self.viewModel.detailViewModel)
     var viewModel: DetailModel
@@ -58,6 +58,10 @@ extension DetailViewController: Presentable {
     func bind() {
         Task {
             viewModel.populateData()
+        }
+        
+        viewModel.routeSubject = { [weak self] sceneCategory in
+            self?.route(to: sceneCategory)
         }
     }
 }

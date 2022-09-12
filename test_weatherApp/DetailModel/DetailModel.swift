@@ -35,6 +35,10 @@ class DetailModel: AdditionalContextAddable {
         addMoreContext = { [weak self] string in
             self?.cityNameParam = string
         }
+        
+        privateDetailViewModel.propergateDismissEvent = { [weak self] in
+            self?.routeSubject?(.justClose)
+        }
     }
 
     func populateData() {
@@ -49,23 +53,23 @@ class DetailModel: AdditionalContextAddable {
             let result: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: cityNameParam)))
             return result
         } catch {
-            //TODO: 뷰모델이 에러 핸들링 하게 하기
-            let error = error as? HTTPError
-            switch error {
-            case .invalidURL:
-                print("❌ Error: \(String(describing: error))")
-            case .errorDecodingData:
-                print("❌ Error: \(String(describing: error))")
-            case .badResponse:
-                print("❌ Error: \(String(describing: error))")
-            case .badURL:
-                print("❌ Error: \(String(describing: error))")
-            case .iosDevloperIsStupid:
-                print("❌ Error: \(String(describing: error))")
-            case .none:
-                print("noError")
-            }
+            handleError(error: error)
             return nil
+        }
+    }
+    
+    private func handleError(error: Error) {
+        
+        let error = error as? HTTPError
+        
+        switch error {
+        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
+            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            routeSubject?(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
+        case .none:
+            break
         }
     }
 }

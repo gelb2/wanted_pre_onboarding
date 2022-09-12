@@ -22,4 +22,14 @@ protocol Routable {
     func route(to Scene: SceneCategory)
 }
 
+protocol SceneDismissable {
+    func dismissScene(animated: Bool, completion: (() -> Void)?)
+}
+
+extension SceneDismissable where Self: UIViewController {
+    func dismissScene(animated: Bool, completion: (() -> Void)?) {
+        self.dismiss(animated: animated, completion: completion)
+    }
+}
+
 extension UIViewController: Scenable { }

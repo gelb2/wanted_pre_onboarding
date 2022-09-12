@@ -22,6 +22,7 @@ class DetailContentView: UIView {
     var scrollView: UIScrollView = UIScrollView()
         
     var verticalStackView: UIStackView = UIStackView()
+    var closeButton: UIButton = UIButton()
     var titleView: UIView = UIView()
     var firstStackView = UIStackView()
     var secondStackView = UIStackView()
@@ -61,7 +62,8 @@ extension DetailContentView: Presentable {
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
         self.addSubview(activityIndicator)
-
+        
+        verticalStackView.addArrangedSubview(closeButton)
         verticalStackView.addArrangedSubview(titleView)
         verticalStackView.addArrangedSubview(firstStackView)
         verticalStackView.addArrangedSubview(secondStackView)
@@ -86,6 +88,8 @@ extension DetailContentView: Presentable {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -137,6 +141,8 @@ extension DetailContentView: Presentable {
         ]
         
         constraints += [
+            closeButton.widthAnchor.constraint(equalTo: self.widthAnchor),
+            closeButton.heightAnchor.constraint(equalToConstant: 120),
             titleView.heightAnchor.constraint(equalToConstant: 200),
             titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
             firstStackView.heightAnchor.constraint(equalToConstant: 200),
@@ -159,6 +165,9 @@ extension DetailContentView: Presentable {
         self.backgroundColor = .white
         
         scrollView.showsHorizontalScrollIndicator = true
+        
+        closeButton.setTitle("닫기", for: .normal)
+        closeButton.setTitleColor(.red, for: .normal)
         
         activityIndicator.tintColor = .red
         activityIndicator.hidesWhenStopped = true
@@ -216,6 +225,9 @@ extension DetailContentView: Presentable {
     func bind() {
         scrollView.isHidden = true
         activityIndicator.startAnimating()
+        
+        closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        
         viewModel.didReceiveViewModel = { [weak self] in
             DispatchQueue.main.async {
                 self?.scrollView.isHidden = false
@@ -246,6 +258,10 @@ extension DetailContentView: Presentable {
         windSpeedLabel.text = viewModel.dataSource.windSpeedString
         
         weatherDescriptionLabel.text = viewModel.dataSource.weatherDesc
+    }
+    
+    @objc func dismiss() {
+        viewModel.dismissButtonPressed()
     }
 }
 
