@@ -31,9 +31,18 @@ protocol HTTPClientProtocol {
 class CacheHandler: ImageCacheable {
     
     static let sharedInstance = CacheHandler()
-    
+    private var sharedCache = NSCache<AnyObject, AnyObject>.sharedCache
+
     private init() {
         print("cacheHandler init and return")
+    }
+    
+    func setObject(_ obj : AnyObject, forKey: String) {
+        sharedCache.setObject(obj, forKey: forKey as NSString)
+    }
+    
+    func object(forKey: String) -> AnyObject? {
+        return sharedCache.object(forKey: forKey as NSString)
     }
 }
 

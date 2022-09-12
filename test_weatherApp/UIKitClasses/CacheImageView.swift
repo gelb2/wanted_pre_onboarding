@@ -10,8 +10,6 @@ import UIKit
 //TODO: Repository와 어떻게 엮어야 하나 고려...특히 아래 URLSessionRequest도...
 class CacheImageView: UIImageView {
 
-    //TODO: 싱글턴으로 만들긴 했는데 좀 이상하다 리턴이 계속 된다...로그 찍어보니...수정이 필요해보인다.
-    private var sharedCache = NSCache<AnyObject, AnyObject>.sharedCache
     var lastImageURLString: String?
 
     private let sharedHandler = CacheHandler.sharedInstance
@@ -19,7 +17,7 @@ class CacheImageView: UIImageView {
     func loadImage(urlString: String) {
         self.image = nil
         self.lastImageURLString = urlString
-        if let image = sharedCache.object(forKey: urlString as NSString) as? UIImage {
+        if let image = sharedHandler.object(forKey: urlString) as? UIImage {
             self.image = image
             return
         }
@@ -35,7 +33,7 @@ class CacheImageView: UIImageView {
             guard lastImageURLString == absoluteString else { return }
             guard let image = UIImage(data: data.0) else { return }
             
-            sharedCache.setObject(image, forKey: absoluteString as NSString)
+            sharedHandler.setObject(image, forKey: absoluteString)
             DispatchQueue.main.async { [weak self] in
                 self?.image = image
             }
@@ -58,7 +56,7 @@ class CacheImageView: UIImageView {
         self.image = nil
         self.lastImageURLString = urlString
 
-        if let image = sharedCache.object(forKey: urlString as NSString) as? UIImage {
+        if let image = sharedHandler.object(forKey: urlString) as? UIImage {
             self.image = image
             return
         }
@@ -67,7 +65,6 @@ class CacheImageView: UIImageView {
             //TODO: 기본이미지 set
             return }
         
-        //TODO: gcd, 기존의 비동기 처리 대신 "async" 애트리뷰트로 처리 간결하게...
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             //TODO: 에러 핸들링
             if let error = error {
@@ -81,7 +78,7 @@ class CacheImageView: UIImageView {
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { return }
             
-            self?.sharedCache.setObject(image, forKey: url.absoluteString as NSString)
+            self?.sharedHandler.setObject(image, forKey: url.absoluteString)
             
             DispatchQueue.main.async {
                 self?.image = image

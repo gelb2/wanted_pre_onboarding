@@ -99,7 +99,6 @@ extension BasicContentView: Presentable {
     }
 }
 
-//TODO: collectionViewModel과의 연관 로직 개선
 extension BasicContentView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.dataSource.count

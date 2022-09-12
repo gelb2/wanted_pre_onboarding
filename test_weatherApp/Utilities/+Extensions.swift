@@ -7,8 +7,6 @@
 
 import Foundation
 
-//TODO: 엔티티에서 받은 값을 수정하는게 좋을지 뷰모델에서 해주는게 좋을지 생각 좀 해보자...
-//TODO: Sign이 정확한 Sign인지도 검증
 extension String {
     func addTempratureSign() -> Self {
         let sign = "°C"
