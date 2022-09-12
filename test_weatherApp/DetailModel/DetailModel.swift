@@ -25,7 +25,6 @@ class DetailModel: AdditionalContextAddable {
     //일단 두번째 뷰가 전달받은 도시명 대로 api를 호출하는지 확인하는지 확인하고자 임의로 추가
     private var cityNameParam: String = ""
 
-    //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
         self.privateDetailViewModel = DetailViewModel()

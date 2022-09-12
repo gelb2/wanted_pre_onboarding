@@ -43,13 +43,17 @@ class BasicContentViewModel {
     private func populateEntity(result:[BasicWeatherEntity]) {
         privateDataSource = result.map { entity -> BasicCellModel in
             let cellModel = BasicCellModel()
-
-            cellModel.cellViewModel.cityName = entity.cityName
-            cellModel.cellViewModel.humid = entity.main.humidity
-            cellModel.cellViewModel.temp = entity.main.temp
+            let cellViewModel = BasicCellViewModel()
+            cellViewModel.cityName = entity.cityName
+            cellViewModel.humid = entity.main.humidity
+            cellViewModel.temp = entity.main.temp
             
             //TODO: 서버 api에서 weather는 배열이다...왜지...도큐먼트를 봐도 확실한 설명이 없어 보인다...
-            cellModel.cellViewModel.icon = entity.weather.first?.icon ?? ""
+            cellViewModel.icon = entity.weather.first?.icon ?? ""
+            
+            cellModel.didReceiveViewModel(cellViewModel)
+            
+            
             return cellModel
         }
     }

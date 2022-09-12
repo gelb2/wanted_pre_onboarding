@@ -11,11 +11,24 @@ import Foundation
 class BasicCellModel {
     
     //input
-    var cellViewModel: BasicCellViewModel
+    var didReceiveViewModel: (BasicCellViewModel) -> () = { viewModel in }
     
     //output
+    var cellViewModel: BasicCellViewModel {
+        return privateCellViewModel
+    }
+    
+    //properties
+    private var privateCellViewModel: BasicCellViewModel
 
     init() {
-        self.cellViewModel = BasicCellViewModel()
+        self.privateCellViewModel = BasicCellViewModel()
+        bind()
+    }
+    
+    private func bind() {
+        didReceiveViewModel = { [weak self] viewModel in
+            self?.privateCellViewModel = viewModel
+        }
     }
 }

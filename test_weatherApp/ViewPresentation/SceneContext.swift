@@ -15,8 +15,7 @@ class SceneContext<Dependency> {
     }
 }
 
-//TODO: SceneContext 클래스와 합치기? SceneContext와 같이 효과적으로 묶는 방법 생각해보기?
-//기본적으로 모델에 주입할 repository, httpclient 이외의 프로퍼티, 파라미터들을 이걸 통해 주입받으면 좋지 않을까 함...
+//repository 같은 필수적으로 주입해야할 사항 이외의 다음 뷰에 필요한 string 같은것 주입시 사용...
 protocol AdditionalContextAddable {
     
     associatedtype contextType
