@@ -28,7 +28,8 @@ class BasicCellModel {
     
     private func bind() {
         didReceiveViewModel = { [weak self] viewModel in
-            self?.privateCellViewModel = viewModel
+            guard let self = self else { return }
+            self.privateCellViewModel = viewModel
         }
     }
 }

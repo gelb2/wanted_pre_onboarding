@@ -102,7 +102,9 @@ extension BasicCellView: Presentable {
     func bind() {
         didReceivedViewModel = { [weak self] viewModel in
             self?.viewModel = viewModel
-            self?.setData()
+            DispatchQueue.main.async {
+                self?.setData()
+            }
         }
     }
     

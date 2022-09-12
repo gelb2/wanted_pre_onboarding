@@ -10,6 +10,11 @@ import UIKit
 class BasicCell: UICollectionViewCell {
     
     var cellView: BasicCellView = BasicCellView(viewModel: BasicCellViewModel())
+    var viewModel = BasicCellModel() {
+        didSet {
+            self.cellView.didReceivedViewModel(self.viewModel.cellViewModel)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,16 +46,15 @@ extension BasicCell: Presentable {
     }
     
     func configureView() {
-        
+        print("cell configure view")
     }
     
     func bind() {
-        
+
     }
     
     func configureCell(viewModel: BasicCellModel) {
-        self.cellView.didReceivedViewModel(viewModel.cellViewModel)
+        self.viewModel = viewModel
     }
-    
-    
 }
+
