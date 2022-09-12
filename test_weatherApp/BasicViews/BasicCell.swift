@@ -48,5 +48,12 @@ extension BasicCell: Presentable {
         
     }
     
+    func configureCell(viewModel: BasicCellViewModel) {
+        self.cellView.cityNameLabel.text = viewModel.cityName
+        self.cellView.humidityLabel.text = viewModel.humidString
+        self.cellView.temperatureLabel.text = viewModel.tempString
+        self.cellView.iconImageView.loadImage(urlString: viewModel.icon)
+    }
+    
     
 }

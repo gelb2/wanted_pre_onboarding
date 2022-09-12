@@ -12,25 +12,25 @@ class BasicModel {
     //input
     
     //output
-    var collectionViewModel: BasicCollectionViewModel {
-        return privateCollectionViewModel
+    var contentViewModel: BasicContentViewModel {
+        return privateContentViewModel
     }
     
     @MainThreadActor var routeSubject: ( (SceneCategory) -> () )?
     
     //properties
-    private var privateCollectionViewModel: BasicCollectionViewModel
+    private var privateContentViewModel: BasicContentViewModel
     private var repository: RepositoryProtocol
 
     //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
-        self.privateCollectionViewModel = BasicCollectionViewModel()
+        self.privateContentViewModel = BasicContentViewModel()
         self.bind()
     }
     
     func bind() {
-        privateCollectionViewModel.propergateDidSelectItem = { [weak self] cityName in
+        privateContentViewModel.propergateDidSelectItem = { [weak self] cityName in
             
             let detailModel = DetailModel(repository: Repository(httpClient: HTTPClient()))
             detailModel.addMoreContext(cityName)
@@ -43,7 +43,7 @@ class BasicModel {
     func populateData() {
         Task {
             guard let entity = await requestAPI() else { return }
-            privateCollectionViewModel.didReceiveEntity(entity)
+            privateContentViewModel.didReceiveEntity(entity)
         }
     }
 

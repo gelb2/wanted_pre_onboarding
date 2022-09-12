@@ -16,7 +16,7 @@ class BasicContentView: UIView {
     var basicContentViewOutput = { }
     
     //properties
-    private var viewModel: BasicCollectionViewModel
+    private var viewModel: BasicContentViewModel
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -26,7 +26,7 @@ class BasicContentView: UIView {
     private let cellSpacing: CGFloat = 1
     private let columns: CGFloat = 3
     
-    init(viewModel: BasicCollectionViewModel) {
+    init(viewModel: BasicContentViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         initViewHierarchy()
@@ -109,11 +109,8 @@ extension BasicContentView: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? BasicCell else {
             fatalError()
         }
-        
-        cell.cellView.cityNameLabel.text = viewModel.dataSource[indexPath.item].cityName
-        cell.cellView.humidityLabel.text = viewModel.dataSource[indexPath.item].humidString
-        cell.cellView.temperatureLabel.text = viewModel.dataSource[indexPath.item].tempString
-        cell.cellView.iconImageView.loadImage(urlString: viewModel.dataSource[indexPath.item].icon)
+        let model = viewModel.dataSource[indexPath.item]
+        cell.configureCell(viewModel: model)
         return cell
     }
 }

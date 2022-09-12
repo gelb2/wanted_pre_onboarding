@@ -93,6 +93,10 @@ extension BasicCellView: Presentable {
     func bind() {
         
     }
+    
+    func setData() {
+        
+    }
 }
 
 

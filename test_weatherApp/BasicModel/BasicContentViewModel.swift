@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BasicCollectionViewModel {
+class BasicContentViewModel {
     
     //input
     var didSelectItemInCollectionView:(_ indexPath: IndexPath) -> () = { (IndexPath) in }

@@ -10,7 +10,7 @@ import UIKit
 class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
     var viewModel: BasicModel
-    lazy var contentView: BasicContentView = BasicContentView(viewModel: self.viewModel.collectionViewModel)
+    lazy var contentView: BasicContentView = BasicContentView(viewModel: self.viewModel.contentViewModel)
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
