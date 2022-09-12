@@ -89,7 +89,7 @@ class BasicModel {
             break
         }
     }
-    
+    /***************************************  depreactated ******************************************/
     private func deprecated1_requestAPI() async -> [BasicWeatherEntity]? {
         //3.7초 //Task로 감싸는 처리는 맞는거 같은데 속도 최적화가 안된다...어딜 건드려야하지...
         let timer = ParkBenchTimer()
