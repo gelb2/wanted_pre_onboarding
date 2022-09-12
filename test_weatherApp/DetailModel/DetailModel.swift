@@ -39,6 +39,14 @@ class DetailModel: AdditionalContextAddable {
         privateDetailViewModel.propergateDismissEvent = { [weak self] in
             self?.routeSubject?(.justClose)
         }
+        
+        privateDetailViewModel.propergateRandomEvent = { [weak self] in
+            let detailModel = DetailModel(repository: Repository(httpClient: HTTPClient()))
+            guard let cityName = self?.randomCityName() else { return }
+            detailModel.addMoreContext(cityName)
+            let sceneContext = SceneContext(dependency: detailModel)
+            self?.routeSubject?(.detail(.detailViewController(sceneContext)))
+        }
     }
 
     func populateData() {
@@ -46,6 +54,11 @@ class DetailModel: AdditionalContextAddable {
             guard let entity = await requestAPI() else { return }
             privateDetailViewModel.didReceiveEntity(entity)
         }
+    }
+    
+    private func randomCityName() -> String {
+        guard let cityName = CityNames.allCases.randomElement()?.rawValue else { return CityNames.seoul.rawValue }
+        return cityName
     }
 
     private func requestAPI() async -> BasicWeatherEntity? {

@@ -26,7 +26,10 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
     func route(to Scene: SceneCategory) {
         guard let scene = buildScene(scene: Scene) else { return }
         guard let nextVC = scene as? UIViewController else { return }
-        present(nextVC, animated: true, completion: nil)
+        
+        let navi = UINavigationController(rootViewController: nextVC)
+        navi.modalPresentationStyle = .fullScreen
+        present(navi, animated: true, completion: nil)
     }
 }
 

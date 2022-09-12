@@ -13,10 +13,13 @@ class DetailViewModel {
     
     var dismissButtonPressed = { }
     
+    var randomButtonPressed = { }
+    
     //output
     var didReceiveViewModel = { }
     var dataSource: DetailDataSourceModel { return privateDataSource }
     var propergateDismissEvent = { }
+    var propergateRandomEvent = { }
 
     //properties
     private var privateDataSource: DetailDataSourceModel = DetailDataSourceModel()
@@ -34,6 +37,10 @@ class DetailViewModel {
         
         dismissButtonPressed = { [weak self] in
             self?.propergateDismissEvent()
+        }
+        
+        randomButtonPressed = { [weak self] in
+            self?.propergateRandomEvent()
         }
     }
     

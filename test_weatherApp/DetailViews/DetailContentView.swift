@@ -23,6 +23,8 @@ class DetailContentView: UIView {
         
     var verticalStackView: UIStackView = UIStackView()
     var closeButton: UIButton = UIButton()
+    var randomButton: UIButton = UIButton()
+    var buttonStackView: UIStackView = UIStackView()
     var titleView: UIView = UIView()
     var firstStackView = UIStackView()
     var secondStackView = UIStackView()
@@ -63,7 +65,7 @@ extension DetailContentView: Presentable {
         scrollView.addSubview(verticalStackView)
         self.addSubview(activityIndicator)
         
-        verticalStackView.addArrangedSubview(closeButton)
+        verticalStackView.addArrangedSubview(buttonStackView)
         verticalStackView.addArrangedSubview(titleView)
         verticalStackView.addArrangedSubview(firstStackView)
         verticalStackView.addArrangedSubview(secondStackView)
@@ -73,6 +75,9 @@ extension DetailContentView: Presentable {
         titleView.addSubview(iconImageView)
         titleView.addSubview(cityNameLabel)
 
+        buttonStackView.addArrangedSubview(closeButton)
+        buttonStackView.addArrangedSubview(randomButton)
+        
         firstStackView.addArrangedSubview(presentHumidityLabel)
         firstStackView.addArrangedSubview(weatherDescriptionLabel)
 
@@ -90,11 +95,13 @@ extension DetailContentView: Presentable {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         closeButton.translatesAutoresizingMaskIntoConstraints = false
+        randomButton.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
         
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         thirdStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,8 +150,8 @@ extension DetailContentView: Presentable {
         ]
         
         constraints += [
-            closeButton.widthAnchor.constraint(equalTo: self.widthAnchor),
-            closeButton.heightAnchor.constraint(equalToConstant: 120),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 100),
+            buttonStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
             titleView.heightAnchor.constraint(equalToConstant: 200),
             titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
             firstStackView.heightAnchor.constraint(equalToConstant: 200),
@@ -171,6 +178,9 @@ extension DetailContentView: Presentable {
         closeButton.setTitle("닫기", for: .normal)
         closeButton.setTitleColor(.red, for: .normal)
         
+        randomButton.setTitle("랜덤", for: .normal)
+        randomButton.setTitleColor(.blue, for: .normal)
+        
         activityIndicator.tintColor = .red
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
@@ -179,6 +189,7 @@ extension DetailContentView: Presentable {
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 8
         
+        buttonStackView.distribution = .fillEqually
         firstStackView.distribution = .fillEqually
         secondStackView.distribution = .fillEqually
         thirdStackView.distribution = .fillEqually
@@ -229,6 +240,7 @@ extension DetailContentView: Presentable {
         activityIndicator.startAnimating()
         
         closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        randomButton.addTarget(self, action: #selector(random), for: .touchUpInside)
         
         viewModel.didReceiveViewModel = { [weak self] in
             DispatchQueue.main.async {
@@ -264,6 +276,10 @@ extension DetailContentView: Presentable {
     
     @objc func dismiss() {
         viewModel.dismissButtonPressed()
+    }
+    
+    @objc func random() {
+        viewModel.randomButtonPressed()
     }
 }
 

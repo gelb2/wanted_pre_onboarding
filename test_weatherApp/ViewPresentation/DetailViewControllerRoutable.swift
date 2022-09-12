@@ -17,6 +17,8 @@ extension DetailViewControllerRoutable where Self: DetailViewController {
         switch scene {
         case .alert(.networkAlert(.normalErrorAlert(let context))):
             nextScene = buildAlert(context: context)
+        case .detail(.detailViewController(let context)):
+            nextScene = buildDetailViewScene(context: context)
         default: break
         }
         return nextScene
@@ -29,7 +31,7 @@ extension DetailViewControllerRoutable where Self: DetailViewController {
         default:
             guard let scene = buildScene(scene: Scene) else { return }
             guard let nextVC = scene as? UIViewController else { return }
-            present(nextVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }
 }
@@ -40,6 +42,15 @@ protocol DetailViewControllerSceneBuildable: SceneBuildable {
 
 extension DetailViewControllerSceneBuildable {
 
+    func buildDetailViewScene(context: SceneContext<DetailModel>) -> Scenable {
+        let nextScene: Scenable
+        
+        let detailModel = context.dependency
+        let detailVC = DetailViewController(viewModel: detailModel)
+        nextScene = detailVC
+        return nextScene
+    }
+    
     func buildAlert(context: AlertDependency) -> Scenable {
         let nextScene: Scenable
         
