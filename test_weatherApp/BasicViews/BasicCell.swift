@@ -9,7 +9,7 @@ import UIKit
 
 class BasicCell: UICollectionViewCell {
     
-    var cellView: BasicCellView = BasicCellView()
+    var cellView: BasicCellView = BasicCellView(viewModel: BasicCellViewModel())
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,10 +49,7 @@ extension BasicCell: Presentable {
     }
     
     func configureCell(viewModel: BasicCellModel) {
-        self.cellView.cityNameLabel.text = viewModel.cellViewModel.cityName
-        self.cellView.humidityLabel.text = viewModel.cellViewModel.humidString
-        self.cellView.temperatureLabel.text = viewModel.cellViewModel.tempString
-        self.cellView.iconImageView.loadImage(urlString: viewModel.cellViewModel.icon)
+        self.cellView.didReceivedViewModel(viewModel.cellViewModel)
     }
     
     

@@ -11,14 +11,23 @@ import SwiftUI
 //TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
 class BasicCellView: UIView {
     
+    //input
+    var didReceivedViewModel: (BasicCellViewModel) -> () = { viewModel in }
+    
+    //output
+    
+    //properties
+    private var viewModel: BasicCellViewModel
+    
     var cityNameLabel: UILabel = UILabel()
     var iconImageView: CacheImageView = CacheImageView()
     var temperatureLabel: UILabel = UILabel()
     var humidityLabel: UILabel = UILabel()
     var bottomStackView: UIStackView = UIStackView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: BasicCellViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         initViewHierarchy()
         configureView()
         bind()
@@ -91,11 +100,18 @@ extension BasicCellView: Presentable {
     }
     
     func bind() {
-        
+        didReceivedViewModel = { [weak self] viewModel in
+            self?.viewModel = viewModel
+            self?.setData()
+        }
     }
     
+    //TODO: dataSet 해주는 과정 자체가 MVVM 스럽지 못하다. 더 MVVM 스럽게 수정필요
     func setData() {
-        
+        cityNameLabel.text = viewModel.cityName
+        iconImageView.loadImage(urlString: viewModel.icon)
+        temperatureLabel.text = viewModel.tempString
+        humidityLabel.text = viewModel.humidString
     }
 }
 
@@ -124,7 +140,7 @@ struct BasicCellViewPreview<View: UIView>: UIViewRepresentable {
 struct BasicCellViewPreviewProvider: PreviewProvider {
     static var previews: some View {
         BasicCellViewPreview {
-            let cell = BasicCellView(frame: .zero)
+            let cell = BasicCellView(viewModel: BasicCellViewModel())
             
             return cell
         }.previewLayout(.fixed(width: 100, height: 100))
