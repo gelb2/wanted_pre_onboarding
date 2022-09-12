@@ -132,12 +132,14 @@ extension DetailContentView: Presentable {
             iconImageView.trailingAnchor.constraint(equalTo: cityNameLabel.leadingAnchor),
             iconImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
             iconImageView.heightAnchor.constraint(equalTo: cityNameLabel.heightAnchor),
-            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor)
+            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),
+            iconImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleView.leadingAnchor)
         ]
 
         constraints += [
             cityNameLabel.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
-            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor)
+            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor),
+            cityNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: titleView.trailingAnchor)
         ]
         
         constraints += [
