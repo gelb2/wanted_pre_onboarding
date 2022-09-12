@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7028C77C1D00D07443 /* BasicModel.swift */; };
-		36B1CB7328C77C4600D07443 /* BasicCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7228C77C4600D07443 /* BasicCellViewModel.swift */; };
+		36B1CB7328C77C4600D07443 /* BasicCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7228C77C4600D07443 /* BasicCellModel.swift */; };
 		36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */; };
 		36B1CB7728C785EF00D07443 /* SceneContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7628C785EF00D07443 /* SceneContext.swift */; };
 		36B1CB7A28C786DE00D07443 /* Routable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7928C786DE00D07443 /* Routable.swift */; };
@@ -31,6 +31,7 @@
 		36B1CBA728CAE10F00D07443 /* DetailDataSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */; };
 		36B1CBAB28CB0FD900D07443 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */; };
 		36B1CBAD28CB2D8300D07443 /* +Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CBAC28CB2D8300D07443 /* +Extensions.swift */; };
+		36F0419328CF338E00F772BF /* BasicCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F0419228CF338E00F772BF /* BasicCellViewModel.swift */; };
 		4CCDE80028C7211500F05AFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */; };
 		4CCDE80228C7211500F05AFF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80128C7211500F05AFF /* SceneDelegate.swift */; };
 		4CCDE80428C7211500F05AFF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCDE80328C7211500F05AFF /* BasicViewController.swift */; };
@@ -65,7 +66,7 @@
 
 /* Begin PBXFileReference section */
 		36B1CB7028C77C1D00D07443 /* BasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicModel.swift; sourceTree = "<group>"; };
-		36B1CB7228C77C4600D07443 /* BasicCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCellViewModel.swift; sourceTree = "<group>"; };
+		36B1CB7228C77C4600D07443 /* BasicCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCellModel.swift; sourceTree = "<group>"; };
 		36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSearchViewModel.swift; sourceTree = "<group>"; };
 		36B1CB7628C785EF00D07443 /* SceneContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneContext.swift; sourceTree = "<group>"; };
 		36B1CB7928C786DE00D07443 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		36B1CBA628CAE10F00D07443 /* DetailDataSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDataSourceModel.swift; sourceTree = "<group>"; };
 		36B1CBAA28CB0FD900D07443 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		36B1CBAC28CB2D8300D07443 /* +Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Extensions.swift"; sourceTree = "<group>"; };
+		36F0419228CF338E00F772BF /* BasicCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCellViewModel.swift; sourceTree = "<group>"; };
 		4CCDE7FC28C7211500F05AFF /* test_weatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test_weatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCDE7FF28C7211500F05AFF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCDE80128C7211500F05AFF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -285,7 +287,8 @@
 			children = (
 				36B1CB7028C77C1D00D07443 /* BasicModel.swift */,
 				36B1CB9528C99EC500D07443 /* BasicContentViewModel.swift */,
-				36B1CB7228C77C4600D07443 /* BasicCellViewModel.swift */,
+				36B1CB7228C77C4600D07443 /* BasicCellModel.swift */,
+				36F0419228CF338E00F772BF /* BasicCellViewModel.swift */,
 				36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */,
 			);
 			path = BasicModel;
@@ -421,7 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36B1CB7328C77C4600D07443 /* BasicCellViewModel.swift in Sources */,
+				36B1CB7328C77C4600D07443 /* BasicCellModel.swift in Sources */,
 				36B1CB8528C89C5E00D07443 /* Presentable.swift in Sources */,
 				36B1CB7C28C7870D00D07443 /* SceneCategory.swift in Sources */,
 				36B1CB9428C8DCD500D07443 /* ParkBenchTimer.swift in Sources */,
@@ -451,6 +454,7 @@
 				36B1CBA528CADE2700D07443 /* DetailViewModel.swift in Sources */,
 				36B1CB8A28C89FBD00D07443 /* BasicCell.swift in Sources */,
 				36B1CB8028C78CBF00D07443 /* SceneDelegateRoutable.swift in Sources */,
+				36F0419328CF338E00F772BF /* BasicCellViewModel.swift in Sources */,
 				36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */,
 				4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */,
 			);

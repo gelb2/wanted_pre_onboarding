@@ -16,13 +16,14 @@ class BasicContentViewModel {
     //output
     var didReceiveViewModel = { }
     var propergateDidSelectItem: (_ String: String) -> () = { (String) in }
-    var dataSource: [BasicCellViewModel] { return privateDataSource }
+    var dataSource: [BasicCellModel] { return privateDataSource }
     
     //properties
-    var privateDataSource: [BasicCellViewModel] = []
+    var privateDataSource: [BasicCellModel] = []
     
     init() {
         bind()
+        
     }
 
     private func bind() {
@@ -40,19 +41,20 @@ class BasicContentViewModel {
     }
     
     private func populateEntity(result:[BasicWeatherEntity]) {
-        privateDataSource = result.map { entity -> BasicCellViewModel in
-            let weather = BasicCellViewModel()
-            weather.cityName = entity.cityName
-            weather.humid = entity.main.humidity
-            weather.temp = entity.main.temp
+        privateDataSource = result.map { entity -> BasicCellModel in
+            let cellModel = BasicCellModel()
+
+            cellModel.cellViewModel.cityName = entity.cityName
+            cellModel.cellViewModel.humid = entity.main.humidity
+            cellModel.cellViewModel.temp = entity.main.temp
             
             //TODO: 서버 api에서 weather는 배열이다...왜지...도큐먼트를 봐도 확실한 설명이 없어 보인다...
-            weather.icon = entity.weather.first?.icon ?? ""
-            return weather
+            cellModel.cellViewModel.icon = entity.weather.first?.icon ?? ""
+            return cellModel
         }
     }
     
     private func findAndReturnSelectedItem(indexPathItem: Int) -> String {
-        privateDataSource[indexPathItem].cityName
+        privateDataSource[indexPathItem].cellViewModel.cityName
     }
 }
