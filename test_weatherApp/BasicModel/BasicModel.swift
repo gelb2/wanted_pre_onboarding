@@ -44,6 +44,10 @@ class BasicModel {
             self?.routeSubject?(.detail(.detailViewController(sceneContext)))
         }
         
+        privateSearchViewModel.propergateFetchAllEvent = { [weak self] in
+            self?.populateData()
+        }
+        
         privateSearchViewModel.propergateUserInput = { [weak self] userInput in
             self?.privateContentViewModel.didReceiveUserInput(userInput)
         }
@@ -53,13 +57,16 @@ class BasicModel {
             
             let okAction = AlertActionDependency(title: "OK", style: .default) { [weak self] _ in
                 guard let self = self else { return }
+                self.privateContentViewModel.turnOnIndicator?(())
                 Task {
                     do {
                         async let entity: BasicWeatherEntity = self.repository.fetch(api: .weatherData(.cityName(name: userInput)))
                         let entities = try await [entity]
                         self.privateContentViewModel.didReceiveEntity(entities)
+                        self.privateContentViewModel.turnOffIndicator?(())
                     } catch {
                         self.handleError(error: error)
+                        self.privateContentViewModel.turnOffIndicator?(())
                     }
                 }
             }
@@ -72,8 +79,10 @@ class BasicModel {
 
     func populateData() {
         Task {
+            privateContentViewModel.turnOnIndicator?(())
             guard let entity = await requestAPI() else { return }
             privateContentViewModel.didReceiveEntity(entity)
+            privateContentViewModel.turnOffIndicator?(())
         }
     }
 

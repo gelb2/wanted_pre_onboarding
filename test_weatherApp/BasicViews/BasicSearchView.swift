@@ -17,7 +17,9 @@ class BasicSearchView: UIView, BasicSearchViewStyling {
     //properties
     private var viewModel: BasicSearchViewModel
     
+    let horizontalStackView = UIStackView()
     var textField: UITextField = UITextField()
+    var fetchAllButton: UIButton = UIButton()
     
     init(viewModel: BasicSearchViewModel) {
         self.viewModel = viewModel
@@ -35,26 +37,41 @@ class BasicSearchView: UIView, BasicSearchViewStyling {
 
 extension BasicSearchView: Presentable {
     func initViewHierarchy() {
-        self.addSubview(textField)
+        
+        self.addSubview(horizontalStackView)
+        
+        horizontalStackView.addArrangedSubview(textField)
+        horizontalStackView.addArrangedSubview(fetchAllButton)
+        
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
+        fetchAllButton.translatesAutoresizingMaskIntoConstraints = false
         
         var constraints: [NSLayoutConstraint] = []
         defer { NSLayoutConstraint.activate(constraints) }
         
         constraints += [
-            textField.topAnchor.constraint(equalTo: self.topAnchor),
-            textField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            textField.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            horizontalStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            horizontalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            horizontalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
     }
     
     func configureView() {
+        self.addStyles(style: contentViewStyle)
+        horizontalStackView.addStyles(style: horizontalStackViewStyle)
         textField.addStyles(style: textFieldStyle)
+        fetchAllButton.addStyles(style: fetchAllButtonStyle)
     }
     
     func bind() {
         textField.delegate = self
+        fetchAllButton.addTarget(self, action: #selector(fetchAllButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func fetchAllButtonPressed() {
+        viewModel.fetchAllButtonPressed()
     }
 }
 

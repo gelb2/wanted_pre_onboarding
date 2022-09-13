@@ -12,9 +12,11 @@ class BasicSearchViewModel {
     
     //input
     var enterKeyPressed: (String) -> () = { userInput in }
+    var fetchAllButtonPressed: () -> () = { }
     
     //output
     var propergateUserInput: (String) -> () = { userInput in }
+    var propergateFetchAllEvent: () -> () = { }
     
     //properties
     init() {
@@ -25,6 +27,10 @@ class BasicSearchViewModel {
         enterKeyPressed = { [weak self] userInput in
             guard let filteredInput = self?.removeSpaces(userInput: userInput) else { return }
             self?.propergateUserInput(filteredInput)
+        }
+        
+        fetchAllButtonPressed = { [weak self] in
+            self?.propergateFetchAllEvent()
         }
     }
     

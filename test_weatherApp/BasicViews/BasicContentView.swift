@@ -90,6 +90,16 @@ extension BasicContentView: Presentable {
             let indexPath = IndexPath(item: indexPathItem, section: 0)
             self?.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
+        
+        viewModel.turnOnIndicator = { [weak self] _ in
+            self?.collectionView.isHidden = true
+            self?.activityIndicator.startAnimating()
+        }
+        
+        viewModel.turnOffIndicator = { [weak self] _ in
+            self?.collectionView.isHidden = false
+            self?.activityIndicator.stopAnimating()
+        }
     }
 }
 

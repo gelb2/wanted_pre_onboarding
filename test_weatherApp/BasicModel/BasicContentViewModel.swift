@@ -15,6 +15,8 @@ class BasicContentViewModel {
     var didReceiveEntity: ([BasicWeatherEntity]) -> () = { entity in }
     
     //output
+    @MainThreadActor var turnOnIndicator: ( ((Void)) -> () )?
+    @MainThreadActor var turnOffIndicator: ( ((Void)) -> () )?
     @MainThreadActor var didReceiveViewModel: ( ((Void)) -> () )?
     @MainThreadActor var scrollToProperIndex: ( (Int) -> () )?
     @MainThreadActor var userInputNotValid: ( (String) -> () )?

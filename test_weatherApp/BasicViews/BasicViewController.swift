@@ -57,7 +57,7 @@ extension BasicViewController: Presentable {
         ]
         
         constraints += [
-            contentView.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 8),
+            contentView.topAnchor.constraint(equalTo: searchView.bottomAnchor),
             contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
