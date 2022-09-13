@@ -23,7 +23,7 @@ class BasicContentView: UIView {
     private let layout = UICollectionViewFlowLayout()
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     private let reuseIdentifier = "BasicCell"
-    private let cellSpacing: CGFloat = 1
+    private let cellSpacing: CGFloat = 10
     private let columns: CGFloat = 3
     
     init(viewModel: BasicContentViewModel) {

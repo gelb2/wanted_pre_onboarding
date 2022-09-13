@@ -71,7 +71,7 @@ extension BasicCellView: Presentable {
         ]
         
         constraints += [
-            bottomStackView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 16),
+            bottomStackView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 4),
             bottomStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bottomStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bottomStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -80,6 +80,12 @@ extension BasicCellView: Presentable {
     
     func configureView() {
         self.backgroundColor = .white
+        
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 1
+        self.layer.shadowOffset = CGSize(width: 10.0, height: -3.0)
+        self.layer.shadowRadius = 10
+        
         cityNameLabel.text = "seoul"
         cityNameLabel.textColor = .black
         cityNameLabel.textAlignment = .center
@@ -95,8 +101,8 @@ extension BasicCellView: Presentable {
         humidityLabel.textAlignment = .center
         humidityLabel.font = UIFont.systemFont(ofSize: 16)
         
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .fill
+        bottomStackView.axis = .vertical
+        bottomStackView.distribution = .fillEqually
     }
     
     func bind() {

@@ -36,11 +36,25 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
 extension BasicViewController: Presentable {
     func initViewHierarchy() {
-        self.view = contentView
+        self.view = UIView()
+        self.view.addSubview(contentView)
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraints: [NSLayoutConstraint] = []
+        
+        defer { NSLayoutConstraint.activate(constraints) }
+        
+        constraints += [
+            contentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ]
     }
     
     func configureView() {
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .white
     }
     
     func bind() {
