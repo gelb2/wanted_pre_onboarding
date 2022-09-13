@@ -11,7 +11,6 @@ class BasicViewController: UIViewController, BasicViewControllerRoutable {
 
     var viewModel: BasicModel
     lazy var contentView: BasicContentView = BasicContentView(viewModel: self.viewModel.contentViewModel)
-    lazy var searchView: BasicSearchView = BasicSearchView(viewModel: self.viewModel.searchViewModel)
     
     init(viewModel: BasicModel) {
         self.viewModel = viewModel
@@ -39,10 +38,9 @@ extension BasicViewController: Presentable {
     func initViewHierarchy() {
         self.view = UIView()
         self.view.addSubview(contentView)
-        self.view.addSubview(searchView)
         self.title = "City Weathers"
         
-        searchView.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
         var constraints: [NSLayoutConstraint] = []
@@ -50,14 +48,7 @@ extension BasicViewController: Presentable {
         defer { NSLayoutConstraint.activate(constraints) }
         
         constraints += [
-            searchView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            searchView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            searchView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            searchView.heightAnchor.constraint(equalToConstant: 36)
-        ]
-        
-        constraints += [
-            contentView.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 8),
+            contentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)

@@ -32,7 +32,6 @@ enum SceneCategory {
         
         enum basicViewRelated {
             case moveToDetailView(AlertDependency)
-            case userSearchInputError(AlertDependency)
         }
         
         enum detailViewRelated {

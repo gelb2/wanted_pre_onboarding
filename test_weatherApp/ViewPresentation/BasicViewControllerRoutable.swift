@@ -18,8 +18,6 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
             nextScene = buildDetailViewScene(context: context)
         case .alert(.networkAlert(.normalErrorAlert(let context))):
             nextScene = buildAlert(context: context)
-        case .alert(.basicViewAlert(.userSearchInputError(let context))):
-            nextScene = buildAlert(context: context)
         default: break
         }
         return nextScene
