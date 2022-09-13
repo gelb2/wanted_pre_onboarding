@@ -217,12 +217,10 @@ extension DetailContentView: Presentable {
         closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         randomButton.addTarget(self, action: #selector(random), for: .touchUpInside)
         
-        viewModel.didReceiveViewModel = { [weak self] in
-            DispatchQueue.main.async {
-                self?.scrollView.isHidden = false
-                self?.setData()
-                self?.activityIndicator.stopAnimating()
-            }
+        viewModel.didReceiveViewModel = { [weak self] _ in
+            self?.scrollView.isHidden = false
+            self?.setData()
+            self?.activityIndicator.stopAnimating()
         }
     }
     

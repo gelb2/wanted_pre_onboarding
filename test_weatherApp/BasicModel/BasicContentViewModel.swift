@@ -14,7 +14,7 @@ class BasicContentViewModel {
     var didReceiveEntity: ([BasicWeatherEntity]) -> () = { entity in }
     
     //output
-    var didReceiveViewModel = { }
+    @MainThreadActor var didReceiveViewModel: ( ((Void)) -> () )?
     var propergateDidSelectItem: (_ String: String) -> () = { (String) in }
     var dataSource: [BasicCellModel] { return privateDataSource }
     
@@ -30,7 +30,7 @@ class BasicContentViewModel {
 
         didReceiveEntity = { [weak self] entity in
             self?.populateEntity(result: entity)
-            self?.didReceiveViewModel()
+            self?.didReceiveViewModel?(())
         }
         
         didSelectItemInCollectionView = { [weak self] indexPath in

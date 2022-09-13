@@ -16,7 +16,7 @@ class DetailViewModel {
     var randomButtonPressed = { }
     
     //output
-    var didReceiveViewModel = { }
+    @MainThreadActor var didReceiveViewModel: ( ((Void)) -> () )?
     var dataSource: DetailDataSourceModel { return privateDataSource }
     var propergateDismissEvent = { }
     var propergateRandomEvent = { }
@@ -31,7 +31,7 @@ class DetailViewModel {
     private func bind() {
         didReceiveEntity = { [weak self] entity in
             self?.populateEntity(result: entity)
-            self?.didReceiveViewModel()
+            self?.didReceiveViewModel?(())
         }
         
         dismissButtonPressed = { [weak self] in

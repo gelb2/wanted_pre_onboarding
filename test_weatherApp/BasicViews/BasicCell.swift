@@ -12,7 +12,7 @@ class BasicCell: UICollectionViewCell {
     var cellView: BasicCellView = BasicCellView(viewModel: BasicCellViewModel())
     var viewModel = BasicCellModel() {
         didSet {
-            self.cellView.didReceivedViewModel(self.viewModel.cellViewModel)
+            self.cellView.didReceivedViewModel?(self.viewModel.cellViewModel)
         }
     }
     

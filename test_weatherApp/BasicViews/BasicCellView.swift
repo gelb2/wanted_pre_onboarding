@@ -12,7 +12,7 @@ import SwiftUI
 class BasicCellView: UIView, BasicCellStyling {
     
     //input
-    var didReceivedViewModel: (BasicCellViewModel) -> () = { viewModel in }
+    @MainThreadActor var didReceivedViewModel: ((BasicCellViewModel) -> ())?
     
     //output
     
@@ -97,9 +97,7 @@ extension BasicCellView: Presentable {
     func bind() {
         didReceivedViewModel = { [weak self] viewModel in
             self?.viewModel = viewModel
-            DispatchQueue.main.async {
-                self?.setData()
-            }
+            self?.setData()
         }
     }
     

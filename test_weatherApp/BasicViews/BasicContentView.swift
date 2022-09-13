@@ -81,11 +81,9 @@ extension BasicContentView: Presentable {
 
         activityIndicator.startAnimating()
         
-        viewModel.didReceiveViewModel = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-                self?.activityIndicator.stopAnimating()
-            }
+        viewModel.didReceiveViewModel = { [weak self] _ in
+            self?.collectionView.reloadData()
+            self?.activityIndicator.stopAnimating()
         }
     }
 }
