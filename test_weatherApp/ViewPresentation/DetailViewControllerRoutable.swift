@@ -31,7 +31,7 @@ extension DetailViewControllerRoutable where Self: DetailViewController {
         default:
             guard let scene = buildScene(scene: Scene) else { return }
             guard let nextVC = scene as? UIViewController else { return }
-            self.navigationController?.pushViewController(nextVC, animated: true)
+            present(nextVC, animated: true, completion: nil)
         }
     }
 }

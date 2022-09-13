@@ -38,6 +38,8 @@ extension BasicViewController: Presentable {
     func initViewHierarchy() {
         self.view = UIView()
         self.view.addSubview(contentView)
+        self.title = "City Weathers"
+        
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         

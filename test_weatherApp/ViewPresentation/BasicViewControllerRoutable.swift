@@ -24,14 +24,17 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
     }
     
     func route(to Scene: SceneCategory) {
-        guard let scene = buildScene(scene: Scene) else { return }
-        guard let nextVC = scene as? UIViewController else { return }
-        
-        let navi = BasicNavigationController(rootViewController: nextVC)
-//        nextVC.didMove(toParent: navi)
-//        let navi = UINavigationController(rootViewController: nextVC)
-        navi.modalPresentationStyle = .formSheet
-        present(navi, animated: true, completion: nil)
+        switch Scene {
+        case .detail(_):
+            guard let scene = buildScene(scene: Scene) else { return }
+            guard let nextVC = scene as? UIViewController else { return }
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        case .alert(_):
+            guard let scene = buildScene(scene: Scene) else { return }
+            guard let nextVC = scene as? UIViewController else { return }
+            present(nextVC, animated: true, completion: nil)
+        default: break
+        }
     }
 }
 

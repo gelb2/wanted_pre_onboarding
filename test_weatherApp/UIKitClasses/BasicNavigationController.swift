@@ -36,7 +36,7 @@ extension BasicNavigationController: Presentable {
     }
     
     func configureView() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .blue
         navigationBar.addStyles(style: navigationBarStyle)
     }
     

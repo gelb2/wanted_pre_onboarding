@@ -43,12 +43,12 @@ protocol SceneDelegateSceneBuildable: SceneBuildable {
 
 extension SceneDelegateSceneBuildable {
     func buildFirstViewScene(context: SceneContext<BasicModel>) -> Scenable {
-        let nextScene: Scenable
-        
         let basicModel = context.dependency
-        let firstVC = BasicViewController(viewModel: basicModel)
-        nextScene = firstVC
-        return nextScene
+        let firstVC = BasicViewController(viewModel: basicModel) as UIViewController
+        
+        let navi = BasicNavigationController(rootViewController: firstVC)
+        
+        return navi
     }
 }
 

@@ -63,5 +63,14 @@ extension DetailViewController: Presentable {
         viewModel.routeSubject = { [weak self] sceneCategory in
             self?.route(to: sceneCategory)
         }
+        
+        var isPushedByNavi = false
+        if self.presentingViewController != nil {
+            isPushedByNavi = false
+        } else if self.presentingViewController == nil {
+            isPushedByNavi = true
+        }
+        
+        contentView.isPushedByNavi(isPushedByNavi)
     }
 }

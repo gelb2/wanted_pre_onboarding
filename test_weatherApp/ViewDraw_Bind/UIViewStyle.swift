@@ -14,9 +14,14 @@ protocol BasicNavigationControllerStyling: Styling { }
 
 extension BasicNavigationControllerStyling {
     var navigationBarStyle: (UINavigationBar) -> () {
-        {
-            $0.barTintColor = .blue
-            $0.shadowImage = UIImage()
+        {   $0.tintColor = .red //backbutton color
+            $0.barTintColor = .black //default: nil //navi bar tintcolor //스크롤 아래로 하다 보면 색이 드러남
+            $0.shadowImage = UIImage() //default: nil
+            $0.prefersLargeTitles = true
+            $0.isTranslucent = true
+            $0.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+            $0.titleTextAttributes = [.foregroundColor : UIColor.white]
+            $0.backgroundColor = .white //navi bar backgroundcolor // 처음 네비컨, 뷰컨 init 했을시 보이는 네비바 색
         }
     }
 }
@@ -46,7 +51,6 @@ extension BasicContentViewStyling {
     
     var collectionViewFlowLayoutStyle: (UICollectionViewFlowLayout) -> () {
         {
-            // TODO: 지역변수들 다른 방법으로 만들고 할당해주기...
             let cellSpacing: CGFloat = cellSpacing
             let columns: CGFloat = columns
             $0.scrollDirection = .vertical

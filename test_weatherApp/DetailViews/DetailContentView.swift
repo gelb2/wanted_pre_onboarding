@@ -12,11 +12,17 @@ import SwiftUI
 class DetailContentView: UIView, DetailContentViewStyling, ActivityIndicatorViewStyling {
     
     //input
+    var isPushedByNavi: (Bool) -> () = { bool in }
     
     //output
     
     //properties
     private var viewModel: DetailViewModel
+    private var isSuperViewPushedByNavi: Bool = false {
+        didSet {
+            closeButton.isHidden = isSuperViewPushedByNavi
+        }
+    }
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var scrollView: UIScrollView = UIScrollView()
@@ -211,6 +217,11 @@ extension DetailContentView: Presentable {
     }
     
     func bind() {
+        
+        isPushedByNavi = { [weak self] bool in
+            self?.isSuperViewPushedByNavi = bool
+        }
+        
         scrollView.isHidden = true
         activityIndicator.startAnimating()
         
