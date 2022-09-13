@@ -168,12 +168,15 @@ extension DetailContentViewStyling {
     }
 }
 
-//TODO: uilabel의 익스텐션을 파는 것은 너무 협소해 보인다...다른 uiview 서브클래스들에 대한 대응은 어떻게 하지...
-//uiview나 uiviewcontroller나 init할때 init(coder: nscoder) 를 쓰는 경우가 있다...
-//ex.storyboard, xib init
-//그럼 nscoder 클래스를 활용해 uiview인스턴스가 메소드를 호출하게끔 트릭을 구현할 수 있지 않을까
-//공식 도큐먼트를 찾아보니 uiview, nsview같은 것들은 nscoding을 따른다고 함
-//nscoder는 nsobject를 상속받는다고 함
+
+//uiview나 uiviewcontroller나 init할때 init(coder: nscoder) 를 쓰는 경우가 있다...(ex.storyboard, xib init)
+//그럼 nscoder 클래스를 활용해 uiview인스턴스가 메소드를 호출하게끔 트릭을 구현할 수 있지 않을까 하는 발상에서 출발함...
+//그래서 나온 결과
+//1. 공식 도큐먼트를 찾아보니 uiview, nsview같은 것들은 nscoding을 따른다고 함
+//2. nscoder는 nsobject를 상속받는다고 함
+//3. 근데 nscoder를 활용해서 해보려니 잘 안됨...
+//4. 혹시나 해서 nscoding으로 뭔가가 되지 않을까 해서 해보니 됨...
+//5. nscoder와 nscoding의 관계는 찾아도 잘 나오지 않음...둘이 분명히 어떤 관계가 있어서 이 로직이 작동하는게 맞는데...
 extension NSCoding where Self: UIView {
     @discardableResult
     func addStyles(style: (Self) ->()) -> Self {
