@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3660165528D044BC00678B32 /* UIViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3660165428D044BC00678B32 /* UIViewStyle.swift */; };
+		3660165728D0A33000678B32 /* BasicSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3660165628D0A33000678B32 /* BasicSearchView.swift */; };
 		36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7028C77C1D00D07443 /* BasicModel.swift */; };
 		36B1CB7328C77C4600D07443 /* BasicCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7228C77C4600D07443 /* BasicCellModel.swift */; };
 		36B1CB7528C77C6B00D07443 /* BasicSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		3660165428D044BC00678B32 /* UIViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewStyle.swift; sourceTree = "<group>"; };
+		3660165628D0A33000678B32 /* BasicSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSearchView.swift; sourceTree = "<group>"; };
 		36B1CB7028C77C1D00D07443 /* BasicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicModel.swift; sourceTree = "<group>"; };
 		36B1CB7228C77C4600D07443 /* BasicCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCellModel.swift; sourceTree = "<group>"; };
 		36B1CB7428C77C6B00D07443 /* BasicSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSearchViewModel.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				36B1CB9728C9A0F600D07443 /* BasicContentView.swift */,
 				36B1CB8928C89FBD00D07443 /* BasicCell.swift */,
 				36B1CB8B28C8B20000D07443 /* BasicCellView.swift */,
+				3660165628D0A33000678B32 /* BasicSearchView.swift */,
 			);
 			path = BasicViews;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				36F0419B28CF9AEB00F772BF /* BasicNavigationController.swift in Sources */,
 				36B1CB8028C78CBF00D07443 /* SceneDelegateRoutable.swift in Sources */,
 				36F0419328CF338E00F772BF /* BasicCellViewModel.swift in Sources */,
+				3660165728D0A33000678B32 /* BasicSearchView.swift in Sources */,
 				36B1CB7128C77C1D00D07443 /* BasicModel.swift in Sources */,
 				4CCDE83528C7356C00F05AFF /* Repository.swift in Sources */,
 			);
