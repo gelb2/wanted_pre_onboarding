@@ -7,41 +7,85 @@
 
 import UIKit
 
-//TODO: Repository와 어떻게 엮어야 하나 고려...특히 아래 URLSessionRequest도...
 class CacheImageView: UIImageView {
-    
-    private var sharedCache = NSCache<AnyObject, AnyObject>.sharedCache
-    private var lastImageURLString: String?
-    
+
+    var lastImageURLString: String?
+
+    private let sharedHandler = CacheHandler.sharedInstance
     
     func loadImage(urlString: String) {
         self.image = nil
         self.lastImageURLString = urlString
-        
-        if let image = sharedCache.object(forKey: urlString as NSString) as? UIImage {
+        if let image = sharedHandler.object(forKey: urlString) as? UIImage {
+            self.image = image
+            return
+        }
+        Task {
+            await requestImage(urlString: urlString)
+        }
+    }
+    
+    private func requestImage(urlString: String) async {
+        do {
+            let data = try await sharedHandler.fetch(with: urlString)
+            guard let absoluteString = data.1?.absoluteString else { setErrorImage()
+                return }
+            guard lastImageURLString == absoluteString else { setErrorImage()
+                return }
+            guard let image = UIImage(data: data.0) else { setErrorImage()
+                return }
+            
+            sharedHandler.setObject(image, forKey: absoluteString)
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image
+            }
+        } catch {
+            handleError(error: error)
+        }
+    }
+    
+    private func setErrorImage() {
+        self.image = UIImage(systemName: .errorImage)
+    }
+    
+    func handleError(error: Error) {
+        let error = error as? HTTPError
+        switch error {
+        case .badURL, .badResponse, .errorDecodingData, .invalidURL, .iosDevloperIsStupid:
+            setErrorImage()
+        default:
+            break
+        }
+    }
+    
+    func deprecated_requestImage(urlString: String) {
+        self.image = nil
+        self.lastImageURLString = urlString
+
+        if let image = sharedHandler.object(forKey: urlString) as? UIImage {
             self.image = image
             return
         }
         
         guard let url = URL(string: urlString) else {
-            //TODO: 기본이미지 set
+            setErrorImage()
             return }
         
-        //TODO: gcd, 기존의 비동기 처리 대신 "async" 애트리뷰트로 처리 간결하게...
         URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            //TODO: 에러 핸들링
+            
             if let error = error {
-                print("이미지 로딩 실패 : \(String(describing: error))")
+                self?.handleError(error: error)
             }
-            //TODO: 예외처리
+            
             if self?.lastImageURLString != url.absoluteString {
+                self?.setErrorImage()
                 return
             }
-            //TODO: 예외처리
+            
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { return }
             
-            self?.sharedCache.setObject(image, forKey: url.absoluteString as NSString)
+            self?.sharedHandler.setObject(image, forKey: url.absoluteString)
             
             DispatchQueue.main.async {
                 self?.image = image
@@ -49,7 +93,4 @@ class CacheImageView: UIImageView {
         }.resume()
         
     }
-    
-    
-
 }

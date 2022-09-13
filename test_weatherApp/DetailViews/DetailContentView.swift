@@ -8,25 +8,29 @@
 import UIKit
 import SwiftUI
 
-//TODO: ui개선
-//특히 날씨아이콘 다른데로 옮기고 작게 띄우도록, 크니까 깨진다
-//필수로 표시해야 하는 정보
-//도시이름, 날씨아이콘, 현재기온, 체감기온, 현재습도, 최저기온, 최고기온, 기압, 풍속, 날씨설명
-class DetailContentView: UIView {
+//TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
+class DetailContentView: UIView, DetailContentViewStyling, ActivityIndicatorViewStyling {
     
     //input
-    var didReceivedViewModel: (_: DetailViewModel) -> () = { viewModel in }
+    var isPushedByNavi: (Bool) -> () = { bool in }
     
     //output
     
-    
     //properties
-    private var viewModel: DetailViewModel = DetailViewModel()
+    private var viewModel: DetailViewModel
+    private var isSuperViewPushedByNavi: Bool = false {
+        didSet {
+            closeButton.isHidden = isSuperViewPushedByNavi
+        }
+    }
     
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var scrollView: UIScrollView = UIScrollView()
         
     var verticalStackView: UIStackView = UIStackView()
+    var closeButton: UIButton = UIButton()
+    var randomButton: UIButton = UIButton()
+    var buttonStackView: UIStackView = UIStackView()
     var titleView: UIView = UIView()
     var firstStackView = UIStackView()
     var secondStackView = UIStackView()
@@ -44,9 +48,11 @@ class DetailContentView: UIView {
     var windSpeedLabel: UILabel = UILabel()
     var weatherDescriptionLabel: UILabel = UILabel()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        initViewHierachy()
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(frame: .zero)
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -56,12 +62,16 @@ class DetailContentView: UIView {
     }
 }
 
-extension DetailContentView: Presentable {
-    func initViewHierachy() {
+extension DetailContentView: LoadingIndicatorPresentable { }
 
+extension DetailContentView: Presentable {
+    func initViewHierarchy() {
+        
         self.addSubview(scrollView)
         scrollView.addSubview(verticalStackView)
-
+        self.addSubview(activityIndicator)
+        
+        verticalStackView.addArrangedSubview(buttonStackView)
         verticalStackView.addArrangedSubview(titleView)
         verticalStackView.addArrangedSubview(firstStackView)
         verticalStackView.addArrangedSubview(secondStackView)
@@ -71,6 +81,9 @@ extension DetailContentView: Presentable {
         titleView.addSubview(iconImageView)
         titleView.addSubview(cityNameLabel)
 
+        buttonStackView.addArrangedSubview(closeButton)
+        buttonStackView.addArrangedSubview(randomButton)
+        
         firstStackView.addArrangedSubview(presentHumidityLabel)
         firstStackView.addArrangedSubview(weatherDescriptionLabel)
 
@@ -82,14 +95,19 @@ extension DetailContentView: Presentable {
 
         fourthStackView.addArrangedSubview(pressureLabel)
         fourthStackView.addArrangedSubview(windSpeedLabel)
-
-
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        randomButton.translatesAutoresizingMaskIntoConstraints = false
         
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
         
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         firstStackView.translatesAutoresizingMaskIntoConstraints = false
         secondStackView.translatesAutoresizingMaskIntoConstraints = false
         thirdStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,15 +145,19 @@ extension DetailContentView: Presentable {
             iconImageView.trailingAnchor.constraint(equalTo: cityNameLabel.leadingAnchor),
             iconImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
             iconImageView.heightAnchor.constraint(equalTo: cityNameLabel.heightAnchor),
-            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor)
+            iconImageView.widthAnchor.constraint(equalTo: iconImageView.heightAnchor),
+            iconImageView.leadingAnchor.constraint(greaterThanOrEqualTo: titleView.leadingAnchor)
         ]
 
         constraints += [
             cityNameLabel.centerYAnchor.constraint(equalTo: titleView.centerYAnchor),
-            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor)
+            cityNameLabel.centerXAnchor.constraint(equalTo: titleView.centerXAnchor),
+            cityNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: titleView.trailingAnchor)
         ]
         
         constraints += [
+            buttonStackView.heightAnchor.constraint(equalToConstant: 100),
+            buttonStackView.widthAnchor.constraint(equalTo: self.widthAnchor),
             titleView.heightAnchor.constraint(equalToConstant: 200),
             titleView.widthAnchor.constraint(equalTo: self.widthAnchor),
             firstStackView.heightAnchor.constraint(equalToConstant: 200),
@@ -147,6 +169,11 @@ extension DetailContentView: Presentable {
             fourthStackView.heightAnchor.constraint(equalToConstant: 200),
             fourthStackView.widthAnchor.constraint(equalTo: self.widthAnchor)
         ]
+        
+        constraints += [
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ]
     }
     
     func configureView() {
@@ -154,65 +181,61 @@ extension DetailContentView: Presentable {
         
         scrollView.showsHorizontalScrollIndicator = true
         
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 8
+        closeButton.addStyles(style: closeButtonStyle)
         
-        firstStackView.distribution = .fillEqually
-        secondStackView.distribution = .fillEqually
-        thirdStackView.distribution = .fillEqually
-        fourthStackView.distribution = .fillEqually
+        randomButton.addStyles(style: randomButtonStyle)
         
-        cityNameLabel.text = "서울"
-        cityNameLabel.textColor = .black
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.font = UIFont.systemFont(ofSize: 48)
+        activityIndicator.addStyles(style: indicatorStyle)
         
-        iconImageView.image = UIImage(named: "10d")
+        verticalStackView.addStyles(style: verticalStackViewStyle)
         
-        presentTemperatureLabel.text = "32"
-        presentTemperatureLabel.textAlignment = .center
-        presentTemperatureLabel.numberOfLines = 2
+        buttonStackView.addStyles(style: horizontalStackViewStyle)
+        firstStackView.addStyles(style: horizontalStackViewStyle)
+        secondStackView.addStyles(style: horizontalStackViewStyle)
+        thirdStackView.addStyles(style: horizontalStackViewStyle)
+        fourthStackView.addStyles(style: horizontalStackViewStyle)
         
-        feeledTemperatureLabel.text = "35"
-        feeledTemperatureLabel.textAlignment = .center
-        feeledTemperatureLabel.numberOfLines = 2
+        cityNameLabel.addStyles(style: cityNameLabelStyle)
         
-        presentHumidityLabel.text = "77%"
-        presentHumidityLabel.textAlignment = .center
-        presentHumidityLabel.numberOfLines = 2
+        iconImageView.addStyles(style: iconImageViewStyle)
         
-        minimumTemperatureLabel.text = "15%"
-        minimumTemperatureLabel.textAlignment = .center
-        minimumTemperatureLabel.numberOfLines = 2
+        presentTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        maximumTemperatureLabel.text = "54%"
-        maximumTemperatureLabel.textAlignment = .center
-        maximumTemperatureLabel.numberOfLines = 2
+        feeledTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        pressureLabel.text = "0.25"
-        pressureLabel.textAlignment = .center
-        pressureLabel.numberOfLines = 2
+        presentHumidityLabel.addStyles(style: detailContentViewLabelStyle)
         
-        windSpeedLabel.text = "876"
-        windSpeedLabel.textAlignment = .center
-        windSpeedLabel.numberOfLines = 2
+        minimumTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        weatherDescriptionLabel.text = "청명함"
-        weatherDescriptionLabel.textAlignment = .center
-        weatherDescriptionLabel.numberOfLines = 2
+        maximumTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
+        
+        pressureLabel.addStyles(style: detailContentViewLabelStyle)
+        
+        windSpeedLabel.addStyles(style: detailContentViewLabelStyle)
+        
+        weatherDescriptionLabel.addStyles(style: detailContentViewLabelStyle)
     }
     
     func bind() {
-        didReceivedViewModel = { [weak self] viewModel in
-            self?.viewModel = viewModel
-            DispatchQueue.main.async {
-                self?.setData()
-            }
+        
+        isPushedByNavi = { [weak self] bool in
+            self?.isSuperViewPushedByNavi = bool
+        }
+        
+        scrollView.isHidden = true
+        activityIndicator.startAnimating()
+        
+        closeButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
+        randomButton.addTarget(self, action: #selector(random), for: .touchUpInside)
+        
+        viewModel.didReceiveViewModel = { [weak self] _ in
+            self?.scrollView.isHidden = false
+            self?.setData()
+            self?.activityIndicator.stopAnimating()
         }
     }
     
-    //TODO: ViewModel이 데이터 형식에 맞게 수정하도록
-    //ex. %, 섭씨 기호 추가 등
+    //TODO: dataSet 해주는 과정 자체가 MVVM 스럽지 못하다. 더 MVVM 스럽게 수정필요
     func setData() {
         cityNameLabel.text = viewModel.dataSource.cityName
         
@@ -233,6 +256,14 @@ extension DetailContentView: Presentable {
         windSpeedLabel.text = viewModel.dataSource.windSpeedString
         
         weatherDescriptionLabel.text = viewModel.dataSource.weatherDesc
+    }
+    
+    @objc func dismiss() {
+        viewModel.dismissButtonPressed()
+    }
+    
+    @objc func random() {
+        viewModel.randomButtonPressed()
     }
 }
 
@@ -261,7 +292,7 @@ struct DetailContentViewPreview<View: UIView>: UIViewRepresentable {
 struct DetailContentViewPreviewProvider: PreviewProvider {
     static var previews: some View {
         DetailContentViewPreview {
-            let cell = DetailContentView(frame: .zero)
+            let cell = DetailContentView(viewModel: DetailViewModel())
             
             return cell
         }.previewLayout(.fixed(width: 180, height:300))

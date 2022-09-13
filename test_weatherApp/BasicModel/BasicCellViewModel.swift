@@ -1,15 +1,13 @@
 //
-//  BasicCollectionViewModel.swift
+//  BasicCellViewModel.swift
 //  test_weatherApp
 //
-//  Created by pablo.jee on 2022/09/06.
+//  Created by pablo.jee on 2022/09/12.
 //
 
 import Foundation
 
-//FirstVC에서 날씨 보여줄때 사용할 뷰의 뷰모델
 class BasicCellViewModel {
-    
     //input
     var cityName: String
     var icon: String

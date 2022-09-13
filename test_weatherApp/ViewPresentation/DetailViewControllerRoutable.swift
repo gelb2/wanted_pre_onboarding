@@ -1,23 +1,24 @@
 //
-//  BasicViewControllerRoutable.swift
+//  DetailViewControllerRoutable.swift
 //  test_weatherApp
 //
-//  Created by pablo.jee on 2022/09/08.
+//  Created by pablo.jee on 2022/09/12.
 //
 
 import Foundation
 import UIKit
 
-protocol BasicViewControllerRoutable: Routable, BasicViewControllerSceneBuildable { }
 
-extension BasicViewControllerRoutable where Self: BasicViewController {
+protocol DetailViewControllerRoutable: Routable, DetailViewControllerSceneBuildable, SceneDismissable { }
+
+extension DetailViewControllerRoutable where Self: DetailViewController {
     func buildScene(scene: SceneCategory) -> Scenable? {
         var nextScene: Scenable?
         switch scene {
-        case .detail(.detailViewController(let context)):
-            nextScene = buildDetailViewScene(context: context)
         case .alert(.networkAlert(.normalErrorAlert(let context))):
             nextScene = buildAlert(context: context)
+        case .detail(.detailViewController(let context)):
+            nextScene = buildDetailViewScene(context: context)
         default: break
         }
         return nextScene
@@ -25,24 +26,22 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
     
     func route(to Scene: SceneCategory) {
         switch Scene {
-        case .detail(_):
-            guard let scene = buildScene(scene: Scene) else { return }
-            guard let nextVC = scene as? UIViewController else { return }
-            self.navigationController?.pushViewController(nextVC, animated: true)
-        case .alert(_):
+        case .justClose:
+            self.dismissScene(animated: true, completion: nil)
+        default:
             guard let scene = buildScene(scene: Scene) else { return }
             guard let nextVC = scene as? UIViewController else { return }
             present(nextVC, animated: true, completion: nil)
-        default: break
         }
     }
 }
 
-protocol BasicViewControllerSceneBuildable: SceneBuildable {
+protocol DetailViewControllerSceneBuildable: SceneBuildable {
     
 }
 
-extension BasicViewControllerSceneBuildable {
+extension DetailViewControllerSceneBuildable {
+
     func buildDetailViewScene(context: SceneContext<DetailModel>) -> Scenable {
         let nextScene: Scenable
         

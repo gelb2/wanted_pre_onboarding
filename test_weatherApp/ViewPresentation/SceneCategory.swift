@@ -12,6 +12,7 @@ enum SceneCategory {
     case main(mainScene)
     case detail(detailScene)
     case alert(alertScene)
+    case justClose
     
     enum mainScene {
         case basicViewController(SceneContext<BasicModel>)
@@ -34,7 +35,7 @@ enum SceneCategory {
         }
         
         enum detailViewRelated {
-            case notDefinedYet //TODO: 두번째 VC, VM에 어느 기능을 추가로 넣어야 할지 고려해보기
+            case notDefinedYet 
         }
         
     }

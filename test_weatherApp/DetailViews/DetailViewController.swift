@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, DetailViewControllerRoutable {
 
-    var contentView: DetailContentView = DetailContentView()
+    lazy var contentView: DetailContentView = DetailContentView(viewModel: self.viewModel.detailViewModel)
     var viewModel: DetailModel
     
     init(viewModel: DetailModel) {
@@ -22,14 +22,13 @@ class DetailViewController: UIViewController {
     }
     
     override func loadView() {
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
-        bind()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bind()
         // Do any additional setup after loading the view.
     }
     
@@ -47,22 +46,8 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: Presentable {
-    func initViewHierachy() {
-        self.view = UIView()
-
-        view.addSubview(contentView)
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        var constraints: [NSLayoutConstraint] = []
-        defer { NSLayoutConstraint.activate(constraints) }
-        
-        constraints += [
-            contentView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ]
+    func initViewHierarchy() {
+        self.view = contentView
     }
     
     
@@ -75,10 +60,17 @@ extension DetailViewController: Presentable {
             viewModel.populateData()
         }
         
-        viewModel.didReceivedViewModel = { [weak self] contentViewModel in
-            self?.contentView.didReceivedViewModel(contentViewModel)
+        viewModel.routeSubject = { [weak self] sceneCategory in
+            self?.route(to: sceneCategory)
         }
+        
+        var isPushedByNavi = false
+        if self.presentingViewController != nil {
+            isPushedByNavi = false
+        } else if self.presentingViewController == nil {
+            isPushedByNavi = true
+        }
+        
+        contentView.isPushedByNavi(isPushedByNavi)
     }
-    
-    
 }

@@ -8,8 +8,16 @@
 import UIKit
 import SwiftUI
 
-//TODO: ui개선
-class BasicCellView: UIView {
+//TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
+class BasicCellView: UIView, BasicCellStyling {
+    
+    //input
+    @MainThreadActor var didReceivedViewModel: ((BasicCellViewModel) -> ())?
+    
+    //output
+    
+    //properties
+    private var viewModel: BasicCellViewModel
     
     var cityNameLabel: UILabel = UILabel()
     var iconImageView: CacheImageView = CacheImageView()
@@ -17,9 +25,11 @@ class BasicCellView: UIView {
     var humidityLabel: UILabel = UILabel()
     var bottomStackView: UIStackView = UIStackView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        initViewHierachy()
+    
+    init(viewModel: BasicCellViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -30,7 +40,7 @@ class BasicCellView: UIView {
 }
 
 extension BasicCellView: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.addSubview(cityNameLabel)
         self.addSubview(iconImageView)
         self.addSubview(bottomStackView)
@@ -62,7 +72,7 @@ extension BasicCellView: Presentable {
         ]
         
         constraints += [
-            bottomStackView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 16),
+            bottomStackView.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 4),
             bottomStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bottomStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bottomStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -70,28 +80,33 @@ extension BasicCellView: Presentable {
     }
     
     func configureView() {
-        self.backgroundColor = .white
-        cityNameLabel.text = "seoul"
-        cityNameLabel.textColor = .black
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.font = UIFont.systemFont(ofSize: 24)
         
-        iconImageView.image = UIImage(named: "10d")
+        self.addStyles(style: basicCellViewStyle)
         
-        temperatureLabel.text = "32.14".addTempratureSign()
-        temperatureLabel.textAlignment = .center
-        temperatureLabel.font = UIFont.systemFont(ofSize: 16)
+        cityNameLabel.addStyles(style: cityNameLabelStyle)
         
-        humidityLabel.text = "77".addHumiditySign()
-        humidityLabel.textAlignment = .center
-        humidityLabel.font = UIFont.systemFont(ofSize: 16)
+        iconImageView.addStyles(style: iconImageViewStyle)
         
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .fill
+        temperatureLabel.addStyles(style: tempratureLabelStyle)
+        
+        humidityLabel.addStyles(style: humidityLabelStyle)
+        
+        bottomStackView.addStyles(style: bottomStackViewStyle)
     }
     
     func bind() {
-        
+        didReceivedViewModel = { [weak self] viewModel in
+            self?.viewModel = viewModel
+            self?.setData()
+        }
+    }
+    
+    //TODO: dataSet 해주는 과정 자체가 MVVM 스럽지 못하다. 더 MVVM 스럽게 수정필요
+    func setData() {
+        cityNameLabel.text = viewModel.cityName
+        iconImageView.loadImage(urlString: viewModel.icon)
+        temperatureLabel.text = viewModel.tempString
+        humidityLabel.text = viewModel.humidString
     }
 }
 
@@ -120,7 +135,7 @@ struct BasicCellViewPreview<View: UIView>: UIViewRepresentable {
 struct BasicCellViewPreviewProvider: PreviewProvider {
     static var previews: some View {
         BasicCellViewPreview {
-            let cell = BasicCellView(frame: .zero)
+            let cell = BasicCellView(viewModel: BasicCellViewModel())
             
             return cell
         }.previewLayout(.fixed(width: 100, height: 100))

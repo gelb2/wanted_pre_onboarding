@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-// TODO: 뷰프리젠테이션 관련 로직 추가 처리
-//얼럿 팝업, dismiss 등
 protocol Scenable {
     
 }
@@ -20,6 +18,16 @@ protocol SceneBuildable {
 
 protocol Routable {
     func route(to Scene: SceneCategory)
+}
+
+protocol SceneDismissable {
+    func dismissScene(animated: Bool, completion: (() -> Void)?)
+}
+
+extension SceneDismissable where Self: UIViewController {
+    func dismissScene(animated: Bool, completion: (() -> Void)?) {
+        self.dismiss(animated: animated, completion: completion)
+    }
 }
 
 extension UIViewController: Scenable { }

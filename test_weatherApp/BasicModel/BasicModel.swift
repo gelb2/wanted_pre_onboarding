@@ -7,51 +7,139 @@
 
 import Foundation
 
-//FirstViewController용 모델
 class BasicModel {
     
     //input
     
     //output
-    var didReceivedViewModel: (_ viewModel: BasicCollectionViewModel) -> () = { viewModel in }
-    var routeSubject: (SceneCategory) -> () = { SceneCategory in }
+    var contentViewModel: BasicContentViewModel {
+        return privateContentViewModel
+    }
+    
+    @MainThreadActor var routeSubject: ( (SceneCategory) -> () )?
     
     //properties
-    private var basicViewModel: BasicCollectionViewModel
+    private var privateContentViewModel: BasicContentViewModel
     private var repository: RepositoryProtocol
 
-    //TODO: 뷰모델에 주입할 제네릭한 클래스(레포지토리, 캐쉬, 스트링, 불 값 등 뷰모델에 필요한 것들 다 넣어줄 수 있는) 만들고 그 클래스를 주입받게끔 하기
     init(repository: RepositoryProtocol) {
         self.repository = repository
-        self.basicViewModel = BasicCollectionViewModel()
+        self.privateContentViewModel = BasicContentViewModel()
         self.bind()
     }
     
     func bind() {
-        basicViewModel.propergateDidSelectItem = { [weak self] cityName in
+        privateContentViewModel.propergateDidSelectItem = { [weak self] cityName in
             
             let detailModel = DetailModel(repository: Repository(httpClient: HTTPClient()))
             detailModel.addMoreContext(cityName)
             let sceneContext = SceneContext(dependency: detailModel)
             
-            self?.routeSubject(.detail(.detailViewController(sceneContext)))
+            self?.routeSubject?(.detail(.detailViewController(sceneContext)))
         }
     }
 
     func populateData() {
         Task {
-            let dataSource = await requestAPI()
-            basicViewModel.didReceivedDataSource(dataSource)
-            didReceivedViewModel(basicViewModel)
+            guard let entity = await requestAPI() else { return }
+            privateContentViewModel.didReceiveEntity(entity)
         }
     }
 
-    private func requestAPI() async -> [BasicCellViewModel] {
-        var dataSource: [BasicCellViewModel] = []
+    private func requestAPI() async -> [BasicWeatherEntity]? {
+        //0.9초
+        let timer = ParkBenchTimer()
+        var closures: [(String, (String) -> Task<BasicWeatherEntity, Error>)] = []
+        for value in CityNames.allCases {
+            async let closure: (String) -> Task<BasicWeatherEntity, Error> = { (String) -> Task<BasicWeatherEntity, Error> in
+                Task { () -> (BasicWeatherEntity) in
+                    return try await self.repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
+                }
+            }
+            await closures.append((value.rawValue, closure))
+        }
+        
+        let mappedClosure = closures.map { value in value.1(value.0) }
+        
         do {
-            //TODO: API 분석하여 한글 도시명 받아도 처리 가능하도록 개선 -> 일단 addPercentEncoding(.query) 는 안되는 것으로 확인
-            //TODO: 비동기 로직들을 다 동기로 돌리니 느림...개선해야 함...개선중임...그냥 enum 루프 돌리는 것 보단 빠르다 시간 재보니...
-                        
+            let asyncMapped: [BasicWeatherEntity] = try await mappedClosure.asyncMap { task in
+                let result = try await task.result.get()
+                return result
+            }
+            
+            return asyncMapped
+        } catch {
+            handleError(error: error)
+            return nil
+        }
+    }
+    
+    private func handleError(error: Error) {
+        
+        let error = error as? HTTPError
+        
+        switch error {
+        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
+            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            routeSubject?(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
+        case .none:
+            break
+        }
+    }
+    /***************************************  depreactated ******************************************/
+    private func deprecated1_requestAPI() async -> [BasicWeatherEntity]? {
+        //3.7초 //Task로 감싸는 처리는 맞는거 같은데 속도 최적화가 안된다...어딜 건드려야하지...
+        let timer = ParkBenchTimer()
+
+        let iteratedTask = Task { () -> [BasicWeatherEntity] in
+            var entities: [BasicWeatherEntity] = []
+            for try await value in Counter(cityNames: CityNames.allCases, repository: repository) {
+                entities.append(value)
+            }
+            return entities
+        }
+
+        do {
+            let result = try await iteratedTask.result.get()
+            return result
+        } catch {
+            handleError(error: error)
+            return nil
+        }
+    }
+    
+    private func deprecated2_requestAPI() async -> [BasicWeatherEntity]? {
+        //3.5초
+        do {
+            
+            let task = Task { () -> [BasicWeatherEntity] in
+                var result: [BasicWeatherEntity] = []
+                for value in CityNames.allCases {
+                    async let entity: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: value.rawValue)))
+                    try await result.append(entity)
+                }
+                return result
+            }
+            
+            do {
+                let result = try await task.result.get()
+                return result
+            } catch {
+                handleError(error: error)
+                return nil
+            }
+        } catch {
+            handleError(error: error)
+            return nil
+        }
+    }
+    
+    private func deprecated3_requestAPI() async -> [BasicWeatherEntity]? {
+        //0.97초
+        do {
+            let timer = ParkBenchTimer()
             async let gongju: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gongju.rawValue)))
             async let gwangu: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gwangju.rawValue)))
             async let gumi: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.gumi.rawValue)))
@@ -74,36 +162,11 @@ class BasicModel {
             async let chuncheon: BasicWeatherEntity = try repository.fetch(api: .weatherData(.cityName(name: CityNames.chuncheon.rawValue)))
 
             let result = try await [gongju,gwangu,gumi,gunsan,daegu,daejeon,mokpo,busan,seosan,seoul,sokcho,suwon,suncheon,ulsan,iksan,jeonju,jeju,cheonan,cheongju,chuncheon]
+            return result
 
-            dataSource = result.map { entity -> BasicCellViewModel in
-                let weather = BasicCellViewModel()
-                weather.cityName = entity.cityName
-                weather.humid = entity.main.humidity
-                weather.temp = entity.main.temp
-                
-                //TODO: 서버 api에서 weather는 배열이다...왜지...도큐먼트를 봐도 확실한 설명이 없어 보인다...
-                weather.icon = entity.weather.first?.icon ?? ""
-                return weather
-            }
         } catch {
             handleError(error: error)
-        }
-        return dataSource
-    }
-    
-    private func handleError(error: Error) {
-        
-        let error = error as? HTTPError
-        
-        switch error {
-        case .invalidURL, .errorDecodingData, .badResponse, .badURL, .iosDevloperIsStupid:
-            let okAction = AlertActionDependency(title: "ok", style: .default, action: nil)
-            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
-            let alertDependency = AlertDependency(title: String(describing: error), message: "check network", preferredStyle: .alert, actionSet: [okAction, cancelAction])
-            routeSubject(.alert(.networkAlert(.normalErrorAlert(alertDependency))))
-        case .none:
-            break
+            return nil
         }
     }
-
 }

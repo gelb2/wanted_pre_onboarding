@@ -9,11 +9,16 @@ import UIKit
 
 class BasicCell: UICollectionViewCell {
     
-    var cellView: BasicCellView = BasicCellView()
+    var cellView: BasicCellView = BasicCellView(viewModel: BasicCellViewModel())
+    var viewModel = BasicCellModel() {
+        didSet {
+            self.cellView.didReceivedViewModel?(self.viewModel.cellViewModel)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initViewHierachy()
+        initViewHierarchy()
         configureView()
         bind()
     }
@@ -24,7 +29,7 @@ class BasicCell: UICollectionViewCell {
 }
 
 extension BasicCell: Presentable {
-    func initViewHierachy() {
+    func initViewHierarchy() {
         self.contentView.addSubview(cellView)
         cellView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -45,8 +50,11 @@ extension BasicCell: Presentable {
     }
     
     func bind() {
-        
+
     }
     
-    
+    func configureCell(viewModel: BasicCellModel) {
+        self.viewModel = viewModel
+    }
 }
+
