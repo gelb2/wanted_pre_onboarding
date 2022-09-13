@@ -66,7 +66,7 @@ class BasicModel {
                 let result = try await task.result.get()
                 return result
             }
-            print("timecheck : \(timer.stop())")
+            
             return asyncMapped
         } catch {
             handleError(error: error)

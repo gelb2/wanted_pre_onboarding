@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-// TODO: 뷰프리젠테이션 관련 로직 추가 처리
-//dismiss 시키는 처리, navigationController와 조합시키기, dismiss 시키고 이전 뷰의 밸류가 바뀌도록 해보기 혹은 이전 뷰가 다른 동작을 하게끔 해보기
 protocol Scenable {
     
 }

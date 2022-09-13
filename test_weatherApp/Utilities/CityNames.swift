@@ -34,7 +34,6 @@ class Counter: AsyncSequence {
             }
             
             let value: BasicWeatherEntity = try await repository.fetch(api: .weatherData(.cityName(name: howHigh[current].rawValue)))
-            print("current check : \(current)")
             current += 1
             return value
         }

@@ -27,8 +27,10 @@ extension BasicViewControllerRoutable where Self: BasicViewController {
         guard let scene = buildScene(scene: Scene) else { return }
         guard let nextVC = scene as? UIViewController else { return }
         
-        let navi = UINavigationController(rootViewController: nextVC)
-        navi.modalPresentationStyle = .fullScreen
+        let navi = BasicNavigationController(rootViewController: nextVC)
+//        nextVC.didMove(toParent: navi)
+//        let navi = UINavigationController(rootViewController: nextVC)
+        navi.modalPresentationStyle = .formSheet
         present(navi, animated: true, completion: nil)
     }
 }

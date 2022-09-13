@@ -54,7 +54,6 @@ enum API {
     private var getMethodQuerySet: [URLQueryItem] {
         switch self {
         case .weatherData(.cityName(let name)):
-            print("cityName Query check \(name)")
             return [URLQueryItem(name: "q", value: name)]
         case .weatherData(.cityCoordination(lat: let lat, lon: let lon)):
             let latQuery = [URLQueryItem(name: "lat", value: String(lat))]

@@ -34,7 +34,6 @@ class BasicContentViewModel {
         }
         
         didSelectItemInCollectionView = { [weak self] indexPath in
-            print("BasicContentView item didSelected indexPath : \(indexPath.item)")
             guard let cityName = self?.findAndReturnSelectedItem(indexPathItem: indexPath.item) else { return }
             self?.propergateDidSelectItem(cityName)
         }

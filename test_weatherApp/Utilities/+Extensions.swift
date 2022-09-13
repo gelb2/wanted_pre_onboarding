@@ -55,7 +55,6 @@ extension NSCache {
         cache.countLimit = 0  //unlimited. default
         cache.totalCostLimit = 0 //unlimited. default
         //sharedCache.totalCostLimit = 50 * 1024 * 1024 //50mb
-        print("ns cache return called")
         return cache
     }
 }

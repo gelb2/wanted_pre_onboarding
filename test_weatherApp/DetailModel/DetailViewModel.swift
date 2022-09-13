@@ -29,7 +29,6 @@ class DetailViewModel {
     }
 
     private func bind() {
-        print("detailContentViewModel Bind")
         didReceiveEntity = { [weak self] entity in
             self?.populateEntity(result: entity)
             self?.didReceiveViewModel()

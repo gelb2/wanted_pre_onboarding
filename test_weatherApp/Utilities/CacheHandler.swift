@@ -13,7 +13,7 @@ class CacheHandler: ImageCacheable {
     private var sharedCache = NSCache<AnyObject, AnyObject>.sharedCache
 
     private init() {
-        print("cacheHandler init and return")
+        
     }
     
     func setObject(_ obj : AnyObject, forKey: String) {
