@@ -10,11 +10,51 @@ import UIKit
 
 protocol Styling {}
 
+protocol BasicSearchViewStyling: Styling { }
+
+extension BasicSearchViewStyling {
+    
+    var contentViewStyle: (UIView) -> () {
+        {
+            $0.backgroundColor = .white
+            $0.layer.shadowColor = UIColor.black.cgColor
+            $0.layer.shadowOpacity = 1
+            $0.layer.shadowOffset = CGSize(width: 10.0, height: -3.0)
+            $0.layer.shadowRadius = 10
+        }
+    }
+    
+    var textFieldStyle: (UITextField) -> () {
+        {
+            $0.keyboardType = .alphabet
+            $0.placeholder = "type city name"
+            $0.autocorrectionType = .no
+            $0.textAlignment = .center
+        }
+    }
+    
+    var fetchAllButtonStyle: (UIButton) -> () {
+        {
+            $0.titleLabel?.textAlignment = .center
+            $0.setTitle("fetch all", for: .normal)
+            $0.setTitleColor(.red, for: .normal)
+        }
+    }
+    
+    var horizontalStackViewStyle: (UIStackView) -> () {
+        return {
+            $0.axis = .horizontal
+            $0.distribution = .fillEqually
+        }
+    }
+}
+
 protocol BasicNavigationControllerStyling: Styling { }
 
 extension BasicNavigationControllerStyling {
     var navigationBarStyle: (UINavigationBar) -> () {
-        {   $0.tintColor = .red //backbutton color
+        {
+            $0.tintColor = .red //backbutton color
             $0.barTintColor = .black //default: nil //navi bar tintcolor //스크롤 아래로 하다 보면 색이 드러남
             $0.shadowImage = UIImage() //default: nil
             $0.prefersLargeTitles = true

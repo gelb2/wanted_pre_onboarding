@@ -10,11 +10,16 @@ import Foundation
 class BasicContentViewModel {
     
     //input
+    var didReceiveUserInput: (String) -> () = { userInput in }
     var didSelectItemInCollectionView:(_ indexPath: IndexPath) -> () = { (IndexPath) in }
     var didReceiveEntity: ([BasicWeatherEntity]) -> () = { entity in }
     
     //output
+    @MainThreadActor var turnOnIndicator: ( ((Void)) -> () )?
+    @MainThreadActor var turnOffIndicator: ( ((Void)) -> () )?
     @MainThreadActor var didReceiveViewModel: ( ((Void)) -> () )?
+    @MainThreadActor var scrollToProperIndex: ( (Int) -> () )?
+    @MainThreadActor var userInputNotValid: ( (String) -> () )?
     var propergateDidSelectItem: (_ String: String) -> () = { (String) in }
     var dataSource: [BasicCellModel] { return privateDataSource }
     
@@ -27,6 +32,14 @@ class BasicContentViewModel {
     }
 
     private func bind() {
+        
+        didReceiveUserInput = { [weak self] userInput in
+            guard let self = self else { return }
+            guard let index = self.findAndReturnSearchedItem(userInput: userInput) else {
+                self.userInputNotValid?(userInput)
+                return }
+            self.scrollToProperIndex?(index)
+        }
 
         didReceiveEntity = { [weak self] entity in
             self?.populateEntity(result: entity)
@@ -55,6 +68,21 @@ class BasicContentViewModel {
             
             return cellModel
         }
+    }
+    
+    private func findAndReturnSearchedItem(userInput: String) -> Int? {
+        let tempDataSource = privateDataSource.map { cellModel in
+            return cellModel.cellViewModel.cityName
+        }
+        
+        var index: Int?
+        for i in 0..<tempDataSource.count {
+            if tempDataSource[i].contains(userInput) {
+                index = i
+            }
+        }
+        
+        return index
     }
     
     private func findAndReturnSelectedItem(indexPathItem: Int) -> String {

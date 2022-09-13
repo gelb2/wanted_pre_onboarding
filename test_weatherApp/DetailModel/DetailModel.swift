@@ -51,8 +51,10 @@ class DetailModel: AdditionalContextAddable {
 
     func populateData() {
         Task {
+            privateDetailViewModel.turnOnIndicator?(())
             guard let entity = await requestAPI() else { return }
             privateDetailViewModel.didReceiveEntity(entity)
+            privateDetailViewModel.turnOffIndicator?(())
         }
     }
     

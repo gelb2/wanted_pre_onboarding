@@ -16,15 +16,21 @@ class BasicModel {
         return privateContentViewModel
     }
     
+    var searchViewModel: BasicSearchViewModel {
+        return privateSearchViewModel
+    }
+    
     @MainThreadActor var routeSubject: ( (SceneCategory) -> () )?
     
     //properties
     private var privateContentViewModel: BasicContentViewModel
+    private var privateSearchViewModel: BasicSearchViewModel
     private var repository: RepositoryProtocol
 
     init(repository: RepositoryProtocol) {
         self.repository = repository
         self.privateContentViewModel = BasicContentViewModel()
+        self.privateSearchViewModel = BasicSearchViewModel()
         self.bind()
     }
     
@@ -37,12 +43,46 @@ class BasicModel {
             
             self?.routeSubject?(.detail(.detailViewController(sceneContext)))
         }
+        
+        privateSearchViewModel.propergateFetchAllEvent = { [weak self] in
+            self?.populateData()
+        }
+        
+        privateSearchViewModel.propergateUserInput = { [weak self] userInput in
+            self?.privateContentViewModel.didReceiveUserInput(userInput)
+        }
+        
+        privateContentViewModel.userInputNotValid = { [weak self] userInput in
+            guard let self = self else { return }
+            
+            let okAction = AlertActionDependency(title: "OK", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                self.privateContentViewModel.turnOnIndicator?(())
+                Task {
+                    do {
+                        async let entity: BasicWeatherEntity = self.repository.fetch(api: .weatherData(.cityName(name: userInput)))
+                        let entities = try await [entity]
+                        self.privateContentViewModel.didReceiveEntity(entities)
+                        self.privateContentViewModel.turnOffIndicator?(())
+                    } catch {
+                        self.handleError(error: error)
+                        self.privateContentViewModel.turnOffIndicator?(())
+                    }
+                }
+            }
+            
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: "검색결과 화면 안에 없음", message: "API를 호출해보겠습니까?", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            self.routeSubject?(.alert(.basicViewAlert(.userSearchInputError(alertDependency))))
+        }
     }
 
     func populateData() {
         Task {
+            privateContentViewModel.turnOnIndicator?(())
             guard let entity = await requestAPI() else { return }
             privateContentViewModel.didReceiveEntity(entity)
+            privateContentViewModel.turnOffIndicator?(())
         }
     }
 

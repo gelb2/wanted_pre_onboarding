@@ -16,6 +16,8 @@ class DetailViewModel {
     var randomButtonPressed = { }
     
     //output
+    @MainThreadActor var turnOnIndicator: ( ((Void)) -> () )?
+    @MainThreadActor var turnOffIndicator: ( ((Void)) -> () )?
     @MainThreadActor var didReceiveViewModel: ( ((Void)) -> () )?
     var dataSource: DetailDataSourceModel { return privateDataSource }
     var propergateDismissEvent = { }
