@@ -63,6 +63,10 @@ extension UIImage {
     convenience init?(systemName: ImageName) {
         self.init(systemName: systemName.rawValue)
     }
+    
+    convenience init?(imageName: String) {
+        self.init(named: imageName)
+    }
 }
 
 enum ImageName: String {

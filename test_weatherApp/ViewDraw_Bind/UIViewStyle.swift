@@ -92,7 +92,7 @@ extension BasicCellStyling {
     
     var iconImageViewStyle: (UIImageView) -> () {
         {
-            $0.image = UIImage(systemName: "exclamationmark.circle.fill")
+            $0.image = UIImage(systemName: .errorImage)
         }
     }
     
@@ -163,7 +163,7 @@ extension DetailContentViewStyling {
     
     var iconImageViewStyle: (UIImageView) -> () {
         {
-            $0.image = UIImage(named: "10d")
+            $0.image = UIImage(imageName: "10d")
         }
     }
     
