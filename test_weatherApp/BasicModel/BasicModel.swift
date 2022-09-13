@@ -16,15 +16,21 @@ class BasicModel {
         return privateContentViewModel
     }
     
+    var searchViewModel: BasicSearchViewModel {
+        return privateSearchViewModel
+    }
+    
     @MainThreadActor var routeSubject: ( (SceneCategory) -> () )?
     
     //properties
     private var privateContentViewModel: BasicContentViewModel
+    private var privateSearchViewModel: BasicSearchViewModel
     private var repository: RepositoryProtocol
 
     init(repository: RepositoryProtocol) {
         self.repository = repository
         self.privateContentViewModel = BasicContentViewModel()
+        self.privateSearchViewModel = BasicSearchViewModel()
         self.bind()
     }
     
@@ -36,6 +42,27 @@ class BasicModel {
             let sceneContext = SceneContext(dependency: detailModel)
             
             self?.routeSubject?(.detail(.detailViewController(sceneContext)))
+        }
+        
+        privateSearchViewModel.propergateUserInput = { [weak self] userInput in
+            self?.privateContentViewModel.didReceiveUserInput(userInput)
+        }
+        
+        privateContentViewModel.userInputNotValid = { [weak self] userInput in
+            guard let self = self else { return }
+            
+            let okAction = AlertActionDependency(title: "OK", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                Task {
+                    async let entity: BasicWeatherEntity = self.repository.fetch(api: .weatherData(.cityName(name: userInput)))
+                    let entities = try await [entity]
+                    self.privateContentViewModel.didReceiveEntity(entities)
+                }
+            }
+            
+            let cancelAction = AlertActionDependency(title: "cancel", style: .cancel, action: nil)
+            let alertDependency = AlertDependency(title: "검색결과 없음", message: "미리 가져온 데이터안에 입력값 없음\n API를 호출해보겠습니까?", preferredStyle: .alert, actionSet: [okAction, cancelAction])
+            self.routeSubject?(.alert(.basicViewAlert(.userSearchInputError(alertDependency))))
         }
     }
 
