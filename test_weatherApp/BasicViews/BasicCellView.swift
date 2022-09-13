@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 //TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
-class BasicCellView: UIView {
+class BasicCellView: UIView, BasicCellStyling {
     
     //input
     var didReceivedViewModel: (BasicCellViewModel) -> () = { viewModel in }
@@ -86,20 +86,13 @@ extension BasicCellView: Presentable {
         self.layer.shadowOffset = CGSize(width: 10.0, height: -3.0)
         self.layer.shadowRadius = 10
         
-        cityNameLabel.text = "seoul"
-        cityNameLabel.textColor = .black
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.font = UIFont.systemFont(ofSize: 24)
+        cityNameLabel.addStyles(style: cityNameLabelStyle)
         
         iconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
         
-        temperatureLabel.text = "32.14".addTempratureSign()
-        temperatureLabel.textAlignment = .center
-        temperatureLabel.font = UIFont.systemFont(ofSize: 16)
+        temperatureLabel.addStyles(style: tempratureLabelStyle)
         
-        humidityLabel.text = "77".addHumiditySign()
-        humidityLabel.textAlignment = .center
-        humidityLabel.font = UIFont.systemFont(ofSize: 16)
+        humidityLabel.addStyles(style: humidityLabelStyle)
         
         bottomStackView.axis = .vertical
         bottomStackView.distribution = .fillEqually
