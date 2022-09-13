@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class BasicContentView: UIView {
+class BasicContentView: UIView, BasicContentViewStyling, ActivityIndicatorViewStyling {
     
     //input
     
@@ -23,8 +23,7 @@ class BasicContentView: UIView {
     private let layout = UICollectionViewFlowLayout()
     lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     private let reuseIdentifier = "BasicCell"
-    private let cellSpacing: CGFloat = 10
-    private let columns: CGFloat = 3
+    
     
     init(viewModel: BasicContentViewModel) {
         self.viewModel = viewModel
@@ -69,18 +68,10 @@ extension BasicContentView: Presentable {
     
     func configureView() {
         self.backgroundColor = .white
-        collectionView.backgroundColor = .white
-        activityIndicator.tintColor = .red
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .large
-        activityIndicator.color = .red
+        collectionView.addStyles(style: collectionViewStyle)
+        activityIndicator.addStyles(style: indicatorStyle)
         
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = cellSpacing
-        layout.minimumInteritemSpacing = cellSpacing
-        let width = (UIScreen.main.bounds.width - cellSpacing * 2) / columns
-        layout.itemSize = CGSize(width: width , height: width)
+        layout.addStyles(style: collectionViewFlowLayoutStyle)
     }
     
     func bind() {

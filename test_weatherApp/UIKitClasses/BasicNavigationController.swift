@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BasicNavigationController: UINavigationController {
+class BasicNavigationController: UINavigationController, BasicNavigationControllerStyling {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +36,8 @@ extension BasicNavigationController: Presentable {
     }
     
     func configureView() {
-        self.view.backgroundColor = .yellow
-        navigationBar.barTintColor = .blue
-        navigationBar.shadowImage = UIImage()
+        self.view.backgroundColor = .white
+        navigationBar.addStyles(style: navigationBarStyle)
     }
     
     func bind() {

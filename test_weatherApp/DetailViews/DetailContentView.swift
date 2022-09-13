@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 //TODO: ui개선 : 좀 더 나은 방향으로 (ex. 그림자 추가 같은 더 예쁜거...)
-class DetailContentView: UIView {
+class DetailContentView: UIView, DetailContentViewStyling, ActivityIndicatorViewStyling {
     
     //input
     
@@ -175,64 +175,39 @@ extension DetailContentView: Presentable {
         
         scrollView.showsHorizontalScrollIndicator = true
         
-        closeButton.setTitle("닫기", for: .normal)
-        closeButton.setTitleColor(.red, for: .normal)
+        closeButton.addStyles(style: closeButtonStyle)
         
-        randomButton.setTitle("랜덤", for: .normal)
-        randomButton.setTitleColor(.blue, for: .normal)
+        randomButton.addStyles(style: randomButtonStyle)
         
-        activityIndicator.tintColor = .red
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .large
-        activityIndicator.color = .red
+        activityIndicator.addStyles(style: indicatorStyle)
         
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 8
+        verticalStackView.addStyles(style: verticalStackViewStyle)
         
-        buttonStackView.distribution = .fillEqually
-        firstStackView.distribution = .fillEqually
-        secondStackView.distribution = .fillEqually
-        thirdStackView.distribution = .fillEqually
-        fourthStackView.distribution = .fillEqually
+        buttonStackView.addStyles(style: horizontalStackViewStyle)
+        firstStackView.addStyles(style: horizontalStackViewStyle)
+        secondStackView.addStyles(style: horizontalStackViewStyle)
+        thirdStackView.addStyles(style: horizontalStackViewStyle)
+        fourthStackView.addStyles(style: horizontalStackViewStyle)
         
-        cityNameLabel.text = "서울"
-        cityNameLabel.textColor = .black
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.font = UIFont.systemFont(ofSize: 48)
+        cityNameLabel.addStyles(style: cityNameLabelStyle)
         
-        iconImageView.image = UIImage(named: "10d")
+        iconImageView.addStyles(style: iconImageViewStyle)
         
-        presentTemperatureLabel.text = "32"
-        presentTemperatureLabel.textAlignment = .center
-        presentTemperatureLabel.numberOfLines = 2
+        presentTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        feeledTemperatureLabel.text = "35"
-        feeledTemperatureLabel.textAlignment = .center
-        feeledTemperatureLabel.numberOfLines = 2
+        feeledTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        presentHumidityLabel.text = "77%"
-        presentHumidityLabel.textAlignment = .center
-        presentHumidityLabel.numberOfLines = 2
+        presentHumidityLabel.addStyles(style: detailContentViewLabelStyle)
         
-        minimumTemperatureLabel.text = "15%"
-        minimumTemperatureLabel.textAlignment = .center
-        minimumTemperatureLabel.numberOfLines = 2
+        minimumTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        maximumTemperatureLabel.text = "54%"
-        maximumTemperatureLabel.textAlignment = .center
-        maximumTemperatureLabel.numberOfLines = 2
+        maximumTemperatureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        pressureLabel.text = "0.25"
-        pressureLabel.textAlignment = .center
-        pressureLabel.numberOfLines = 2
+        pressureLabel.addStyles(style: detailContentViewLabelStyle)
         
-        windSpeedLabel.text = "876"
-        windSpeedLabel.textAlignment = .center
-        windSpeedLabel.numberOfLines = 2
+        windSpeedLabel.addStyles(style: detailContentViewLabelStyle)
         
-        weatherDescriptionLabel.text = "청명함"
-        weatherDescriptionLabel.textAlignment = .center
-        weatherDescriptionLabel.numberOfLines = 2
+        weatherDescriptionLabel.addStyles(style: detailContentViewLabelStyle)
     }
     
     func bind() {

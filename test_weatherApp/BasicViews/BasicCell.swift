@@ -46,7 +46,7 @@ extension BasicCell: Presentable {
     }
     
     func configureView() {
-        print("cell configure view")
+        
     }
     
     func bind() {

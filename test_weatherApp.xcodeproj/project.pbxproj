@@ -165,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				36B1CB8428C89C5E00D07443 /* Presentable.swift */,
+				3660165428D044BC00678B32 /* UIViewStyle.swift */,
 			);
 			path = ViewDraw_Bind;
 			sourceTree = "<group>";
@@ -286,7 +287,6 @@
 				4CCDE83F28CC7CB600F05AFF /* PropertyWrappers.swift */,
 				36F0419428CF480D00F772BF /* CacheHandler.swift */,
 				36B1CBAC28CB2D8300D07443 /* +Extensions.swift */,
-				3660165428D044BC00678B32 /* UIViewStyle.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";

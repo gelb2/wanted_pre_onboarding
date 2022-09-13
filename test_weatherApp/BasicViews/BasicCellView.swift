@@ -25,6 +25,7 @@ class BasicCellView: UIView, BasicCellStyling {
     var humidityLabel: UILabel = UILabel()
     var bottomStackView: UIStackView = UIStackView()
     
+    
     init(viewModel: BasicCellViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
@@ -79,23 +80,18 @@ extension BasicCellView: Presentable {
     }
     
     func configureView() {
-        self.backgroundColor = .white
         
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = CGSize(width: 10.0, height: -3.0)
-        self.layer.shadowRadius = 10
+        self.addStyles(style: basicCellViewStyle)
         
         cityNameLabel.addStyles(style: cityNameLabelStyle)
         
-        iconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+        iconImageView.addStyles(style: iconImageViewStyle)
         
         temperatureLabel.addStyles(style: tempratureLabelStyle)
         
         humidityLabel.addStyles(style: humidityLabelStyle)
         
-        bottomStackView.axis = .vertical
-        bottomStackView.distribution = .fillEqually
+        bottomStackView.addStyles(style: bottomStackViewStyle)
     }
     
     func bind() {
