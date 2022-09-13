@@ -47,8 +47,8 @@ extension BasicContentViewStyling {
     var collectionViewFlowLayoutStyle: (UICollectionViewFlowLayout) -> () {
         {
             // TODO: 지역변수들 다른 방법으로 만들고 할당해주기...
-            let cellSpacing: CGFloat = 10
-            let columns: CGFloat = 3
+            let cellSpacing: CGFloat = cellSpacing
+            let columns: CGFloat = columns
             $0.scrollDirection = .vertical
             $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             $0.minimumLineSpacing = cellSpacing
@@ -56,6 +56,14 @@ extension BasicContentViewStyling {
             let width = (UIScreen.main.bounds.width - cellSpacing * 2) / columns
             $0.itemSize = CGSize(width: width , height: width)
         }
+    }
+    
+    private var cellSpacing: CGFloat {
+        return 10.0
+    }
+    
+    private var columns: CGFloat {
+        return 3.0
     }
 }
 
