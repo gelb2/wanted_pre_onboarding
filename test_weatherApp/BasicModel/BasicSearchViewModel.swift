@@ -25,17 +25,11 @@ class BasicSearchViewModel {
     
     private func bind() {
         enterKeyPressed = { [weak self] userInput in
-            guard let filteredInput = self?.removeSpaces(userInput: userInput) else { return }
-            self?.propergateUserInput(filteredInput)
+            self?.propergateUserInput(userInput)
         }
         
         fetchAllButtonPressed = { [weak self] in
             self?.propergateFetchAllEvent()
         }
     }
-    
-    private func removeSpaces(userInput: String) -> String {
-        return userInput.replacingOccurrences(of: " ", with: "")
-    }
-    
 }
